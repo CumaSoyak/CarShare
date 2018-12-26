@@ -18,42 +18,32 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/photo" />
-
     <android.support.design.widget.TextInputLayout
         android:id="@+id/textInputLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="24dp"
         android:textColorHint="@color/beyaz"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView7">
+        app:layout_constraintTop_toTopOf="@+id/view4">
 
         <EditText
-            android:id="@+id/kayit_edittext"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:drawableRight="@drawable/ic_person_black_24dp"
             android:ems="10"
-            android:hint="Username"
-            android:textColor="@color/beyaz"
+            android:hint="Username or Email"
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:padding="8dp"
+            android:textColor="@color/beyaz"
             android:textColorHint="@color/beyaz"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="190dp" />
@@ -73,23 +63,23 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout">
 
         <EditText
-            android:id="@+id/parola_edittext"
+            android:id="@+id/parola"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:drawableRight="@drawable/ic_lock_white_24dp"
             android:ems="10"
             android:hint="Parola"
-            android:textColor="@color/beyaz"
             android:inputType="textPassword"
             android:padding="8dp"
+            android:textColor="@color/beyaz"
             android:textColorHint="@color/beyaz"
             tools:layout_editor_absoluteY="285dp" />
 
     </android.support.design.widget.TextInputLayout>
 
     <Button
-        android:id="@+id/kayit_signup"
+        android:id="@+id/login"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -114,7 +104,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/kayit_signup" />
+        app:layout_constraintTop_toBottomOf="@+id/login" />
 
     <TextView
         android:id="@+id/textView11"
@@ -123,7 +113,7 @@
         android:fontFamily="@font/baloo"
         android:text="Parolamı unutum"
         android:textColor="@color/beyaz"
-        app:layout_constraintBottom_toTopOf="@+id/kayit_signup"
+        app:layout_constraintBottom_toTopOf="@+id/login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -159,4 +149,17 @@
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/view4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view4" />
 </android.support.constraint.ConstraintLayout>

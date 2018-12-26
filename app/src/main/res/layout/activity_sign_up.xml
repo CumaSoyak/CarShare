@@ -42,7 +42,7 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView7">
 
         <EditText
-            android:id="@+id/kayit_edittext"
+            android:id="@+id/ad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -72,7 +72,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout3">
 
         <EditText
-            android:id="@+id/kayit_edittext2"
+            android:id="@+id/soyad"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -83,6 +83,7 @@
             android:maxLines="1"
             android:padding="8dp"
             android:textColorHint="@color/beyaz"
+            android:textColor="@color/beyaz"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="154dp" />
     </android.support.design.widget.TextInputLayout>
@@ -101,16 +102,17 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4">
 
         <EditText
-            android:id="@+id/parola_edittext"
+            android:id="@+id/email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:drawableRight="@drawable/email"
             android:ems="10"
             android:hint="E mail adresi "
-            android:inputType="textPassword"
+            android:inputType="textEmailAddress"
             android:padding="8dp"
             android:textColorHint="@color/beyaz"
+            android:textColor="@color/beyaz"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="213dp" />
     </android.support.design.widget.TextInputLayout>
@@ -129,16 +131,16 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout5">
 
         <EditText
-            android:id="@+id/parola_edittext3"
+            android:id="@+id/telefon"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:drawableRight="@drawable/ic_lock_white_24dp"
             android:ems="10"
             android:hint="Telefon Numarası"
-            android:inputType="textPassword"
-            android:padding="8dp"
+             android:padding="8dp"
             android:textColorHint="@color/beyaz"
+            android:textColor="@color/beyaz"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="272dp" />
 
@@ -151,14 +153,14 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:textColorHint="@color/beyaz"
-        app:layout_constraintBottom_toTopOf="@+id/checkBox"
+        app:layout_constraintBottom_toTopOf="@+id/hatirla_beni"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout6">
 
         <EditText
-            android:id="@+id/parola_edittext2"
+            android:id="@+id/parola"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -168,13 +170,14 @@
             android:inputType="textPassword"
             android:padding="8dp"
             android:textColorHint="@color/beyaz"
+            android:textColor="@color/beyaz"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="331dp" />
     </android.support.design.widget.TextInputLayout>
 
 
     <Button
-        android:id="@+id/kayit_signup"
+        android:id="@+id/login"
         android:layout_width="344dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
@@ -185,16 +188,16 @@
         app:layout_constraintBottom_toTopOf="@+id/giris_signup"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox" />
+        app:layout_constraintTop_toBottomOf="@+id/hatirla_beni" />
 
     <CheckBox
-        android:id="@+id/checkBox"
+        android:id="@+id/hatirla_beni"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Hatırla beni "
         android:textColor="@color/beyaz"
-        app:layout_constraintBottom_toTopOf="@+id/kayit_signup"
+        app:layout_constraintBottom_toTopOf="@+id/login"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout7"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout7" />
 
@@ -209,7 +212,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/kayit_signup" />
+        app:layout_constraintTop_toBottomOf="@+id/login" />
 
     <View
         android:id="@+id/view3"
@@ -255,5 +258,19 @@
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout7"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout7"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout7" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/view7"
+        app:layout_constraintTop_toTopOf="@+id/view7" />
 
 </android.support.constraint.ConstraintLayout>

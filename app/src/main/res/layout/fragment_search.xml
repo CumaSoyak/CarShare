@@ -7,7 +7,7 @@
     tools:context=".Fragment.SearchFragment">
 
     <EditText
-        android:id="@+id/editText3"
+        android:id="@+id/nereden"
         android:layout_width="128dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText4"
+        android:id="@+id/nereye"
         android:layout_width="142dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
@@ -33,18 +33,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/editText3" />
+        app:layout_constraintTop_toTopOf="@+id/nereden" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:src="@drawable/yon"
-        app:layout_constraintBottom_toBottomOf="@+id/editText4"
-        app:layout_constraintEnd_toStartOf="@+id/editText4"
+        app:layout_constraintBottom_toBottomOf="@+id/nereye"
+        app:layout_constraintEnd_toStartOf="@+id/nereye"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/editText3"
-        app:layout_constraintTop_toTopOf="@+id/editText4" />
+        app:layout_constraintStart_toEndOf="@+id/nereden"
+        app:layout_constraintTop_toTopOf="@+id/nereye" />
 
     <LinearLayout
         android:id="@+id/yolcu_layout"
@@ -58,7 +58,7 @@
         app:layout_constraintEnd_toStartOf="@+id/sofor_layout"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText3">
+        app:layout_constraintTop_toBottomOf="@+id/nereden">
 
         <ImageView
             android:id="@+id/yolcu_resim"
