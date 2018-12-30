@@ -17,9 +17,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.android.volley.toolbox.StringRequest;
 import com.araba.cuma.araba.Adapter.IlanAdapter;
 import com.araba.cuma.araba.Api.Api;
 import com.araba.cuma.araba.Class.Ilanlar;
+import com.araba.cuma.araba.Class.Teklifler;
 import com.araba.cuma.araba.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -30,6 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -52,7 +55,14 @@ public class HomeFragment extends Fragment {
     private RecyclerView recyclerView;
     private IlanAdapter ılanAdapter;
     private ArrayList<Ilanlar> ilanlarList;
+    private Ilanlar mılanlar;
 
+    private String gelen_ad;
+    private String gelen_soyad;
+    private String gelen_telefon;
+
+    final String PREFS_NAME = "MyPrefsFile";
+    SharedPreferences settings;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,6 +74,8 @@ public class HomeFragment extends Fragment {
         databaseReference = database.getReference();
         user = firebaseAuth.getCurrentUser();
         user_id = user.getUid();
+
+        settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
 
         UUID uuıd = UUID.randomUUID();
         linearLayout_sofor = view.findViewById(R.id.sofor_cardView);
@@ -78,10 +90,10 @@ public class HomeFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(ılanAdapter);
         //get_ilanlar();
+        //ilanlarList.add(new Ilanlar("Yolcuyum","Cuma","Soyak","Niğde","Elazığ",45,"40"));
 
-
+        Firebase_get_yolcu();
         linearLayout_yolcu.performClick();
 
         linearLayout_yolcu.setOnClickListener(new View.OnClickListener() {
@@ -107,17 +119,49 @@ public class HomeFragment extends Fragment {
         });
 
         ilk();
+        bilgi_al();
         return view;
     }
 
+
     public void Firebase_get_yolcu() {
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Yolcu").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    mılanlar = ds.getValue(Ilanlar.class);
+                    ilanlarList.add(mılanlar);
+                    recyclerView.setAdapter(ılanAdapter);
 
-                //Todo kalbe veriyi toplam kalp puanı felan br şey olması lazım satın aldığı kadar veya her 24 saatte 5 tane felan
-                int gelen_kalp_deger = dataSnapshot.child("Yolcu").child("kalp").getValue(Integer.class);
-                ilanlarList.add(new Ilanlar("Cuma", "Soyak", "Niğde", "Londra", "Yolcu", 45, "56"));
+/*
+                    Log.i("Soru", ":"+mılanlar.getAd());
+                    String ad =mılanlar.getAd();
+                    String soyad =mılanlar.getAd();
+                    String nereden =mılanlar.getAd();
+                    String nereye =mılanlar.getAd();
+                    String statu =mılanlar.getAd();
+                    int puan =mılanlar.getKullanicipuan();
+                    String fiyat =mılanlar.getAd();
+                    mılanlar.setAd(ad);
+                    mılanlar.setSoyad(ad);
+                    mılanlar.setNereden(ad);
+                    mılanlar.setNereye(ad);
+                    mılanlar.setStatu(ad);
+                    mılanlar.setKullanicipuan(puan);
+                    mılanlar.setFiyat(ad);
+                    ilanlarList.add(new Ilanlar(ad,soyad,nereden,nereye,statu,puan,fiyat));*/
+
+                    /*
+                    kullanici_puan
+                    nereden
+                    nereye
+                    fiyat
+                    ad
+                    soyad
+                    statu
+                    */
+                }
+
 
             }
 
@@ -126,6 +170,8 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
+
     }
 
     public void get_ilanlar() {
@@ -155,24 +201,44 @@ public class HomeFragment extends Fragment {
     }
 
     public void ilk() {
-        final String PREFS_NAME = "MyPrefsFile";
-        SharedPreferences settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
+
         if (settings.getBoolean("my_first_time", true)) {
+
+            SharedPreferences.Editor editor = settings.edit();
 
             Intent ıntent = getActivity().getIntent();
             Bundle bundle = ıntent.getExtras();
             String ad = (String) bundle.get("ad");
             String soyad = (String) bundle.get("soyad");
             String telefon = (String) bundle.get("telefon");
-            Log.i("bilgi",":"+ad+soyad+telefon);
+
+            editor.putString("ad", ad);
+            editor.putString("soyad", soyad);
+            editor.putString("telefon", telefon);
+            editor.commit();
+
+
+            Log.i("bilgi", ":" + ad + soyad + telefon);
             databaseReference.child("User").child(user_id).child("ad").setValue(ad);
             databaseReference.child("User").child(user_id).child("soyad").setValue(soyad);
             databaseReference.child("User").child(user_id).child("telefon").setValue(telefon);
 
-
             settings.edit().putBoolean("my_first_time", false).commit();
         }
 
+    }
+
+    public void bilgi_al() {
+
+        gelen_ad = settings.getString("ad", "default");
+        gelen_soyad = settings.getString("soyad", "default");
+        gelen_telefon = settings.getString("telefon", "default");
+
+        YolcuFragment yolcuFragment = new YolcuFragment();
+        SoforFragment soforFragment = new SoforFragment();
+
+        yolcuFragment.kisi_bilgi_al(gelen_ad, gelen_soyad, gelen_telefon);
+        soforFragment.kisi_bilgi_al(gelen_ad, gelen_soyad, gelen_telefon);
     }
 
 }

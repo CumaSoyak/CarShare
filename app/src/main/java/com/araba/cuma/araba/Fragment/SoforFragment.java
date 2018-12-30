@@ -81,22 +81,22 @@ public class SoforFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (kontrol() == true) {
-                    databaseReference.child("Sofor").child(uuid_String).child("nereden").setValue(nereden_spinner.getSelectedItem().toString());
-                    databaseReference.child("Sofor").child(uuid_String).child("nereye").setValue(nereye_spinner.getSelectedItem().toString());
-                    databaseReference.child("Sofor").child(uuid_String).child("kisi").setValue(kisi_spinner.getSelectedItem().toString());
-                    databaseReference.child("Sofor").child(uuid_String).child("arac_cinsi").setValue(arac_cinsi_spinner.getSelectedItem().toString());
-                    databaseReference.child("Sofor").child(uuid_String).child("tarih").setValue(tarih_sec.getText().toString());
-                    databaseReference.child("Sofor").child(uuid_String).child("saat").setValue(saat_sec.getText().toString());
-                    databaseReference.child("Sofor").child(uuid_String).child("saat").setValue(aciklama.getText().toString());
+                    databaseReference.child("Sofor").child(user_id).child("nereden").setValue(nereden_spinner.getSelectedItem().toString());
+                    databaseReference.child("Sofor").child(user_id).child("nereye").setValue(nereye_spinner.getSelectedItem().toString());
+                    databaseReference.child("Sofor").child(user_id).child("kisi").setValue(kisi_spinner.getSelectedItem().toString());
+                    databaseReference.child("Sofor").child(user_id).child("arac_cinsi").setValue(arac_cinsi_spinner.getSelectedItem().toString());
+                    databaseReference.child("Sofor").child(user_id).child("tarih").setValue(tarih_sec.getText().toString());
+                    databaseReference.child("Sofor").child(user_id).child("saat").setValue(saat_sec.getText().toString());
+                    databaseReference.child("Sofor").child(user_id).child("saat").setValue(aciklama.getText().toString());
 
-                    databaseReference.child(uuid_String).child("nereden").setValue(nereden_spinner.getSelectedItem().toString());
-                    databaseReference.child(uuid_String).child("nereye").setValue(nereye_spinner.getSelectedItem().toString());
-                    databaseReference.child(uuid_String).child("kisi").setValue(kisi_spinner.getSelectedItem().toString());
-                    databaseReference.child(uuid_String).child("arac_cinsi").setValue(arac_cinsi_spinner.getSelectedItem().toString());
-                    databaseReference.child(uuid_String).child("tarih").setValue(tarih_sec.getText().toString());
-                    databaseReference.child(uuid_String).child("saat").setValue(saat_sec.getText().toString());
-                    databaseReference.child(uuid_String).child("saat").setValue(aciklama.getText().toString());
-                    databaseReference.child(uuid_String).child("durum").setValue("Sofor");
+                    databaseReference.child(user_id).child("nereden").setValue(nereden_spinner.getSelectedItem().toString());
+                    databaseReference.child(user_id).child("nereye").setValue(nereye_spinner.getSelectedItem().toString());
+                    databaseReference.child(user_id).child("kisi").setValue(kisi_spinner.getSelectedItem().toString());
+                    databaseReference.child(user_id).child("arac_cinsi").setValue(arac_cinsi_spinner.getSelectedItem().toString());
+                    databaseReference.child(user_id).child("tarih").setValue(tarih_sec.getText().toString());
+                    databaseReference.child(user_id).child("saat").setValue(saat_sec.getText().toString());
+                    databaseReference.child(user_id).child("saat").setValue(aciklama.getText().toString());
+                    databaseReference.child(user_id).child("durum").setValue("Sofor");
                 } else {
                     Toast.makeText(getActivity(), "kontrol et", Toast.LENGTH_LONG).show();
 
@@ -107,7 +107,9 @@ public class SoforFragment extends Fragment {
 
         return view;
     }
+    public  void  kisi_bilgi_al(String ad,String soyad,String telefon){
 
+    }
     public void kisi_arac_cinsi() {
 
         adapter_esya = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arac_cinsi_spin);

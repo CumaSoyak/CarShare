@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,6 +65,10 @@ public class YolcuFragment extends Fragment {
     private DatePickerDialog.OnDateSetListener dateSetListener;
     DatePicker datePicker;
     int birlikte = 0;
+
+    private String gelen_ad;
+    private String gelen_soyad;
+    private String gelen_telefon;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -146,9 +151,15 @@ public class YolcuFragment extends Fragment {
                 ilan_kaydet();
             }
         });
+        Log.i("denemead",":"+gelen_ad);
         return view;
     }
 
+    public  void  kisi_bilgi_al(String ad,String soyad,String telefon){
+         gelen_ad=ad;
+         gelen_soyad=soyad;
+         gelen_telefon=telefon;
+    }
     public void kisi_esya() {
 
         adapter_esya = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, esya_spin);
@@ -239,24 +250,29 @@ public class YolcuFragment extends Fragment {
 
     public void ilan_kaydet() {
         UUID uuıd = UUID.randomUUID();
-        uuid_String = uuıd.toString();
+        uuid_String = uuıd.toString(); //todo bir kişinin birden fazla ilanı olması sebebi
         if (kontrol() == true) {
-            databaseReference.child("Yolcu").child(user_id).child("nereden").setValue(nereden_spinner.getSelectedItem().toString());
-            databaseReference.child("Yolcu").child(user_id).child("nereye").setValue(nereye_spinner.getSelectedItem().toString());
-            databaseReference.child("Yolcu").child(user_id).child("kisi").setValue(kisi_spinner.getSelectedItem().toString());
-            databaseReference.child("Yolcu").child(user_id).child("esya").setValue(esya_spinner.getSelectedItem().toString());
-            databaseReference.child("Yolcu").child(user_id).child("tarih").setValue(tarih_sec.getText().toString());
-            databaseReference.child("Yolcu").child(user_id).child("saat").setValue(saat_sec.getText().toString());
-            databaseReference.child("Yolcu").child(user_id).child("saat").setValue(aciklama.getText().toString());
+            databaseReference.child("Yolcu").child(uuid_String).child("ad").setValue(this.gelen_ad);
+            databaseReference.child("Yolcu").child(uuid_String).child("soyad").setValue(this.gelen_soyad);
+            databaseReference.child("Yolcu").child(uuid_String).child("nereden").setValue(nereden_spinner.getSelectedItem().toString());
+            databaseReference.child("Yolcu").child(uuid_String).child("nereye").setValue(nereye_spinner.getSelectedItem().toString());
+            databaseReference.child("Yolcu").child(uuid_String).child("kisi").setValue(kisi_spinner.getSelectedItem().toString());
+            databaseReference.child("Yolcu").child(uuid_String).child("esya").setValue(esya_spinner.getSelectedItem().toString());
+            databaseReference.child("Yolcu").child(uuid_String).child("tarih").setValue(tarih_sec.getText().toString());
+            databaseReference.child("Yolcu").child(uuid_String).child("saat").setValue(saat_sec.getText().toString());
+            databaseReference.child("Yolcu").child(uuid_String).child("aciklama").setValue(aciklama.getText().toString());
+            databaseReference.child("Yolcu").child(uuid_String).child("kullanicipuan").setValue(4);
+            databaseReference.child("Yolcu").child(uuid_String).child("statu").setValue("Yolcu");
+            databaseReference.child("Yolcu").child(uuid_String).child("fiyat").setValue("100tl");
 
-            databaseReference.child(user_id).child("nereden").setValue(nereden_spinner.getSelectedItem().toString());
-            databaseReference.child(user_id).child("nereye").setValue(nereye_spinner.getSelectedItem().toString());
-            databaseReference.child(user_id).child("kisi").setValue(kisi_spinner.getSelectedItem().toString());
-            databaseReference.child(user_id).child("esya").setValue(esya_spinner.getSelectedItem().toString());
-            databaseReference.child(user_id).child("tarih").setValue(tarih_sec.getText().toString());
-            databaseReference.child(user_id).child("saat").setValue(saat_sec.getText().toString());
-            databaseReference.child(user_id).child("saat").setValue(aciklama.getText().toString());
-            databaseReference.child(user_id).child("durum").setValue("Yolcu");
+            databaseReference.child(uuid_String).child("nereden").setValue(nereden_spinner.getSelectedItem().toString());
+            databaseReference.child(uuid_String).child("nereye").setValue(nereye_spinner.getSelectedItem().toString());
+            databaseReference.child(uuid_String).child("kisi").setValue(kisi_spinner.getSelectedItem().toString());
+            databaseReference.child(uuid_String).child("esya").setValue(esya_spinner.getSelectedItem().toString());
+            databaseReference.child(uuid_String).child("tarih").setValue(tarih_sec.getText().toString());
+            databaseReference.child(uuid_String).child("saat").setValue(saat_sec.getText().toString());
+            databaseReference.child(uuid_String).child("aciklama").setValue(aciklama.getText().toString());
+            databaseReference.child(uuid_String).child("durum").setValue("Yolcu");
 
         } else {
             Toast.makeText(getActivity(), "kontrol et", Toast.LENGTH_LONG).show();

@@ -115,9 +115,9 @@ public class SignUpActivity extends AppCompatActivity {
                             //   Toast.makeText(getApplicationContext(), "Başarılı", Toast.LENGTH_LONG).show();
 
                             Intent ıntent = new Intent(getApplicationContext(), MainActivity.class);
-                            ıntent.putExtra("ad",email.getText().toString());
-                            ıntent.putExtra("soyad",email.getText().toString());
-                            ıntent.putExtra("telefon",email.getText().toString());
+                            ıntent.putExtra("ad",ad.getText().toString());
+                            ıntent.putExtra("soyad",soyad.getText().toString());
+                            ıntent.putExtra("telefon",telefon.getText().toString());
                              startActivity(ıntent);
 
                         }

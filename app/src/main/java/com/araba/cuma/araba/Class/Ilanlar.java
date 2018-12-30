@@ -2,18 +2,18 @@
 package com.araba.cuma.araba.Class;
 
 import com.araba.cuma.araba.R;
+import com.google.firebase.database.IgnoreExtraProperties;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
+@IgnoreExtraProperties
 public class Ilanlar {
 /*
-    kullanici_puan
-    nereden
-    nereye
-    fiyat
     ad
     soyad
-    statu
+    nereden
+    nereye
+    int kullanici puan
+    fiyat
     */
     private String ad;
     private String soyad;
@@ -31,6 +31,10 @@ public class Ilanlar {
         this.statu = statu;
         this.kullanicipuan = kullanicipuan;
         this.fiyat = fiyat;
+    }
+    public  Ilanlar()
+    {
+
     }
 
     public String getAd() {
