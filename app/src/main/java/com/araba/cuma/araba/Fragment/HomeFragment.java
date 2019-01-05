@@ -18,6 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.toolbox.StringRequest;
+import com.araba.cuma.araba.Activity.MainActivity;
+import com.araba.cuma.araba.Activity.MesajActivity;
 import com.araba.cuma.araba.Adapter.IlanAdapter;
 import com.araba.cuma.araba.Api.Api;
 import com.araba.cuma.araba.Class.Ilanlar;
@@ -63,6 +65,7 @@ public class HomeFragment extends Fragment {
 
     final String PREFS_NAME = "MyPrefsFile";
     SharedPreferences settings;
+    private int filtrele = 0;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,14 +94,15 @@ public class HomeFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         //get_ilanlar();
-        //ilanlarList.add(new Ilanlar("Yolcuyum","Cuma","Soyak","Niğde","Elazığ",45,"40"));
-
+        filtrele = 0;
         Firebase_get_yolcu();
         linearLayout_yolcu.performClick();
 
         linearLayout_yolcu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                filtrele = 1;
+                Firebase_get_yolcu();
                 linearLayout_sofor.setBackgroundResource(R.drawable.anasayfa_secenek_right_tikla);
                 sofor_resim.setImageResource(R.drawable.sofor_siyah);
                 yolcu_resim.setImageResource(R.drawable.yolcu);
@@ -109,7 +113,8 @@ public class HomeFragment extends Fragment {
         linearLayout_sofor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                filtrele = 2;
+                Firebase_get_yolcu();
                 linearLayout_yolcu.setBackgroundResource(R.drawable.anasayfa_secenek_left_tikla);
                 yolcu_resim.setImageResource(R.drawable.yolcu_siyah);
                 sofor_resim.setImageResource(R.drawable.sofor);
@@ -128,40 +133,38 @@ public class HomeFragment extends Fragment {
         databaseReference.child("Yolcu").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    mılanlar = ds.getValue(Ilanlar.class);
-                    ilanlarList.add(mılanlar);
-                    recyclerView.setAdapter(ılanAdapter);
-
-/*
-                    Log.i("Soru", ":"+mılanlar.getAd());
-                    String ad =mılanlar.getAd();
-                    String soyad =mılanlar.getAd();
-                    String nereden =mılanlar.getAd();
-                    String nereye =mılanlar.getAd();
-                    String statu =mılanlar.getAd();
-                    int puan =mılanlar.getKullanicipuan();
-                    String fiyat =mılanlar.getAd();
-                    mılanlar.setAd(ad);
-                    mılanlar.setSoyad(ad);
-                    mılanlar.setNereden(ad);
-                    mılanlar.setNereye(ad);
-                    mılanlar.setStatu(ad);
-                    mılanlar.setKullanicipuan(puan);
-                    mılanlar.setFiyat(ad);
-                    ilanlarList.add(new Ilanlar(ad,soyad,nereden,nereye,statu,puan,fiyat));*/
-
-                    /*
-                    kullanici_puan
-                    nereden
-                    nereye
-                    fiyat
-                    ad
-                    soyad
-                    statu
-                    */
+                switch (filtrele) {
+                    case 0:
+                        ilanlarList.clear();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            mılanlar = ds.getValue(Ilanlar.class);
+                            if (!mılanlar.getUserid().equals(user_id)) {
+                                ilanlarList.add(mılanlar);
+                                recyclerView.setAdapter(ılanAdapter);
+                            }
+                        }
+                        break;
+                    case 1:
+                        ilanlarList.clear();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            mılanlar = ds.getValue(Ilanlar.class);
+                            if ((!mılanlar.getUserid().equals(user_id)) && (mılanlar.getStatu().equals("Yolcu"))) {
+                                ilanlarList.add(mılanlar);
+                                recyclerView.setAdapter(ılanAdapter);
+                            }
+                        }
+                        break;
+                    case 2:
+                        ilanlarList.clear();
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                            mılanlar = ds.getValue(Ilanlar.class);
+                            if ((!mılanlar.getUserid().equals(user_id)) && (mılanlar.getStatu().equals("Şoför"))) {
+                                ilanlarList.add(mılanlar);
+                                recyclerView.setAdapter(ılanAdapter);
+                            }
+                        }
+                        break;
                 }
-
 
             }
 
@@ -171,8 +174,8 @@ public class HomeFragment extends Fragment {
             }
         });
 
-
     }
+
 
     public void get_ilanlar() {
         Retrofit retrofit = new Retrofit.Builder()
@@ -218,7 +221,6 @@ public class HomeFragment extends Fragment {
             editor.commit();
 
 
-            Log.i("bilgi", ":" + ad + soyad + telefon);
             databaseReference.child("User").child(user_id).child("ad").setValue(ad);
             databaseReference.child("User").child(user_id).child("soyad").setValue(soyad);
             databaseReference.child("User").child(user_id).child("telefon").setValue(telefon);
@@ -234,9 +236,14 @@ public class HomeFragment extends Fragment {
         gelen_soyad = settings.getString("soyad", "default");
         gelen_telefon = settings.getString("telefon", "default");
 
+        Log.i("bilgi", ":" + gelen_ad + gelen_soyad + gelen_telefon);
+
         YolcuFragment yolcuFragment = new YolcuFragment();
         SoforFragment soforFragment = new SoforFragment();
-
+        ProfileFragment profileFragment = new ProfileFragment();
+        MesajActivity mesajActivity = new MesajActivity();
+        mesajActivity.kisi_bilgi_al(gelen_ad, gelen_soyad, gelen_telefon);
+        profileFragment.kisi_bilgi_al(gelen_ad, gelen_soyad, gelen_telefon);
         yolcuFragment.kisi_bilgi_al(gelen_ad, gelen_soyad, gelen_telefon);
         soforFragment.kisi_bilgi_al(gelen_ad, gelen_soyad, gelen_telefon);
     }

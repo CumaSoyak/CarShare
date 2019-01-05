@@ -46,10 +46,10 @@ public class YolcuFragment extends Fragment {
     private TextView kisi_text, esya_text;
     private RadioGroup radioGroup;
     private RadioButton kisi, kisi_ve_esya, esya;
-    private EditText aciklama;
+    private EditText aciklama, fiyat;
     private Button tarih_sec, saat_sec, onayla;
     private ImageButton iki_tarih_arasi, iki_saat_arasi;
-
+    private String fiyatm,fiyatn,fiyatsonuc;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private FirebaseUser user;
@@ -57,18 +57,20 @@ public class YolcuFragment extends Fragment {
     private String user_id;
     private String uuid_String;
     private RadioButton radioButton;
-    private String[] kisi_spin = {"Kişi Seçiniz", "2", "3", "4", "5"};
-    private String[] esya_spin = {"Eşya Seçiniz", "Çanta", "Ev Eşyası"};
-    private String[] nereden_spin = {"Nereden", "Çanta", "Ev Eşyası"};
-    private String[] nereye_spin = {"Nereye", "Çanta", "Ev Eşyası"};
+    private String[] kisi_spin = {"Kişi Seçiniz", "1", "2", "3", "4"};
+    private String[] esya_spin = {"Eşya Seçiniz", "Valiz", "Ev Eşyası", "Kırılacak Eşya"};
+    private String[] nereden_spin = {"Nereden", "Adana", "Adıyaman", "Afyon", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin",
+            "Bitlis", "Bolu", "Denizli", "Gümüşhane", "Bayburt", "Kilis"};
+    private String[] nereye_spin = {"Nereye", "Adana", "Adıyaman", "Afyon", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin",
+            "Bitlis", "Bolu", "Denizli", "Gümüşhane", "Bayburt", "Kilis"};
     private ArrayAdapter<String> adapter_kisi, adapter_esya, adapter_nereden, adapter_nereye;
     private DatePickerDialog.OnDateSetListener dateSetListener;
     DatePicker datePicker;
     int birlikte = 0;
 
-    private String gelen_ad;
-    private String gelen_soyad;
-    private String gelen_telefon;
+    public static String gelen_ad;
+    public static String gelen_soyad;
+    public static String gelen_telefon;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -98,7 +100,11 @@ public class YolcuFragment extends Fragment {
         saat_sec = view.findViewById(R.id.saat_sec);
         iki_tarih_arasi = view.findViewById(R.id.iki_tarih_arasi);
         iki_saat_arasi = view.findViewById(R.id.iki_saat_arasi);
+        fiyat = view.findViewById(R.id.editText_fiyat);
+        fiyatm = fiyat.getText().toString();
+        fiyatsonuc=fiyatm.concat("TL");
 
+        Log.i("Kisibilgi", ":" + gelen_ad);
 
         radioGroup = view.findViewById(R.id.radioGroup);
         kisi = radioGroup.findViewById(R.id.radioButton_kisi);
@@ -148,24 +154,29 @@ public class YolcuFragment extends Fragment {
         onayla.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ilan_kaydet();
+                if (kontrol() == true) {
+                    ilan_kaydet();
+                }
+
             }
         });
-        Log.i("denemead",":"+gelen_ad);
         return view;
     }
 
-    public  void  kisi_bilgi_al(String ad,String soyad,String telefon){
-         gelen_ad=ad;
-         gelen_soyad=soyad;
-         gelen_telefon=telefon;
+    public void kisi_bilgi_al(String ad, String soyad, String telefon) {
+        gelen_ad = ad;
+        gelen_soyad = soyad;
+        gelen_telefon = telefon;
+        Log.i("denemead", ":" + ad);
+
     }
+
     public void kisi_esya() {
 
         adapter_esya = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, esya_spin);
         adapter_kisi = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, kisi_spin);
         adapter_nereden = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, nereden_spin);
-        adapter_nereye = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, nereden_spin);
+        adapter_nereye = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, nereye_spin);
 
         adapter_esya.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter_kisi.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -206,7 +217,8 @@ public class YolcuFragment extends Fragment {
 
 
     }
-    private void zaman_sec(){
+
+    private void zaman_sec() {
         saat_sec.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -217,7 +229,7 @@ public class YolcuFragment extends Fragment {
                 mTimePicker = new TimePickerDialog(getActivity(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                      saat_sec.setText( selectedHour + ":" + selectedMinute);
+                        saat_sec.setText(selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -244,40 +256,31 @@ public class YolcuFragment extends Fragment {
             return false;
         } else if (saat_sec.getText().toString().equals("Saat Seç")) {
             return false;
-        }
-        else return true;
+        } else if (fiyat.getText().toString().equals("Fiyat Seç")) {
+            return false;
+        } else return true;
     }
 
     public void ilan_kaydet() {
         UUID uuıd = UUID.randomUUID();
-        uuid_String = uuıd.toString(); //todo bir kişinin birden fazla ilanı olması sebebi
-        if (kontrol() == true) {
-            databaseReference.child("Yolcu").child(uuid_String).child("ad").setValue(this.gelen_ad);
-            databaseReference.child("Yolcu").child(uuid_String).child("soyad").setValue(this.gelen_soyad);
-            databaseReference.child("Yolcu").child(uuid_String).child("nereden").setValue(nereden_spinner.getSelectedItem().toString());
-            databaseReference.child("Yolcu").child(uuid_String).child("nereye").setValue(nereye_spinner.getSelectedItem().toString());
-            databaseReference.child("Yolcu").child(uuid_String).child("kisi").setValue(kisi_spinner.getSelectedItem().toString());
-            databaseReference.child("Yolcu").child(uuid_String).child("esya").setValue(esya_spinner.getSelectedItem().toString());
-            databaseReference.child("Yolcu").child(uuid_String).child("tarih").setValue(tarih_sec.getText().toString());
-            databaseReference.child("Yolcu").child(uuid_String).child("saat").setValue(saat_sec.getText().toString());
-            databaseReference.child("Yolcu").child(uuid_String).child("aciklama").setValue(aciklama.getText().toString());
-            databaseReference.child("Yolcu").child(uuid_String).child("kullanicipuan").setValue(4);
-            databaseReference.child("Yolcu").child(uuid_String).child("statu").setValue("Yolcu");
-            databaseReference.child("Yolcu").child(uuid_String).child("fiyat").setValue("100tl");
+        uuid_String = uuıd.toString();
 
-            databaseReference.child(uuid_String).child("nereden").setValue(nereden_spinner.getSelectedItem().toString());
-            databaseReference.child(uuid_String).child("nereye").setValue(nereye_spinner.getSelectedItem().toString());
-            databaseReference.child(uuid_String).child("kisi").setValue(kisi_spinner.getSelectedItem().toString());
-            databaseReference.child(uuid_String).child("esya").setValue(esya_spinner.getSelectedItem().toString());
-            databaseReference.child(uuid_String).child("tarih").setValue(tarih_sec.getText().toString());
-            databaseReference.child(uuid_String).child("saat").setValue(saat_sec.getText().toString());
-            databaseReference.child(uuid_String).child("aciklama").setValue(aciklama.getText().toString());
-            databaseReference.child(uuid_String).child("durum").setValue("Yolcu");
+        databaseReference.child("Yolcu").child(uuid_String).child("ad").setValue(gelen_ad);
+        databaseReference.child("Yolcu").child(uuid_String).child("soyad").setValue(gelen_soyad);
+        databaseReference.child("Yolcu").child(uuid_String).child("telefon").setValue(gelen_telefon);
+        databaseReference.child("Yolcu").child(uuid_String).child("nereden").setValue(nereden_spinner.getSelectedItem().toString());
+        databaseReference.child("Yolcu").child(uuid_String).child("nereye").setValue(nereye_spinner.getSelectedItem().toString());
+        databaseReference.child("Yolcu").child(uuid_String).child("kisi").setValue(kisi_spinner.getSelectedItem().toString());
+        databaseReference.child("Yolcu").child(uuid_String).child("esya").setValue(esya_spinner.getSelectedItem().toString());
+        databaseReference.child("Yolcu").child(uuid_String).child("tarih").setValue(tarih_sec.getText().toString());
+        databaseReference.child("Yolcu").child(uuid_String).child("saat").setValue(saat_sec.getText().toString());
+        databaseReference.child("Yolcu").child(uuid_String).child("aciklama").setValue(aciklama.getText().toString());
+        databaseReference.child("Yolcu").child(uuid_String).child("kullanicipuan").setValue(4);
+        databaseReference.child("Yolcu").child(uuid_String).child("fiyat").setValue(fiyat.getText().toString());
+        databaseReference.child("Yolcu").child(uuid_String).child("statu").setValue("Yolcu");
+        databaseReference.child("Yolcu").child(uuid_String).child("id").setValue(uuid_String);
+        databaseReference.child("Yolcu").child(uuid_String).child("userid").setValue(user_id);
 
-        } else {
-            Toast.makeText(getActivity(), "kontrol et", Toast.LENGTH_LONG).show();
-
-        }
 
         //databaseReference.child("Yolcu").child(uuid_String).child("nereye").setValue(nereye.getText().toString());
 

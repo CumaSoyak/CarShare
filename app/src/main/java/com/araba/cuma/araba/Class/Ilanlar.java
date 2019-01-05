@@ -7,14 +7,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 @IgnoreExtraProperties
 public class Ilanlar {
-/*
-    ad
-    soyad
-    nereden
-    nereye
-    int kullanici puan
-    fiyat
-    */
+
+
+    private String id;
     private String ad;
     private String soyad;
     private String nereden;
@@ -22,8 +17,9 @@ public class Ilanlar {
     private String statu;
     private int kullanicipuan;
     private String fiyat;
+    private String userid;
 
-    public Ilanlar(String ad, String soyad, String nereden, String nereye, String statu, int kullanicipuan, String fiyat) {
+    public Ilanlar(String ad, String soyad, String nereden, String nereye, String statu, int kullanicipuan, String fiyat ,String id,String userid) {
         this.ad = ad;
         this.soyad = soyad;
         this.nereden = nereden;
@@ -31,10 +27,29 @@ public class Ilanlar {
         this.statu = statu;
         this.kullanicipuan = kullanicipuan;
         this.fiyat = fiyat;
+        this.id=id;
+        this.userid=userid;
+
     }
     public  Ilanlar()
     {
 
+    }
+
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getAd() {

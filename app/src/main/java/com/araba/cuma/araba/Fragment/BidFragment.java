@@ -2,6 +2,7 @@ package com.araba.cuma.araba.Fragment;
 
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +13,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.araba.cuma.araba.Adapter.IlanAdapter;
 import com.araba.cuma.araba.Adapter.TeklifAdapter;
+import com.araba.cuma.araba.Class.Ilanlar;
 import com.araba.cuma.araba.Class.Teklifler;
 import com.araba.cuma.araba.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,37 +33,54 @@ import java.util.List;
 public class BidFragment extends Fragment {
 
     private TeklifAdapter teklifAdapter;
+    private Teklifler mteklifler;
     private RecyclerView recyclerView;
     private ArrayList<Teklifler> tekliflerList;
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private FirebaseUser user;
+    private FirebaseAuth firebaseAuth;
+    private String user_id;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bid, container, false);
+        firebaseAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference();
+        user = firebaseAuth.getCurrentUser();
+        user_id = user.getUid();
 
-        recyclerView=view.findViewById(R.id.teklif_recylerview);
-        tekliflerList=new ArrayList<Teklifler>();
-        teklifAdapter=new TeklifAdapter(tekliflerList);
-        RecyclerView.LayoutManager layoutManager=new LinearLayoutManager(getActivity());
+        recyclerView = view.findViewById(R.id.teklif_recylerview);
+        tekliflerList = new ArrayList<Teklifler>();
+        teklifAdapter = new TeklifAdapter(tekliflerList);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(teklifAdapter);
-
-        tekliflerList.add(new Teklifler("Yolcuyum","Cuma","Soyak","Niğde","Elazığ",45,4));
-        tekliflerList.add(new Teklifler("Yolcuyum","Cuma","Soyak","Niğde","Elazığ",45,4));
-        tekliflerList.add(new Teklifler("Yolcuyum","Cuma","Soyak","Niğde","Elazığ",45,4));
-        tekliflerList.add(new Teklifler("Yolcuyum","Cuma","Soyak","Niğde","Elazığ",45,4));
-        tekliflerList.add(new Teklifler("Yolcuyum","Cuma","Soyak","Niğde","Elazığ",45,4));
-        tekliflerList.add(new Teklifler("Yolcuyum","Cuma","Soyak","Niğde","Elazığ",45,4));
-        tekliflerList.add(new Teklifler("Yolcuyum","Cuma","Soyak","Niğde","Elazığ",45,4));
-        tekliflerList.add(new Teklifler("Yolcuyum","Cuma","Soyak","Niğde","Elazığ",45,4));
-
-
-
+        Firebase_get_yolcu();
 
         return view;
     }
 
+    public void Firebase_get_yolcu() {
+        databaseReference.child("Teklif").child(user_id).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    mteklifler = ds.getValue(Teklifler.class);
+                    tekliflerList.add(mteklifler);
+                    recyclerView.setAdapter(teklifAdapter);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
 }

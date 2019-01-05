@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:overScrollMode="never"
     tools:context=".Fragment.SoforFragment">
 <android.support.constraint.ConstraintLayout
     android:layout_width="match_parent"
@@ -14,8 +15,7 @@
         android:id="@+id/tarih_sec"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/tarih_sec"
         android:fontFamily="@font/baloo"
@@ -24,7 +24,7 @@
         app:layout_constraintBottom_toTopOf="@+id/saat_sec"
         app:layout_constraintEnd_toStartOf="@+id/iki_tarih_arasi"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/kisi_image2"
         app:layout_constraintTop_toBottomOf="@+id/kisi_image2" />
 
     <ImageButton
@@ -32,11 +32,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
         android:background="?android:selectableItemBackground"
         android:src="@mipmap/iki_tarih"
         app:layout_constraintBottom_toBottomOf="@+id/saat_sec"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/iki_tarih_arasi"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/saat_sec"
         app:layout_constraintTop_toTopOf="@+id/saat_sec" />
@@ -57,11 +56,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
         android:background="?android:selectableItemBackground"
         android:src="@mipmap/iki_tarih"
         app:layout_constraintBottom_toBottomOf="@+id/tarih_sec"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/kisi_spinner"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/tarih_sec"
         app:layout_constraintTop_toTopOf="@+id/tarih_sec" />
@@ -80,7 +78,6 @@
         android:id="@+id/saat_sec"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:background="@drawable/tarih_sec"
@@ -90,28 +87,28 @@
         app:layout_constraintBottom_toTopOf="@+id/aciklama"
         app:layout_constraintEnd_toStartOf="@+id/iki_saat_arasi"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/tarih_sec"
         app:layout_constraintTop_toBottomOf="@+id/tarih_sec" />
 
     <ImageView
         android:id="@+id/kisi_image2"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:src="@drawable/yolcu_siyah"
         app:layout_constraintBottom_toTopOf="@+id/tarih_sec"
         app:layout_constraintEnd_toStartOf="@+id/kisi_text2"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/plaka"
         app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
     <TextView
         android:id="@+id/kisi_text2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Kaç Kişi Götürebilirsin"
+        android:layout_marginStart="16dp"
+        android:text="Kaç Kişi Götürebilrsin"
         app:layout_constraintBottom_toBottomOf="@+id/kisi_image2"
         app:layout_constraintEnd_toStartOf="@+id/kisi_spinner"
         app:layout_constraintHorizontal_bias="0.5"
@@ -123,7 +120,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/kisi_text2"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/plaka"
         app:layout_constraintStart_toEndOf="@+id/kisi_text2"
         app:layout_constraintTop_toTopOf="@+id/kisi_text2" />
 
@@ -132,7 +129,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
         android:gravity="center"
@@ -163,7 +160,9 @@
         android:id="@+id/imageView"
         android:layout_width="25dp"
         android:layout_height="25dp"
-        android:src="@drawable/yon"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:src="@drawable/ic_direction"
         app:layout_constraintBottom_toBottomOf="@+id/nereden"
         app:layout_constraintEnd_toStartOf="@+id/nereye"
         app:layout_constraintHorizontal_bias="0.5"
@@ -198,7 +197,7 @@
         app:layout_constraintBottom_toTopOf="@+id/kisi_image2"
         app:layout_constraintEnd_toEndOf="@+id/kisi_image2"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/kisi_image2"
+        app:layout_constraintStart_toStartOf="@+id/plaka"
         app:layout_constraintTop_toBottomOf="@+id/plaka" />
 
     <TextView
@@ -220,7 +219,7 @@
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
-        app:layout_constraintEnd_toEndOf="@+id/kisi_spinner"
+        app:layout_constraintEnd_toEndOf="@+id/plaka"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/kisi_spinner"
         app:layout_constraintTop_toTopOf="@+id/textView5" />
@@ -228,19 +227,18 @@
     <EditText
         android:id="@+id/aciklama"
         android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="32dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
+        android:background="@color/beyaz"
         android:ems="10"
-        android:hint="Açıklama ekle..."
+        android:hint="Açıklama ekle(isteğe bağlı)"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/onayla"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/fiyat_sofor"
+        app:layout_constraintEnd_toEndOf="@+id/iki_saat_arasi"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/saat_sec"
         app:layout_constraintTop_toBottomOf="@+id/saat_sec" />
 
     <Button
@@ -258,6 +256,22 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fiyat_sofor" />
+
+    <EditText
+        android:id="@+id/fiyat_sofor"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/cerceve"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Fiyat ?"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/onayla"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/aciklama" />
 

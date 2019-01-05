@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -33,10 +32,10 @@ public class TeklifAdapter extends RecyclerView.Adapter<TeklifAdapter.MyviewHold
     @Override
     public void onBindViewHolder(@NonNull MyviewHolder myviewHolder, int i) {
 
-        myviewHolder.kullanici_puan.setRating(tekliflerList.get(i).getPuan());
+        //myviewHolder.kullanici_puan.setRating(tekliflerList.get(i).getPuan());
         myviewHolder.ad.setText(tekliflerList.get(i).getAd());
         myviewHolder.soyad.setText(tekliflerList.get(i).getSoyad());
-        myviewHolder.fiyat.setText(Integer.toString((int) tekliflerList.get(i).getFiyat()));
+        myviewHolder.teklif.setText(tekliflerList.get(i).getTeklif());
         myviewHolder.nereden.setText(tekliflerList.get(i).getNereden());
         myviewHolder.nereye.setText(tekliflerList.get(i).getNereye());
         myviewHolder.statu.setText(tekliflerList.get(i).getStatu());
@@ -49,17 +48,18 @@ public class TeklifAdapter extends RecyclerView.Adapter<TeklifAdapter.MyviewHold
     }
 
     public class MyviewHolder extends RecyclerView.ViewHolder {
-        public TextView  nereden, nereye, fiyat, ad, soyad,statu;
-        public RatingBar kullanici_puan ;
+        public TextView nereden, nereye, fiyat, ad, soyad, statu,teklif;
+        public RatingBar kullanici_puan;
+
         public MyviewHolder(@NonNull View itemView) {
             super(itemView);
             kullanici_puan = itemView.findViewById(R.id.kullanici_puan);
             nereden = itemView.findViewById(R.id.nereden);
             nereye = itemView.findViewById(R.id.nereye);
-            fiyat = itemView.findViewById(R.id.fiyat);
             ad = itemView.findViewById(R.id.ad);
             soyad = itemView.findViewById(R.id.soyad);
             statu = itemView.findViewById(R.id.statu);
+            teklif = itemView.findViewById(R.id.teklif);
         }
     }
 }

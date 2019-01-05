@@ -1,19 +1,24 @@
 package com.araba.cuma.araba.Class;
 
-public class Teklifler {
-    private String statu, ad,soyad,nereden,nereye;
-    private int fiyat,puan;
+import com.google.firebase.database.IgnoreExtraProperties;
 
-    public Teklifler(String statu, String ad, String soyad, String nereden, String nereye, int fiyat, int puan) {
+@IgnoreExtraProperties
+public class Teklifler {
+    private String statu, ad,soyad,nereden,nereye, teklif;
+    private int kullanicipuan;
+
+    public Teklifler(String statu, String ad, String soyad, String nereden, String nereye, String teklif, int kullanicipuan) {
         this.statu = statu;
         this.ad = ad;
         this.soyad = soyad;
         this.nereden = nereden;
         this.nereye = nereye;
-        this.fiyat = fiyat;
-        this.puan = puan;
+        this.teklif = teklif;
+        this.kullanicipuan = kullanicipuan;
     }
+    public Teklifler(){
 
+    }
     public String getStatu() {
         return statu;
     }
@@ -54,19 +59,19 @@ public class Teklifler {
         this.nereye = nereye;
     }
 
-    public int getFiyat() {
-        return fiyat;
+    public String getTeklif() {
+        return teklif;
     }
 
-    public void setFiyat(int fiyat) {
-        this.fiyat = fiyat;
+    public void setTeklif(String teklif) {
+        this.teklif = teklif;
     }
 
-    public int getPuan() {
-        return puan;
+    public int getKullanicipuan() {
+        return kullanicipuan;
     }
 
-    public void setPuan(int puan) {
-        this.puan = puan;
+    public void setKullanicipuan(int kullanicipuan) {
+        this.kullanicipuan = kullanicipuan;
     }
 }
