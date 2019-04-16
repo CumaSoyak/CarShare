@@ -7,64 +7,98 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.HomeFragment">
 
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </include>
+
 
     <LinearLayout
-        android:id="@+id/yolcu_cardView"
+        android:id="@+id/linearLayout7"
         android:layout_width="0dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="2dp"
-        android:background="@drawable/anasayfa_secenek_left"
-        app:layout_constraintEnd_toStartOf="@+id/sofor_cardView"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/yolcu_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/yolcu" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/sofor_cardView"
-        android:layout_width="0dp"
-        android:layout_height="65dp"
-        android:layout_marginStart="2dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:background="@drawable/anasayfa_secenek_right"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/yolcu_cardView"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/sofor_imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:scaleType="centerInside"
-            android:src="@drawable/sofor" />
-    </LinearLayout>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/home_recylerview"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:overScrollMode="never"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/yolcu_cardView"
+            android:layout_width="175dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/anasayfa_secenek_left">
+
+            <ImageView
+                android:id="@+id/yolcu_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_traveler_white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/sofor_cardView"
+            android:layout_width="175dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/anasayfa_secenek_right">
+
+            <ImageView
+                android:id="@+id/sofor_imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_car_white" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yolcu_cardView" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout7">
+
+        <TextView
+            android:id="@+id/info_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="200dp"
+            android:fontFamily="@font/baloo"
+            android:text="Arama sonucu bulunamadı"
+            tools:layout_editor_absoluteX="129dp"
+            tools:layout_editor_absoluteY="258dp" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/home_recylerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="10dp"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toBottomOf="@+id/info_home"
+            app:layout_constraintEnd_toEndOf="@+id/info_home" />
+    </FrameLayout>
+
 </android.support.constraint.ConstraintLayout>

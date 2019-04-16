@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".Fragment.BidFragment">
 
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/teklif_recylerview"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:overScrollMode="never"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/color_beyaz"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 </android.support.constraint.ConstraintLayout>

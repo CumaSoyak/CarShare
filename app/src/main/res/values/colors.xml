@@ -6,12 +6,26 @@
     <color name="beyaz">#ffff</color>
     <color name="yesil">#3CB371</color>
     <color name="red">#ff074f</color>
-    <color name="mavi">#2bb6fc</color>
+    <color name="mavi">#2bb6fc</color> <!--Buraya or yakıştı-->
+    <color name="acik_mavi">#6956F7</color>
+    <color name="mor">#7714a1</color>
+    <color name="renk">#6956F7</color>
+    <color name="gri">#f3fffc</color>
+    <color name="text_color">#787883</color>
+    <color name="acik_gri">#D3D3D3</color>
+    <color name="cok_acik_gri">#ededed</color>
+
+    <color name="color_one">#84EDED</color>
+    <color name="color_two">#BBFAF0</color>
+    <color name="color_beyaz">#F3FFFC</color>
+    <color name="color_four">#5EB5D7</color>
+    <color name="color_five">#4365B3</color>
+    <color name="color_six">#00bddd</color>
+
     <color name="kahverengi">#6f6f6f</color>
     <color name="siyah">#080000</color>
     <!-- Screens background color-->
-    <color name="mor">#7966FF</color>
-    <color name="bg_screen2">#20d2bb</color>
+     <color name="bg_screen2">#20d2bb</color>
     <color name="bg_screen3">#3395ff</color>
     <color name="bg_screen4">#c873f4</color>
 

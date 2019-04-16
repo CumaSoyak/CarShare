@@ -10,13 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.Toast;
 
-import com.araba.cuma.araba.Adapter.IlanAdapter;
-import com.araba.cuma.araba.Adapter.TeklifAdapter;
-import com.araba.cuma.araba.Class.Ilanlar;
-import com.araba.cuma.araba.Class.Teklifler;
+import com.araba.cuma.araba.Adapter.BidAdapter;
+import com.araba.cuma.araba.Class.Bid;
 import com.araba.cuma.araba.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -27,15 +24,14 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class BidFragment extends Fragment {
 
-    private TeklifAdapter teklifAdapter;
-    private Teklifler mteklifler;
+    private BidAdapter bidAdapter;
+    private Bid mteklifler;
     private RecyclerView recyclerView;
-    private ArrayList<Teklifler> tekliflerList;
+    private ArrayList<Bid> bidList;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private FirebaseUser user;
@@ -54,8 +50,8 @@ public class BidFragment extends Fragment {
         user_id = user.getUid();
 
         recyclerView = view.findViewById(R.id.teklif_recylerview);
-        tekliflerList = new ArrayList<Teklifler>();
-        teklifAdapter = new TeklifAdapter(tekliflerList);
+        bidList = new ArrayList<Bid>();
+        bidAdapter = new BidAdapter(bidList,getActivity());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -70,9 +66,16 @@ public class BidFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    mteklifler = ds.getValue(Teklifler.class);
-                    tekliflerList.add(mteklifler);
-                    recyclerView.setAdapter(teklifAdapter);
+                    mteklifler = ds.getValue(Bid.class);
+                    if (mteklifler.getNereden().matches(""))
+                    {
+                        Toast.makeText(getActivity(), "Alınan teklif bulunmamaktadır !", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        bidList.add(mteklifler);
+                        recyclerView.setAdapter(bidAdapter);
+                    }
+
                 }
             }
 
