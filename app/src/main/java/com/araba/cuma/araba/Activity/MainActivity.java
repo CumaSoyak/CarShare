@@ -1,6 +1,5 @@
 package com.araba.cuma.araba.Activity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -12,7 +11,7 @@ import android.view.View;
 
 import com.araba.cuma.araba.Fragment.BidFragment;
 import com.araba.cuma.araba.Fragment.HomeFragment;
-import com.araba.cuma.araba.Fragment.IlanFragment;
+import com.araba.cuma.araba.Fragment.AdvertFragment;
 import com.araba.cuma.araba.Fragment.ProfileFragment;
 import com.araba.cuma.araba.Fragment.SearchFragment;
 import com.araba.cuma.araba.R;
@@ -33,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, new IlanFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, new AdvertFragment()).commit();
 
             }
         });
@@ -55,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.navigation_ilanver:
 
-                    break;
                 case R.id.navigation_teklifler:
                     selectedFragment = new BidFragment();
                     break;

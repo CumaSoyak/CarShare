@@ -8,13 +8,7 @@
     android:layout_height="match_parent"
     tools:context=".Activity.MainActivity">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-    </include>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
@@ -35,15 +29,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="24dp"
+        android:backgroundTint="@color/mavi"
         android:clickable="true"
         app:elevation="9dp"
         app:fabSize="normal"
-        android:backgroundTint="@color/mavi"
-        app:layout_constraintBottom_toTopOf="@+id/navigation"
+        app:layout_constraintBottom_toBottomOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/navigation"
         app:srcCompat="@mipmap/ilanver" />
 
     <FrameLayout
@@ -53,20 +46,9 @@
         app:layout_constraintBottom_toTopOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include">
+        app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
-
-    <ImageView
-        android:id="@+id/imageView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="50dp"
-        app:layout_constraintEnd_toEndOf="@+id/include"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/email"
-        tools:ignore="VectorDrawableCompat" />
 
 
 </android.support.constraint.ConstraintLayout>

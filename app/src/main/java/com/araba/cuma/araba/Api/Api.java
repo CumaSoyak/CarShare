@@ -1,6 +1,6 @@
 package com.araba.cuma.araba.Api;
 
-import com.araba.cuma.araba.Class.Ilanlar;
+import com.araba.cuma.araba.Class.Advert;
 import com.araba.cuma.araba.Class.Users;
 
 import java.util.List;
@@ -30,6 +30,6 @@ public interface Api {
 
 
     @GET("read.php")
-    Call<List<Ilanlar>> getIlanlar();
+    Call<List<Advert>> getIlanlar();
 }
 

@@ -12,8 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.araba.cuma.araba.Api.Api;
-import com.araba.cuma.araba.Class.Users;
 import com.araba.cuma.araba.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -23,14 +21,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginActivity extends AppCompatActivity {
     TextView kayit_buton;
@@ -50,46 +40,42 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        initView();
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
         user = firebaseAuth.getCurrentUser();
 
-
-
-        email = findViewById(R.id.email);
-        parola = findViewById(R.id.parola);
-        progressBar = findViewById(R.id.progressBar);
-
-        login = findViewById(R.id.login);
-        kayit_buton = findViewById(R.id.kayit_buton);
-
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (checkEditTexts() == true) {
-                    //  getir_user();
+                if (checkEditTexts()) {
                     giris();
-
                 } else {
-                    Toast.makeText(getBaseContext(), "Girişleri kontrol et", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "Girişleri chechkEmpty et", Toast.LENGTH_LONG).show();
                 }
             }
         });
 
-
         kayit_buton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent ıntent = new Intent(LoginActivity.this, SignUpActivity.class);
+                Intent ıntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(ıntent);
             }
         });
 
 
     }
+    private void initView() {
+        email = findViewById(R.id.email);
+        parola = findViewById(R.id.parola);
+        progressBar = findViewById(R.id.progressBar);
+        login = findViewById(R.id.login);
+        kayit_buton = findViewById(R.id.kayit_buton);
+        progressBar.setVisibility(View.GONE);
 
+    }
     public void giris() {
         progressBar.setVisibility(View.VISIBLE);
         firebaseAuth.signInWithEmailAndPassword(email.getText().toString(), parola.getText().toString())
@@ -109,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("Login", "Error" + e.getLocalizedMessage());
-                Toast.makeText(getApplicationContext(),e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
                 progressBar.setVisibility(View.GONE);
 
             }
@@ -117,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public boolean checkEditTexts() {
-        if (email.getText().toString().matches("") || parola.getText().toString().matches("")) {
+        if (email.getText().toString().isEmpty() || parola.getText().toString().isEmpty()) {
             if (email.length() == 0)
                 email.setError("Email boş geçilemez");
 
@@ -158,7 +144,7 @@ public class LoginActivity extends AppCompatActivity {
                     String e_mail = m.getEmail();
                     String password_ = m.getParola();
                     if (!e_mail.matches("") && !password_.matches("") && e_mail != null && password_ != null) {
-                        if (e_mail.equals(email.getText().toString()) && password_.equals(parola.getText().toString())) {
+                        if (e_mail.equals(email.getText().toString()) && password_.equals(password.getText().toString())) {
                             entry = true;
                             break;
                         }
@@ -169,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
                     startActivity(i);
                 } else {
                     email.setError("Check E mail");
-                    parola.setError("Check Password");
+                    password.setError("Check Password");
                 }
             }
 

@@ -9,13 +9,13 @@ public class Data {
 
     @SerializedName("data")
     @Expose
-    private List<Ilanlar> data = null;
+    private List<Advert> data = null;
 
-    public List<Ilanlar> getData() {
+    public List<Advert> getData() {
         return data;
     }
 
-    public void setData(List<Ilanlar> data) {
+    public void setData(List<Advert> data) {
         this.data = data;
     }
 

@@ -1,152 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.ProfileFragment"
-    android:layout_marginBottom="20dp">
+    android:layout_marginBottom="20dp"
+    android:orientation="vertical"
+    tools:context=".Fragment.ProfileFragment">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp">
+
+        <ImageView
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/word"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imageView2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:elevation="10dp"
+            android:src="@drawable/dddd"
+            app:civ_border_color="@color/color_six"
+            app:civ_border_width="4dp" />
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                style="@style/LinerLayoutStyle"
+                android:layout_height="@dimen/profileLayoutHeght">
+
+                <TextView
+                    style="@style/ProfileTextViewStyle"
+                    android:layout_width="match_parent"
+                    android:text="Bilgi" />
+
+            </LinearLayout>
+
+            <include layout="@layout/view_bottom" />
+
+            <RelativeLayout
+                style="@style/RelativeLayoutStyle"
+                android:layout_height="@dimen/profileLayoutHeght">
+
+                <TextView
+                    android:id="@+id/nametext"
+                    style="@style/ProfileTextViewStyle"
+                    android:layout_alignParentLeft="true"
+                    android:text="Adı Soyadı" />
+
+                <TextView
+                    style="@style/ProfileTextViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/nametext"
+                    android:text="Cuma Soyak" />
+            </RelativeLayout>
+
+            <include layout="@layout/view_bottom" />
+
+            <RelativeLayout
+                style="@style/RelativeLayoutStyle"
+                android:layout_height="@dimen/profileLayoutHeght">
+
+                <TextView
+                    android:id="@+id/emailtext"
+                    style="@style/ProfileTextViewStyle"
+                    android:layout_alignParentLeft="true"
+                    android:text="Email" />
+
+                <TextView
+                    style="@style/ProfileTextViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/emailtext"
+                    android:text="cumasoyak51@gmail.com" />
+            </RelativeLayout>
+
+            <include layout="@layout/view_bottom" />
+            <RelativeLayout
+                style="@style/RelativeLayoutStyle"
+                android:layout_height="@dimen/profileLayoutHeght">
 
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/tarih_sec"
-        app:layout_constraintBottom_toTopOf="@+id/textView9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:id="@+id/phonetext"
+                    style="@style/ProfileTextViewStyle"
+                    android:layout_alignParentLeft="true"
+                    android:text="Telefon" />
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="197dp"
-        android:layout_height="146dp"
-        android:src="@drawable/sofor"
-        app:layout_constraintBottom_toBottomOf="@+id/view"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/view" />
+                <TextView
+                    style="@style/ProfileTextViewStyle"
+                    android:layout_width="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_toRightOf="@id/phonetext"
+                    android:text="05386399039" />
+            </RelativeLayout>
+            <include layout="@layout/view_bottom" />
+            <RelativeLayout
+                style="@style/RelativeLayoutStyle">
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Ad"
-        android:fontFamily="@font/baloo"
-        app:layout_constraintBottom_toTopOf="@+id/textView10"
-        app:layout_constraintEnd_toStartOf="@+id/ad"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
-
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Soyad"
-        android:fontFamily="@font/baloo"
-        app:layout_constraintBottom_toTopOf="@+id/textView14"
-        app:layout_constraintStart_toStartOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
-
-    <TextView
-        android:id="@+id/textView14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Email"
-        android:fontFamily="@font/baloo"
-        app:layout_constraintBottom_toTopOf="@+id/textView15"
-        app:layout_constraintStart_toStartOf="@+id/textView10"
-        app:layout_constraintTop_toBottomOf="@+id/textView10" />
-
-    <TextView
-        android:id="@+id/textView15"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Telefon"
-        android:fontFamily="@font/baloo"
-        app:layout_constraintBottom_toTopOf="@+id/textView20"
-        app:layout_constraintStart_toStartOf="@+id/textView14"
-        app:layout_constraintTop_toBottomOf="@+id/textView14" />
-
-    <TextView
-        android:id="@+id/ad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/textView9"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView9"
-        app:layout_constraintTop_toTopOf="@+id/textView9" />
-
-    <TextView
-        android:id="@+id/soyad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/textView10"
-        app:layout_constraintStart_toStartOf="@+id/ad"
-        app:layout_constraintTop_toTopOf="@+id/textView10" />
-
-    <TextView
-        android:id="@+id/email"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/textView14"
-        app:layout_constraintStart_toStartOf="@+id/soyad"
-        app:layout_constraintTop_toTopOf="@+id/textView14" />
-
-    <TextView
-        android:id="@+id/telefon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="@+id/textView15"
-        app:layout_constraintStart_toStartOf="@+id/email"
-        app:layout_constraintTop_toTopOf="@+id/textView15" />
-
-    <TextView
-        android:id="@+id/textView20"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
-        android:fontFamily="@font/baloo"
-        android:textColor="@color/siyah"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/view10" />
-
-    <View
-        android:id="@+id/view10"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/cerceve"
-        app:layout_constraintBottom_toBottomOf="@+id/textView20"
-        app:layout_constraintEnd_toEndOf="@+id/view"
-        app:layout_constraintStart_toStartOf="@+id/view"
-        app:layout_constraintTop_toBottomOf="@+id/view" />
+                <Button
+                    android:id="@+id/sign_out"
+                    android:layout_width="wrap_content"
+                    android:layout_height="100dp"
+                    android:text="Button" />
+            </RelativeLayout>
 
 
-</android.support.constraint.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>

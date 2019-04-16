@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<View xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/view4"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="@color/cok_acik_gri"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:layout_marginStart="@dimen/linarStart"
+    android:layout_marginEnd="@dimen/linarEnd">
+
+</View>

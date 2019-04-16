@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1062804105272",
+    "firebase_url": "https://araba-81ffd.firebaseio.com",
+    "project_id": "araba-81ffd",
+    "storage_bucket": "araba-81ffd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1062804105272:android:6fd2d047afdfb888",
+        "android_client_info": {
+          "package_name": "com.araba.cuma.araba"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1062804105272-7h2tv5o4l7iukd3h5pgsbtlnt5nfor6a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.araba.cuma.araba",
+            "certificate_hash": "fd55533db0a243f17cbe77f7fd44a2279b6df6f6"
+          }
+        },
+        {
+          "client_id": "1062804105272-iebqsc9dote6gg8vcuii2f28luespshe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2VIVIIxJNUUpXmO4nMx2b-FGJ73pa6YY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1062804105272-iebqsc9dote6gg8vcuii2f28luespshe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
