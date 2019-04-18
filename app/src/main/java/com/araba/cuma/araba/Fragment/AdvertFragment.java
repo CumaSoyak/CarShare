@@ -451,7 +451,7 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
         advert.setTime(selectTime.getText().toString());
         advert.setDescription(description.getText().toString());
         advert.setPrice(price.getText().toString());
-        firebaseFirestore.collection("ilan").document().set(advert).addOnSuccessListener(new OnSuccessListener<Void>() {
+        newAdvert.set(advert).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Toast.makeText(getActivity(), "Paylaşılmıştır", Toast.LENGTH_SHORT).show();
@@ -459,6 +459,7 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
 
             }
         });

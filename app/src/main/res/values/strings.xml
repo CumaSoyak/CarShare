@@ -1,51 +1,51 @@
 <resources>
-    <string nameSurname="app_name">Araba</string>
-    <string nameSurname="title_home">Home</string>
-    <string nameSurname="title_dashboard">Dashboard</string>
-    <string nameSurname="title_notifications">Notifications</string>
+    <string name="app_name">Araba</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string nameSurname="hello_blank_fragment">Hello blank fragment</string>
-    <string nameSurname="sayfa1">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sayfa1">Hello blank fragment</string>
 
 
-    <string nameSurname="person_traveler_default_spin">Kaç kişisiniz</string>
-    <string-array nameSurname="person_traveler_default_spin_array">
-        <item nameSurname="person_traveler_default_spin">Kaç kişisiniz</item>
-        <item nameSurname="person_traveler_default_spin_1">1 kişiyiz</item>
-        <item nameSurname="person_traveler_default_spin_2">2 kişiyiz</item>
-        <item nameSurname="person_traveler_default_spin_3">3 kişiyiz</item>
+    <string name="person_traveler_default_spin">Kaç kişisiniz</string>
+    <string-array name="person_traveler_default_spin_array">
+        <item name="person_traveler_default_spin">Kaç kişisiniz</item>
+        <item name="person_traveler_default_spin_1">1 kişiyiz</item>
+        <item name="person_traveler_default_spin_2">2 kişiyiz</item>
+        <item name="person_traveler_default_spin_3">3 kişiyiz</item>
     </string-array>
-    <string nameSurname="person_driver_default_spin">Kaç kişi götürebilirsin</string>
-    <string-array nameSurname="person_driver_default_spin_array">
-        <item nameSurname="person_driver_default_spin">Kaç kişi götürebilirsin</item>
-        <item nameSurname="person_driver_default_spin_1">1 kişi götürebilirim</item>
-        <item nameSurname="person_driver_default_spin_2">2 kişi götürebilirim</item>
-        <item nameSurname="person_driver_default_spin_3">3 kişi götürebilirim</item>
-    </string-array>
-
-
-    <string nameSurname="material_default_spin">Eşya seçiniz</string>
-    <string-array nameSurname="material_default_spin_array">
-        <item nameSurname="material_default_spin">Eşya seçiniz</item>
-        <item nameSurname="material_default_spin_ev">Ev eşyası</item>
-        <item nameSurname="material_default_spin_mutfak">Mutfak eşyası</item>
-        <item nameSurname="material_default_spin_beyaz">Beyaz eşya</item>
-    </string-array>
-
-    <string nameSurname="car_model_default_spin">Araç seçiniz</string>
-    <string-array nameSurname="car_model_default_spin_array">
-        <item nameSurname="car_model_spin">Araç seçiniz</item>
-        <item nameSurname="car_model_spin_ticari">Otomobil</item>
-        <item nameSurname="car_model_spin_binek">Taksi</item>
-        <item nameSurname="car_model_spin_tır">Kamyon</item>
+    <string name="person_driver_default_spin">Kaç kişi götürebilirsin</string>
+    <string-array name="person_driver_default_spin_array">
+        <item name="person_driver_default_spin">Kaç kişi götürebilirsin</item>
+        <item name="person_driver_default_spin_1">1 kişi götürebilirim</item>
+        <item name="person_driver_default_spin_2">2 kişi götürebilirim</item>
+        <item name="person_driver_default_spin_3">3 kişi götürebilirim</item>
     </string-array>
 
 
-    <string nameSurname="select_date">Tarih seç</string>
-    <string nameSurname="select_time">Saat seç</string>
+    <string name="material_default_spin">Eşya seçiniz</string>
+    <string-array name="material_default_spin_array">
+        <item name="material_default_spin">Eşya seçiniz</item>
+        <item name="material_default_spin_ev">Ev eşyası</item>
+        <item name="material_default_spin_mutfak">Mutfak eşyası</item>
+        <item name="material_default_spin_beyaz">Beyaz eşya</item>
+    </string-array>
 
-    <string-array nameSurname="citys">
+    <string name="car_model_default_spin">Araç seçiniz</string>
+    <string-array name="car_model_default_spin_array">
+        <item name="car_model_spin">Araç seçiniz</item>
+        <item name="car_model_spin_ticari">Otomobil</item>
+        <item name="car_model_spin_binek">Taksi</item>
+        <item name="car_model_spin_tır">Kamyon</item>
+    </string-array>
+
+
+    <string name ="select_date">Tarih seç</string>
+    <string name ="select_time">Saat seç</string>
+
+    <string-array name ="citys">
         <item>Adana</item>
         <item>Adıyaman</item>
         <item>Afyon</item>

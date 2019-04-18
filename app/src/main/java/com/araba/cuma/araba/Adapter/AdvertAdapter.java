@@ -44,7 +44,6 @@ public class AdvertAdapter extends RecyclerView.Adapter<AdvertAdapter.MyviewHold
     public void onBindViewHolder(@NonNull MyviewHolder myviewHolder, final int i) {
         //todo user ımage çekilecek
         myviewHolder.nameAdvert.setText(advertList.get(i).getNameSurname());
-        myviewHolder.surnameAdvert.setText(advertList.get(i).getSurname());
         myviewHolder.fromAdvert.setText(advertList.get(i).getFromCity());
         myviewHolder.toAdvert.setText(advertList.get(i).getToCity());
         myviewHolder.statuAdvert.setText(advertList.get(i).getNameSurname());
@@ -65,8 +64,6 @@ public class AdvertAdapter extends RecyclerView.Adapter<AdvertAdapter.MyviewHold
         myviewHolder.bidButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
 
 
             }

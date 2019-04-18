@@ -2,8 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.araba.cuma.araba">
 
-    <uses-permission android:nameSurname="android.permission.INTERNET" />
-
+    <uses-permission android:name="android.permission.INTERNET" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -12,18 +11,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:nameSurname=".Activity.RegisterActivity"
+            android:name=".Activity.RegisterActivity"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:nameSurname="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:nameSurname="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:nameSurname=".Activity.MainActivity" />
-        <activity android:nameSurname=".Activity.WelcomeActivity" />
-        <activity android:nameSurname=".Activity.LoginActivity" />
-        <activity android:nameSurname=".Activity.MesajActivity" />
+        <activity android:name=".Activity.MainActivity" />
+        <activity android:name=".Activity.WelcomeActivity" />
+        <activity android:name=".Activity.LoginActivity" />
+        <activity android:name=".Activity.MesajActivity" />
     </application>
 
 </manifest>
