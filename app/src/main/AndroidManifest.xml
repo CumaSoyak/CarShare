@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.araba.cuma.araba">
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:nameSurname="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,20 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.LocationActivity"></activity>
         <activity
-            android:name=".Activity.RegisterActivity"
+            android:nameSurname=".Activity.RegisterActivity"
             android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:nameSurname="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:nameSurname="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.MainActivity" />
-        <activity android:name=".Activity.WelcomeActivity" />
-        <activity android:name=".Activity.LoginActivity" />
-        <activity android:name=".Activity.MesajActivity" />
+        <activity android:nameSurname=".Activity.MainActivity" />
+        <activity android:nameSurname=".Activity.WelcomeActivity" />
+        <activity android:nameSurname=".Activity.LoginActivity" />
+        <activity android:nameSurname=".Activity.MesajActivity" />
     </application>
 
 </manifest>

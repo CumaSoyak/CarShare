@@ -15,12 +15,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.araba.cuma.araba.Adapter.AdvertAdapter;
 import com.araba.cuma.araba.Class.Advert;
 import com.araba.cuma.araba.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -28,6 +33,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -36,11 +46,12 @@ import static com.araba.cuma.araba.Fragment.LocationFragment.SEARCH_FROM_CITY;
 import static com.araba.cuma.araba.Fragment.LocationFragment.SEARCH_TO_CITY;
 
 public class SearchFragment extends Fragment implements View.OnClickListener {
-    private LinearLayout layout_yolcu, layout_sofor;
+    private RelativeLayout layout_yolcu, layout_sofor;
     private TextView yolcu_tex, sofor_text, info;
 
     private Button fromCity;
     private Button toCity;
+    private View toggleTraveler, toggleDriver;
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
@@ -54,6 +65,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     private View view;
     private String cityInfoFrom = null, cityInfoTo = null;
     private SharedPreferences preferences;
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
 
     @Override
 
@@ -74,40 +87,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
-
         info.setVisibility(View.GONE);
-        layout_yolcu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (kontrol()) {
-                    Firebase_get_yolcu();
-                    layout_sofor.setBackgroundResource(R.drawable.anasayfa_secenek_right_tikla);
-                    layout_yolcu.setBackgroundResource(R.drawable.anasayfa_secenek_left);
-                    yolcu_tex.setTextColor(ContextCompat.getColor(getActivity(), R.color.beyaz));
-                    sofor_text.setTextColor(ContextCompat.getColor(getActivity(), R.color.mavi));
 
-                } else {
-                    Toast.makeText(getActivity(), "Alanları boş geçmeyiniz", Toast.LENGTH_LONG).show();
-                }
-
-            }
-        });
-        layout_sofor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (kontrol()) {
-                    Firebase_get_sofor();
-                    layout_yolcu.setBackgroundResource(R.drawable.anasayfa_secenek_left_tikla);
-                    layout_sofor.setBackgroundResource(R.drawable.anasayfa_secenek_right);
-                    yolcu_tex.setTextColor(ContextCompat.getColor(getActivity(), R.color.mavi));
-                    sofor_text.setTextColor(ContextCompat.getColor(getActivity(), R.color.beyaz));
-                } else {
-                    Toast.makeText(getActivity(), "Alanları boş geçmeyiniz", Toast.LENGTH_LONG).show();
-                }
-
-
-            }
-        });
+        initLayoutChoose();
 
 
         if (!preferences.getString(SEARCH_FROM_CITY, "0").equals("0")) {
@@ -122,6 +104,11 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
 
 
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -168,10 +155,81 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         toCity.setOnClickListener(this);
         info = view.findViewById(R.id.info);
         recyclerView = view.findViewById(R.id.search_recylerview);
-        layout_yolcu = view.findViewById(R.id.yolcu_layout);
-        layout_sofor = view.findViewById(R.id.sofor_layout);
+        layout_yolcu = view.findViewById(R.id.traveler_layout);
+        layout_sofor = view.findViewById(R.id.driver_layout);
         yolcu_tex = view.findViewById(R.id.yolcu_text);
         sofor_text = view.findViewById(R.id.sofor_text);
+        toggleTraveler = view.findViewById(R.id.toggle_traveler);
+        toggleDriver = view.findViewById(R.id.toggle_driver);
+        toggleTraveler.setVisibility(View.GONE);
+        toggleDriver.setVisibility(View.GONE);
+    }
+
+    private void getSearch() {
+        db.collection("ilan").whereEqualTo("aaaa", "price")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                mılanlar = document.toObject(Advert.class);
+                                advertList.add(mılanlar);
+                                recyclerView.setAdapter(advertAdapter);
+                                advertAdapter.notifyDataSetChanged();
+                                Toast.makeText(getActivity(), "ok", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), (CharSequence) task.getException(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+
+    private void initLayoutChoose() {
+        layout_yolcu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (kontrol()) {
+                    getSearch();
+                    layout_sofor.setBackgroundResource(R.drawable.anasayfa_secenek_right_tikla);
+                    layout_yolcu.setBackgroundResource(R.drawable.anasayfa_secenek_left);
+                    yolcu_tex.setTextColor(ContextCompat.getColor(getActivity(), R.color.beyaz));
+                    sofor_text.setTextColor(ContextCompat.getColor(getActivity(), R.color.mavi));
+                    toggleTraveler.setVisibility(View.VISIBLE);
+                    toggleDriver.setVisibility(View.GONE);
+
+                } else {
+                    Toast.makeText(getActivity(), "Alanları boş geçmeyiniz", Toast.LENGTH_LONG).show();
+                }
+
+            }
+        });
+        layout_sofor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (kontrol()) {
+                    getSearch();
+                    layout_yolcu.setBackgroundResource(R.drawable.anasayfa_secenek_left_tikla);
+                    layout_sofor.setBackgroundResource(R.drawable.anasayfa_secenek_right);
+                    yolcu_tex.setTextColor(ContextCompat.getColor(getActivity(), R.color.mavi));
+                    sofor_text.setTextColor(ContextCompat.getColor(getActivity(), R.color.beyaz));
+                    toggleTraveler.setVisibility(View.GONE);
+                    toggleDriver.setVisibility(View.VISIBLE);
+                } else {
+                    Toast.makeText(getActivity(), "Alanları boş geçmeyiniz", Toast.LENGTH_LONG).show();
+                }
+
+
+            }
+        });
     }
 
     public boolean kontrol() {
@@ -181,14 +239,14 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             return false;
         } else return true;
     }
-
+/*
     public void Firebase_get_yolcu() {
         advertList.clear();
         databaseReference.child("Yolcu").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    mılanlar = ds.getValue(Advert.class);
+
                     if ((mılanlar.getNereden().equals(fromCity.getText().toString())) &&
                             (mılanlar.getNereye().equals(toCity.getText().toString())) &&
                             mılanlar.getStatu().equals("Yolcu")) {
@@ -210,33 +268,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             }
         });
 
-    }
-
-    public void Firebase_get_sofor() {
-        advertList.clear();
-        databaseReference.child("Yolcu").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    mılanlar = ds.getValue(Advert.class);
-                    if ((mılanlar.getNereden().equals(fromCity.getText().toString())) &&
-                            (mılanlar.getNereye().equals(toCity.getText().toString())) &&
-                            mılanlar.getStatu().equals("Şoför")) {
-                        info.setVisibility(View.GONE);
-                        advertList.add(mılanlar);
-                        recyclerView.setAdapter(advertAdapter);
-                    } else {
-                        info.setVisibility(View.VISIBLE);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
-
-    }
+    } */
 
 
 }

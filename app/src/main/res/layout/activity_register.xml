@@ -20,15 +20,9 @@
             app:civ_border_width="2dp" />
 
         <EditText
-            android:id="@+id/ad"
+            android:id="@+id/adSoyad"
             style="@style/RegisterEditTextStyle"
-            android:hint="Ad" />
-
-        <EditText
-            android:id="@+id/soyad"
-            style="@style/RegisterEditTextStyle"
-            android:hint="Soyad" />
-
+            android:hint="Ad Soyad" />
         <EditText
             android:id="@+id/email"
             style="@style/RegisterEditTextStyle"

@@ -24,10 +24,8 @@ public class LocationFragment extends Fragment implements LocationAdapter.OnItem
 
     public static final String SEARCH_FROM_CITY = "SEARCH_FROM_CITY";
     public static final String SEARCH_TO_CITY = "SEARCH_TO_CITY";
-    public static final String TRAVELER_FROM_CITY="TRAVELER_FROM_CITY";
-    public static final String TRAVELER_TO_CITY="TRAVELER_TO_CITY";
-    public static final String DRIVER_FROM_CITY="TRAVELER_FROM_CITY";
-    public static final String DRIVER_TO_CITY="TRAVELER_TO_CITY";
+    public static final String ADVERT_FROM_CITY="ADVERT_FROM_CITY";
+    public static final String ADVERT_TO_CITY="ADVERT_TO_CITY";
     public static final String CITY = "CITY";
     private String cityValue;
 
@@ -96,14 +94,14 @@ public class LocationFragment extends Fragment implements LocationAdapter.OnItem
 
     private void fillLocationList() {
         locationList = new ArrayList<>();
-        locationList.add(new Location(R.drawable.ic_access_time_black_24dp, "1", "on"));
-        locationList.add(new Location(R.drawable.ic_access_time_black_24dp, "2", "yırmı"));
-        locationList.add(new Location(R.drawable.ic_access_time_black_24dp, "3", "otuz"));
-        locationList.add(new Location(R.drawable.ic_access_time_black_24dp, "4", "kırk"));
-        locationList.add(new Location(R.drawable.ic_access_time_black_24dp, "5", "elli"));
-        locationList.add(new Location(R.drawable.ic_access_time_black_24dp, "6", "altmış"));
-        locationList.add(new Location(R.drawable.ic_access_time_black_24dp, "7", "yetmiş"));
-        locationList.add(new Location(R.drawable.ic_access_time_black_24dp, "8", "seksen"));
+        locationList.add(new Location(R.drawable.ic_galata_tower, "Niğde", "bor"));
+        locationList.add(new Location(R.drawable.ic_galata_tower, "Adana", "seyhan"));
+        locationList.add(new Location(R.drawable.ic_galata_tower, "Ankara", "keçiören"));
+        locationList.add(new Location(R.drawable.ic_galata_tower, "Kayseri", "yeşilhisar"));
+        locationList.add(new Location(R.drawable.ic_galata_tower, "İstanbul", "avcılar"));
+        locationList.add(new Location(R.drawable.ic_galata_tower, "Elazığ", "palu"));
+        locationList.add(new Location(R.drawable.ic_galata_tower, "Malatya", "pütürge"));
+        locationList.add(new Location(R.drawable.ic_galata_tower, "Nevşehir", "ürgüp"));
 
 
     }
@@ -127,14 +125,11 @@ public class LocationFragment extends Fragment implements LocationAdapter.OnItem
         {
             selectedFragment = new SearchFragment();
         }
-        if (getArguments().getString(CITY).contains("TRAVELER"))
+        if (getArguments().getString(CITY).contains("ADVERT"))
         {
-            selectedFragment = new TravelerFragment();
+            selectedFragment = new AdvertFragment();
         }
-        if (getArguments().getString(CITY).contains("SEARCH"))
-        {
-            selectedFragment = new DriverFragment();
-        }
+
         Bundle args = new Bundle();
         String cityInfo = position.getArea() + "/" + position.getCity();
         searchEditText.setText(cityInfo);
@@ -142,9 +137,13 @@ public class LocationFragment extends Fragment implements LocationAdapter.OnItem
             args.putString(SEARCH_FROM_CITY, cityInfo);
         }
         else if (cityValue.equals(SEARCH_TO_CITY)) {
-
             args.putString(SEARCH_TO_CITY, cityInfo);
-
+        }
+        else if (cityValue.equals(ADVERT_FROM_CITY)){
+            args.putString(ADVERT_FROM_CITY,cityInfo);
+        }
+        else if (cityValue.equals(ADVERT_TO_CITY)){
+            args.putString(ADVERT_TO_CITY,cityInfo);
         }
         selectedFragment.setArguments(args);
         getFragmentManager().beginTransaction().replace(R.id.main_framelayout, selectedFragment).commit();

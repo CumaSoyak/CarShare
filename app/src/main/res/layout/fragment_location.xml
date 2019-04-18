@@ -11,11 +11,15 @@
         android:orientation="vertical">
         <EditText
             android:id="@+id/location_edittext"
+            android:background="@drawable/custom_advert_edit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Search"
+            android:layout_height="50dp"
+            android:hint="Search City,Area"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/linearTop"
             android:layout_marginStart="@dimen/linarStart"
-            android:layout_marginEnd="@dimen/linarStart"/>
+            android:layout_marginEnd="@dimen/linarStart"
+            android:layout_marginBottom="@dimen/linearBottom"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/location_recyclerview"
             android:layout_width="match_parent"

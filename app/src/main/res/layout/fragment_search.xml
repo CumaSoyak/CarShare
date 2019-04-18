@@ -48,40 +48,50 @@
     </RelativeLayout>
 
     <android.support.constraint.ConstraintLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         tools:ignore="MissingConstraints">
 
-        <LinearLayout
-            android:id="@+id/yolcu_layout"
+        <RelativeLayout
+            android:id="@+id/traveler_layout"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginEnd="2dp"
             android:background="@drawable/anasayfa_secenek_left"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/sofor_layout"
+            app:layout_constraintEnd_toStartOf="@+id/driver_layout"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
+            <View
+                android:id="@+id/toggle_traveler"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/radius"
+                android:background="@drawable/button_toggle_white" />
+
             <TextView
                 android:id="@+id/yolcu_text"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:layout_weight="1"
                 android:fontFamily="@font/baloo"
                 android:gravity="center"
                 android:text="Yolcu ara"
                 android:textColor="@color/beyaz" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
-        <LinearLayout
-            android:id="@+id/sofor_layout"
+        <RelativeLayout
+            android:id="@+id/driver_layout"
             android:layout_width="0dp"
             android:layout_height="50dp"
             android:layout_marginStart="2dp"
@@ -90,20 +100,31 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/yolcu_layout"
+            app:layout_constraintStart_toEndOf="@+id/traveler_layout"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/sofor_text"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center"
-                android:layout_weight="1"
                 android:fontFamily="@font/baloo"
                 android:gravity="center"
                 android:text="Şoför ara"
                 android:textColor="@color/beyaz" />
-        </LinearLayout>
+
+            <View
+                android:id="@+id/toggle_driver"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/radius"
+                android:background="@drawable/button_toggle_white" />
+        </RelativeLayout>
     </android.support.constraint.ConstraintLayout>
 
     <FrameLayout
@@ -130,7 +151,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/yolcu_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/traveler_layout" />
 
     </FrameLayout>
 

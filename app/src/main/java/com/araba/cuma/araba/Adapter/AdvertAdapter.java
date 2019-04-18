@@ -43,20 +43,20 @@ public class AdvertAdapter extends RecyclerView.Adapter<AdvertAdapter.MyviewHold
     @Override
     public void onBindViewHolder(@NonNull MyviewHolder myviewHolder, final int i) {
         //todo user ımage çekilecek
-        myviewHolder.nameAdvert.setText(advertList.get(i).getAd());
-        myviewHolder.surnameAdvert.setText(advertList.get(i).getSoyad());
-        myviewHolder.fromAdvert.setText(advertList.get(i).getNereden());
-        myviewHolder.toAdvert.setText(advertList.get(i).getNereye());
-        myviewHolder.statuAdvert.setText(advertList.get(i).getStatu());
+        myviewHolder.nameAdvert.setText(advertList.get(i).getNameSurname());
+        myviewHolder.surnameAdvert.setText(advertList.get(i).getSurname());
+        myviewHolder.fromAdvert.setText(advertList.get(i).getFromCity());
+        myviewHolder.toAdvert.setText(advertList.get(i).getToCity());
+        myviewHolder.statuAdvert.setText(advertList.get(i).getNameSurname());
         myviewHolder.cardViewAdvert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, MesajActivity.class);
-                intent.putExtra("ilan_id", String.valueOf(advertList.get(i).getId()));
-                intent.putExtra("user_id", String.valueOf(advertList.get(i).getUserid()));
-                intent.putExtra("nereden", String.valueOf(advertList.get(i).getNereden()));
-                intent.putExtra("nereye", String.valueOf(advertList.get(i).getNereye()));
-                intent.putExtra("statu", String.valueOf(advertList.get(i).getStatu()));
+                intent.putExtra("ilan_id", String.valueOf(advertList.get(i).getAdvertId()));
+                intent.putExtra("user_id", String.valueOf(advertList.get(i).getUserId()));
+                intent.putExtra("nereden", String.valueOf(advertList.get(i).getFromCity()));
+                intent.putExtra("nereye", String.valueOf(advertList.get(i).getToCity()));
+                intent.putExtra("statu", String.valueOf(advertList.get(i).getNameSurname()));
                 context.startActivity(intent);
 
 
@@ -66,13 +66,7 @@ public class AdvertAdapter extends RecyclerView.Adapter<AdvertAdapter.MyviewHold
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(context, MesajActivity.class);
-                intent.putExtra("ilan_id", String.valueOf(advertList.get(i).getId()));
-                intent.putExtra("user_id", String.valueOf(advertList.get(i).getUserid()));
-                intent.putExtra("nereden", String.valueOf(advertList.get(i).getNereden()));
-                intent.putExtra("nereye", String.valueOf(advertList.get(i).getNereye()));
-                intent.putExtra("statu", String.valueOf(advertList.get(i).getStatu()));
-                context.startActivity(intent);
+
 
 
             }
