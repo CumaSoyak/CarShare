@@ -1,67 +1,67 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name ="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/mavi</item>
-        <item name="colorAccent">@color/mavi</item>
+        <item name ="colorPrimary">@color/colorPrimary</item>
+        <item name ="colorPrimaryDark">@color/mavi</item>
+        <item name ="colorAccent">@color/mavi</item>
     </style>
 
-    <style name="RegistretionTextStyle">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:textColor">@color/text_color</item>
-        <item name="android:textSize">@dimen/registerText</item>
-        <item name="android:gravity">center</item>
+    <style name ="RegistretionTextStyle">
+        <item name ="android:layout_height">wrap_content</item>
+        <item name ="android:layout_width">match_parent</item>
+        <item name ="android:textColor">@color/text_color</item>
+        <item name ="android:textSize">@dimen/registerText</item>
+        <item name ="android:gravity">center</item>
     </style>
 
-    <style name="RegisterEditTextStyle">
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginStart">@dimen/editTextMarginStart</item>
-        <item name="android:layout_marginEnd">@dimen/editTextMarginEnd</item>
-        <item name="android:layout_marginTop">@dimen/editTextMarginTop</item>
-        <item name="android:layout_marginBottom">@dimen/editTextMarginBottom</item>
-        <item name="android:background">@drawable/edit_text_background</item>
-        <item name="android:gravity">center</item>
-        <item name="android:textColor">@color/text_color</item>
-        <item name="android:textColorHint">@color/text_color</item>
+    <style name ="RegisterEditTextStyle">
+        <item name ="android:layout_height">wrap_content</item>
+        <item name ="android:layout_width">match_parent</item>
+        <item name ="android:layout_marginStart">@dimen/editTextMarginStart</item>
+        <item name ="android:layout_marginEnd">@dimen/editTextMarginEnd</item>
+        <item name ="android:layout_marginTop">@dimen/editTextMarginTop</item>
+        <item name ="android:layout_marginBottom">@dimen/editTextMarginBottom</item>
+        <item name ="android:background">@drawable/edit_text_background</item>
+        <item name ="android:gravity">center</item>
+        <item name ="android:textColor">@color/text_color</item>
+        <item name ="android:textColorHint">@color/text_color</item>
     </style>
 
-    <style name="LinerLayoutStyle">
-        <item name="android:layout_height">50dp</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:gravity">center</item>
-        <item name="android:orientation">horizontal</item>
-        <item name="android:layout_marginTop">@dimen/linearTop</item>
-        <item name="android:layout_marginBottom">@dimen/linearBottom</item>
-        <item name="android:layout_marginStart">@dimen/linarStart</item>
-        <item name="android:layout_marginEnd">@dimen/linarEnd</item>
+    <style name ="LinerLayoutStyle">
+        <item name ="android:layout_height">50dp</item>
+        <item name ="android:layout_width">match_parent</item>
+        <item name ="android:gravity">center</item>
+        <item name ="android:orientation">horizontal</item>
+        <item name ="android:layout_marginTop">@dimen/linearTop</item>
+        <item name ="android:layout_marginBottom">@dimen/linearBottom</item>
+        <item name ="android:layout_marginStart">@dimen/linarStart</item>
+        <item name ="android:layout_marginEnd">@dimen/linarEnd</item>
     </style>
 
-    <style name="RelativeLayoutStyle">
-        <item name="android:layout_height">50dp</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_marginStart">@dimen/linarStart</item>
-        <item name="android:layout_marginEnd">@dimen/linarEnd</item>
-        <item name="android:layout_marginTop">@dimen/linearTop</item>
-        <item name="android:layout_marginBottom">@dimen/linearBottom</item>
-        <item name="android:gravity">center</item>
+    <style name ="RelativeLayoutStyle">
+        <item name ="android:layout_height">50dp</item>
+        <item name ="android:layout_width">match_parent</item>
+        <item name ="android:layout_marginStart">@dimen/linarStart</item>
+        <item name ="android:layout_marginEnd">@dimen/linarEnd</item>
+        <item name ="android:layout_marginTop">@dimen/linearTop</item>
+        <item name ="android:layout_marginBottom">@dimen/linearBottom</item>
+        <item name ="android:gravity">center</item>
     </style>
 
-    <style name="AdvertCustomStyle">
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/custom_advert_edit</item>
-        <item name="android:layout_margin">@dimen/editMargin</item>
+    <style name ="AdvertCustomStyle">
+        <item name ="android:layout_height">match_parent</item>
+        <item name ="android:gravity">center</item>
+        <item name ="android:background">@drawable/custom_advert_edit</item>
+        <item name ="android:layout_margin">@dimen/editMargin</item>
     </style>
 
-    <style name="ProfileTextViewStyle">
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_width">@dimen/ProfileTextViewWidth</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:layout_marginStart">@dimen/linarStart</item>
+    <style name ="ProfileTextViewStyle">
+        <item name ="android:layout_height">match_parent</item>
+        <item name ="android:layout_width">@dimen/ProfileTextViewWidth</item>
+        <item name ="android:gravity">center_vertical</item>
+        <item name ="android:layout_marginStart">@dimen/linarStart</item>
     </style>
 
 </resources>

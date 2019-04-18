@@ -98,7 +98,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Firebase_get_yolcu(1);
+
                 linearLayout_sofor.setBackgroundResource(R.drawable.anasayfa_secenek_right_tikla);
                 sofor_resim.setImageResource(R.drawable.ic_car_blue);
                 yolcu_resim.setImageResource(R.drawable.ic_traveler_white);
@@ -110,7 +110,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                Firebase_get_yolcu(2);
+
                 linearLayout_yolcu.setBackgroundResource(R.drawable.anasayfa_secenek_left_tikla);
                 yolcu_resim.setImageResource(R.drawable.ic_traveler_blue);
                 sofor_resim.setImageResource(R.drawable.ic_car_white);
@@ -124,7 +124,7 @@ public class HomeFragment extends Fragment {
     }
 
 
-    public void Firebase_get_yolcu(final int deger) {
+  /*  public void Firebase_get_yolcu(final int deger) {
         advertList.clear();
         databaseReference.child("Yolcu").addValueEventListener(new ValueEventListener() {
             @Override
@@ -169,7 +169,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-    }
+    }*/
 
     public void bilgi(int i) {
         switch (i) {

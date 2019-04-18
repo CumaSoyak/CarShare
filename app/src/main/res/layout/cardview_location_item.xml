@@ -4,20 +4,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginStart="@dimen/linarStart"
+    android:layout_marginEnd="@dimen/linarEnd"
     android:layout_marginBottom="4dp"
     app:cardCornerRadius="4dp"
     android:id="@+id/city_cardview">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="4dp">
+        android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/image_view"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:padding="2dp" />
+            android:padding="2dp"
+            android:src="@drawable/ic_location"/>
 
         <TextView
             android:id="@+id/text_view1"

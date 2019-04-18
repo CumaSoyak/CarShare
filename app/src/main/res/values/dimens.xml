@@ -1,19 +1,19 @@
 <resources>
     <!-- Default screen margins, per the Android Design guidelines. -->
-    <dimen name="activity_horizontal_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="registerText">16dp</dimen>
-    <dimen name="editTextMarginStart">30dp</dimen>
-    <dimen name="editTextMarginEnd">30dp</dimen>
-    <dimen name="editTextMarginTop">4dp</dimen>
-    <dimen name="editTextMarginBottom">4dp</dimen>
-    <dimen name="editTextHeight">40dp</dimen>
-    <dimen name="linearTop">10dp</dimen>
-    <dimen name="linearBottom">10dp</dimen>
-    <dimen name="linarStart">10dp</dimen>
-    <dimen name="linarEnd">10dp</dimen>
-    <dimen name="editMargin">0dp</dimen>
-    <dimen name="radius">5dp</dimen>
-    <dimen name="ProfileTextViewWidth">150dp</dimen>
-    <dimen name="profileLayoutHeght">25dp</dimen>
+    <dimen name ="activity_horizontal_margin">16dp</dimen>
+    <dimen name ="activity_vertical_margin">16dp</dimen>
+    <dimen name ="registerText">16dp</dimen>
+    <dimen name ="editTextMarginStart">30dp</dimen>
+    <dimen name ="editTextMarginEnd">30dp</dimen>
+    <dimen name ="editTextMarginTop">4dp</dimen>
+    <dimen name ="editTextMarginBottom">4dp</dimen>
+    <dimen name ="editTextHeight">40dp</dimen>
+    <dimen name ="linearTop">10dp</dimen>
+    <dimen name ="linearBottom">10dp</dimen>
+    <dimen name ="linarStart">10dp</dimen>
+    <dimen name ="linarEnd">10dp</dimen>
+    <dimen name ="editMargin">0dp</dimen>
+    <dimen name ="radius">5dp</dimen>
+    <dimen name ="ProfileTextViewWidth">150dp</dimen>
+    <dimen name ="profileLayoutHeght">25dp</dimen>
  </resources>

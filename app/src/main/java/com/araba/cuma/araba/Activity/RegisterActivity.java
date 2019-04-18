@@ -44,7 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
     private final int PICK_IMAGE_REQUEST = 71;
     Button registerButton;
     TextView loginTextview;
-    EditText name, surname, email, phone, password;
+    EditText name,email, phone, password;
     CheckBox rememberMe;
     ProgressBar progressBar;
     CircleImageView profileImage;
@@ -100,8 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void initView() {
-        name = findViewById(R.id.ad);
-        surname = findViewById(R.id.soyad);
+        name = findViewById(R.id.adSoyad);
         email = findViewById(R.id.email);
         phone = findViewById(R.id.telefon);
         password = findViewById(R.id.parola);
@@ -149,9 +148,6 @@ public class RegisterActivity extends AppCompatActivity {
         if (name.getText().toString().isEmpty()) {
             return false;
         }
-        if (surname.getText().toString().isEmpty()) {
-            return false;
-        }
         if (email.getText().toString().isEmpty()) {
             return false;
         }
@@ -196,10 +192,10 @@ public class RegisterActivity extends AppCompatActivity {
                             user = firebaseAuth.getCurrentUser();
                             String userId = user.getUid();
                             firebaseFirestore = FirebaseFirestore.getInstance();
+
                             DocumentReference newUser = firebaseFirestore.collection("users").document();
                             Users users = new Users();
                             users.setName(name.getText().toString());
-                            users.setSurname(surname.getText().toString());
                             users.setPhone(phone.getText().toString());
                             users.setUserId(userId);
                             newUser.set(users).addOnCompleteListener(new OnCompleteListener<Void>() {

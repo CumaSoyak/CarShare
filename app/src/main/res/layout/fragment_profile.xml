@@ -8,19 +8,20 @@
     android:orientation="vertical"
     tools:context=".Fragment.ProfileFragment">
 
-    <FrameLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp">
+        android:layout_height="200dp">
 
         <ImageView
             android:id="@+id/view"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="match_parent"
             android:background="@drawable/word"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/imageView2"
@@ -30,90 +31,142 @@
             android:elevation="10dp"
             android:src="@drawable/dddd"
             app:civ_border_color="@color/color_six"
-            app:civ_border_width="4dp" />
-    </FrameLayout>
+            app:civ_border_width="4dp"
+            app:layout_constraintBottom_toTopOf="@+id/button2"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintStart_toStartOf="@+id/view"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingConstraints" />
+
+        <ImageView
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/ic_edit_profile"
+            app:layout_constraintBottom_toBottomOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            tools:ignore="MissingConstraints" />
+    </android.support.constraint.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/linearTop">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
-                style="@style/LinerLayoutStyle"
-                android:layout_height="@dimen/profileLayoutHeght">
+                style="@style/RelativeLayoutStyle"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_location" />
 
                 <TextView
                     style="@style/ProfileTextViewStyle"
-                    android:layout_width="match_parent"
-                    android:text="Bilgi" />
-
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="Bilgilerim" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_profile_direction" />
             </LinearLayout>
-
-            <include layout="@layout/view_bottom" />
-
-            <RelativeLayout
+            <include layout="@layout/view_bottom"/>
+            <LinearLayout
                 style="@style/RelativeLayoutStyle"
-                android:layout_height="@dimen/profileLayoutHeght">
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_location" />
 
                 <TextView
-                    android:id="@+id/nametext"
                     style="@style/ProfileTextViewStyle"
-                    android:layout_alignParentLeft="true"
-                    android:text="Adı Soyadı" />
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="Yolculuklarım" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_profile_direction" />
+            </LinearLayout>
+            <include layout="@layout/view_bottom"/>
+            <LinearLayout
+                style="@style/RelativeLayoutStyle"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_location" />
 
                 <TextView
                     style="@style/ProfileTextViewStyle"
-                    android:layout_width="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@id/nametext"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="Reklam Anlaşması" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_profile_direction" />
+            </LinearLayout>
+            <include layout="@layout/view_bottom"/>
+            <LinearLayout
+                style="@style/RelativeLayoutStyle"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_location" />
+
+                <TextView
+                    style="@style/ProfileTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
                     android:text="Cuma Soyak" />
-            </RelativeLayout>
-
-            <include layout="@layout/view_bottom" />
-
-            <RelativeLayout
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_profile_direction" />
+            </LinearLayout>
+            <include layout="@layout/view_bottom"/>
+            <LinearLayout
                 style="@style/RelativeLayoutStyle"
-                android:layout_height="@dimen/profileLayoutHeght">
+                android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/emailtext"
-                    style="@style/ProfileTextViewStyle"
-                    android:layout_alignParentLeft="true"
-                    android:text="Email" />
-
-                <TextView
-                    style="@style/ProfileTextViewStyle"
-                    android:layout_width="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@id/emailtext"
-                    android:text="cumasoyak51@gmail.com" />
-            </RelativeLayout>
-
-            <include layout="@layout/view_bottom" />
-            <RelativeLayout
-                style="@style/RelativeLayoutStyle"
-                android:layout_height="@dimen/profileLayoutHeght">
-
-
-                <TextView
-                    android:id="@+id/phonetext"
-                    style="@style/ProfileTextViewStyle"
-                    android:layout_alignParentLeft="true"
-                    android:text="Telefon" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_location" />
 
                 <TextView
                     style="@style/ProfileTextViewStyle"
-                    android:layout_width="match_parent"
-                    android:layout_alignParentRight="true"
-                    android:layout_toRightOf="@id/phonetext"
-                    android:text="05386399039" />
-            </RelativeLayout>
-            <include layout="@layout/view_bottom" />
-            <RelativeLayout
-                style="@style/RelativeLayoutStyle">
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="Cuma Soyak" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_profile_direction" />
+            </LinearLayout>
+            <include layout="@layout/view_bottom"/>
+
+            <RelativeLayout style="@style/RelativeLayoutStyle">
 
                 <Button
                     android:id="@+id/sign_out"

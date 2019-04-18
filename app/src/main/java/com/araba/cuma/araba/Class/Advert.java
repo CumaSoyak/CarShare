@@ -1,130 +1,157 @@
 
 package com.araba.cuma.araba.Class;
 
-import com.araba.cuma.araba.R;
 import com.google.firebase.database.IgnoreExtraProperties;
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+
 @IgnoreExtraProperties
 public class Advert {
 
+    private String advertId;
+    private String userId;
+    private String nameSurname;
 
-    private String id;
-    private String ad;
-    private String soyad;
-    private String nereden;
-    private String nereye;
-    private String statu;
-    private int kullanicipuan;
-    private String fiyat;
-    private String userid;
-    private String arac_cinsi;
-    private String plaka;
+    private String fromCity;
+    private String toCity;
+    private String material;
+    private String travelerPerson;
+    private String carModel;
+    private String driverPerson;
+    private String plate;
+    private String date;
+    private String time;
+    private String description;
+    private String price;
 
-    public Advert(String arac_cinsi, String plaka, String ad, String soyad, String nereden, String nereye, String statu, int kullanicipuan, String fiyat , String id, String userid) {
-        this.ad = ad;
-        this.soyad = soyad;
-        this.nereden = nereden;
-        this.nereye = nereye;
-        this.statu = statu;
-        this.kullanicipuan = kullanicipuan;
-        this.fiyat = fiyat;
-        this.id=id;
-        this.userid=userid;
-        this.arac_cinsi=arac_cinsi;
-        this.plaka=plaka;
+    public Advert(){
 
     }
-    public Advert()
-    {
+    public Advert(String advertId, String userId, String nameSurname,   String fromCity, String toCity, String material, String travelerPerson, String carModel, String driverPerson, String plate, String date, String time, String description, String price) {
+        this.advertId = advertId;
+        this.userId = userId;
+        this.nameSurname = nameSurname;
 
+        this.fromCity = fromCity;
+        this.toCity = toCity;
+        this.material = material;
+        this.travelerPerson = travelerPerson;
+        this.carModel = carModel;
+        this.driverPerson = driverPerson;
+        this.plate = plate;
+        this.date = date;
+        this.time = time;
+        this.description = description;
+        this.price = price;
     }
 
-    public String getArac_cinsi() {
-        return arac_cinsi;
+    public String getAdvertId() {
+        return advertId;
     }
 
-    public void setArac_cinsi(String arac_cinsi) {
-        this.arac_cinsi = arac_cinsi;
+    public void setAdvertId(String advertId) {
+        this.advertId = advertId;
     }
 
-    public String getPlaka() {
-        return plaka;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setPlaka(String plaka) {
-        this.plaka = plaka;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getNameSurname() {
+        return nameSurname;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setNameSurname(String nameSurname) {
+        this.nameSurname = nameSurname;
     }
 
-    public String getId() {
-        return id;
+    public String getFromCity() {
+        return fromCity;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setFromCity(String fromCity) {
+        this.fromCity = fromCity;
     }
 
-    public String getAd() {
-        return ad;
+    public String getToCity() {
+        return toCity;
     }
 
-    public void setAd(String ad) {
-        this.ad = ad;
+    public void setToCity(String toCity) {
+        this.toCity = toCity;
     }
 
-    public String getSoyad() {
-        return soyad;
+    public String getMaterial() {
+        return material;
     }
 
-    public void setSoyad(String soyad) {
-        this.soyad = soyad;
+    public void setMaterial(String material) {
+        this.material = material;
     }
 
-    public String getNereden() {
-        return nereden;
+    public String getTravelerPerson() {
+        return travelerPerson;
     }
 
-    public void setNereden(String nereden) {
-        this.nereden = nereden;
+    public void setTravelerPerson(String travelerPerson) {
+        this.travelerPerson = travelerPerson;
     }
 
-    public String getNereye() {
-        return nereye;
+    public String getCarModel() {
+        return carModel;
     }
 
-    public void setNereye(String nereye) {
-        this.nereye = nereye;
+    public void setCarModel(String carModel) {
+        this.carModel = carModel;
     }
 
-    public String getStatu() {
-        return statu;
+    public String getDriverPerson() {
+        return driverPerson;
     }
 
-    public void setStatu(String statu) {
-        this.statu = statu;
+    public void setDriverPerson(String driverPerson) {
+        this.driverPerson = driverPerson;
     }
 
-    public int getKullanicipuan() {
-        return kullanicipuan;
+    public String getPlate() {
+        return plate;
     }
 
-    public void setKullanicipuan(int kullanicipuan) {
-        this.kullanicipuan = kullanicipuan;
+    public void setPlate(String plate) {
+        this.plate = plate;
     }
 
-    public String getFiyat() {
-        return fiyat;
+    public String getDate() {
+        return date;
     }
 
-    public void setFiyat(String fiyat) {
-        this.fiyat = fiyat;
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPrice() {
+        return price;
+    }
+
+    public void setPrice(String price) {
+        this.price = price;
     }
 }
