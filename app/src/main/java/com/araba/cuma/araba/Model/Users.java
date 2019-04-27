@@ -1,4 +1,4 @@
-package com.araba.cuma.araba.Class;
+package com.araba.cuma.araba.Model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 

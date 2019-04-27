@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.araba.cuma.araba.Adapter.LocationAdapter;
-import com.araba.cuma.araba.Class.Location;
+import com.araba.cuma.araba.Model.Location;
 import com.araba.cuma.araba.R;
 
 import java.util.ArrayList;
@@ -79,6 +79,8 @@ public class LocationFragment extends Fragment implements LocationAdapter.OnItem
                 filter(editable.toString());
             }
         });
+
+
         return view;
     }
 
@@ -106,6 +108,7 @@ public class LocationFragment extends Fragment implements LocationAdapter.OnItem
 
     }
 
+
     private void filter(String text) {
         ArrayList<Location> filderList = new ArrayList<>();
         for (Location location : locationList) {
@@ -131,7 +134,7 @@ public class LocationFragment extends Fragment implements LocationAdapter.OnItem
         }
 
         Bundle args = new Bundle();
-        String cityInfo = position.getArea() + "/" + position.getCity();
+        String cityInfo =position.getCity()+"/"+position.getArea() ;
         searchEditText.setText(cityInfo);
         if (cityValue.equals(SEARCH_FROM_CITY)) {
             args.putString(SEARCH_FROM_CITY, cityInfo);
@@ -146,7 +149,9 @@ public class LocationFragment extends Fragment implements LocationAdapter.OnItem
             args.putString(ADVERT_TO_CITY,cityInfo);
         }
         selectedFragment.setArguments(args);
-        getFragmentManager().beginTransaction().replace(R.id.main_framelayout, selectedFragment).commit();
+        getFragmentManager().beginTransaction().replace(R.id.main_framelayout, selectedFragment).addToBackStack(null).commit();
 
     }
+
+
 }

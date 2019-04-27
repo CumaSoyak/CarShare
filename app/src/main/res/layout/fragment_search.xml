@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".Fragment.SearchFragment">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/relativeSearch"
         style="@style/RelativeLayoutStyle"
         app:layout_constraintTop_toTopOf="parent"
@@ -17,10 +17,8 @@
         <Button
             android:id="@+id/search_from"
             style="@style/AdvertCustomStyle"
-            android:layout_width="150dp"
-            android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
+            android:layout_width="match_parent"
+            android:layout_weight="1"            android:layout_height="50dp"
             android:gravity="center"
             android:hint="Nereden "
             android:inputType="text" />
@@ -29,23 +27,22 @@
             android:id="@+id/imageView"
             android:layout_width="25dp"
             android:layout_height="25dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerVertical="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
             android:src="@drawable/ic_direction_right" />
 
         <Button
             android:id="@+id/search_to"
             style="@style/AdvertCustomStyle"
-            android:layout_width="150dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
             android:layout_height="50dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
             android:ems="10"
             android:gravity="center"
             android:hint="Nereye"
             android:inputType="textPersonName" />
-    </RelativeLayout>
+    </LinearLayout>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -137,10 +134,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="32dp"
+            android:visibility="gone"
             android:text="Arama sonucu bulunamadı"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/search_recylerview" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="100dp"
+            android:elevation="10dp"
+            android:src="@drawable/noresults" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/search_recylerview"

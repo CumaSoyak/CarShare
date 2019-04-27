@@ -7,7 +7,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -28,24 +30,29 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.araba.cuma.araba.Class.Advert;
+import com.araba.cuma.araba.Model.Advert;
+import com.araba.cuma.araba.Model.Users;
 import com.araba.cuma.araba.R;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
+import static com.araba.cuma.araba.Constant.CURRENT_NAME;
+import static com.araba.cuma.araba.Constant.CURRENT_PHOTO_URL;
 import static com.araba.cuma.araba.Fragment.LocationFragment.ADVERT_FROM_CITY;
 import static com.araba.cuma.araba.Fragment.LocationFragment.ADVERT_TO_CITY;
 import static com.araba.cuma.araba.Fragment.LocationFragment.CITY;
@@ -67,7 +74,7 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
     private FirebaseAuth firebaseAuth;
     private String userId;
     private String uuidString;
-    private RelativeLayout layoutCar, layoutMaterial, layoutPersonDriver, layoutPersonTraveler;
+    private LinearLayout layoutCar, layoutMaterial, layoutPersonDriver, layoutPersonTraveler;
     Activity activity = getActivity();
 
     private List<String> personListTraveler;
@@ -82,9 +89,11 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
 
     private String cityInfoFrom = null, cityInfoTo = null;
     private SharedPreferences preferences;
-    private String statusString = "Traveler";
-    private String travelerString = "Traveler";
-    private String driverString = "Driver";
+    private static String statusString;
+    private String userNameSurname = null;
+    private String userPhoto = null;
+    private Users mUsers;
+    private static final String LAYOUT_CHOOSE = "LAYOUT_CHOOSE";
 
 
     public static AdvertFragment newInstance(String param1, String param2) {
@@ -103,7 +112,6 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
         databaseReference = database.getReference();//todo
         user = firebaseAuth.getCurrentUser();
         userId = user.getUid();
-
         preferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
 
 
@@ -111,50 +119,13 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
         initSpinner();
         selectDate();
         selectTime();
-        /*
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-
-                switch (i) {
-                    case R.id.radioButton_person:
-                        kisi_text.setVisibility(View.VISIBLE);
-                        kisi_image.setVisibility(View.VISIBLE);
-                        travelerPersonSpinner.setVisibility(View.VISIBLE);
-                        esya_text.setVisibility(View.INVISIBLE);
-                        esya_image.setVisibility(View.INVISIBLE);
-                        materialSpinner.setVisibility(View.INVISIBLE);
-                        birlikte = 1;
-                        break;
-                    case R.id.radioButton_person_and_material:
-                        esya_text.setVisibility(View.VISIBLE);
-                        esya_image.setVisibility(View.VISIBLE);
-                        materialSpinner.setVisibility(View.VISIBLE);
-                        kisi_text.setVisibility(View.VISIBLE);
-                        kisi_image.setVisibility(View.VISIBLE);
-                        travelerPersonSpinner.setVisibility(View.VISIBLE);
-                        birlikte = 2;
-                        break;
-                    case R.id.radioButton_material:
-                        kisi_text.setVisibility(View.INVISIBLE);
-                        kisi_image.setVisibility(View.INVISIBLE);
-                        travelerPersonSpinner.setVisibility(View.INVISIBLE);
-                        esya_text.setVisibility(View.VISIBLE);
-                        esya_image.setVisibility(View.VISIBLE);
-                        materialSpinner.setVisibility(View.VISIBLE);
-                        birlikte = 3;
-                        break;
-
-                }
-            }
-        });
-        */
-
+        getNameAndPhoto();
+getLayoutChoose();
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (chechkEmpty()) {
-                    postSend();
+                    postSend(userNameSurname, userPhoto);
                 }
 
             }
@@ -168,7 +139,6 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
 
             toCity.setText(preferences.getString(ADVERT_TO_CITY, "1"));
         }
-
         return view;
     }
 
@@ -190,8 +160,27 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
 
             }
         }
+        statusString = getResources().getString(R.string.passenger);
+
     }
 
+    private void saveLayoutChoose(String choose) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(LAYOUT_CHOOSE, choose);
+        editor.commit();
+
+    }
+    private void getLayoutChoose() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String layoutChoose = sharedPreferences.getString(LAYOUT_CHOOSE, "0");
+     if (layoutChoose.equals("0")){
+         linearLayoutTraveler.performClick();
+     }
+     else if (layoutChoose.equals("1")){
+         linearLayoutDriver.performClick();
+     }
+    }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -207,7 +196,8 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
                 layoutPersonDriver.setVisibility(View.GONE);
                 layoutMaterial.setVisibility(View.VISIBLE);
                 layoutPersonTraveler.setVisibility(View.VISIBLE);
-                statusString = travelerString;
+                statusString = getResources().getString(R.string.passenger);
+        saveLayoutChoose("0");
                 break;
             case R.id.driver_layout:
                 linearLayoutTraveler.setBackgroundResource(R.drawable.anasayfa_secenek_left_tikla);
@@ -221,7 +211,8 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
                 layoutPersonDriver.setVisibility(View.VISIBLE);
                 layoutMaterial.setVisibility(View.GONE);
                 layoutPersonTraveler.setVisibility(View.GONE);
-                statusString = driverString;
+                statusString = getResources().getString(R.string.chauffeur);
+          saveLayoutChoose("1");
                 break;
         }
         LocationFragment fragment = new LocationFragment();
@@ -230,12 +221,12 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
             case R.id.from:
                 args.putString(CITY, ADVERT_FROM_CITY);
                 fragment.setArguments(args);
-                getFragmentManager().beginTransaction().replace(R.id.main_framelayout, fragment).commit();
+                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left).replace(R.id.main_framelayout, fragment).addToBackStack(null).commit();
                 break;
             case R.id.to:
                 args.putString(CITY, ADVERT_TO_CITY);
                 fragment.setArguments(args);
-                getFragmentManager().beginTransaction().replace(R.id.main_framelayout, fragment).commit();
+                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left).replace(R.id.main_framelayout, fragment).addToBackStack(null).commit();
 
                 break;
         }
@@ -263,7 +254,6 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
 
         linearLayoutTraveler.setOnClickListener(this);
         linearLayoutDriver.setOnClickListener(this);
-        linearLayoutTraveler.performClick();
 
         fromCity = view.findViewById(R.id.from);
         toCity = view.findViewById(R.id.to);
@@ -357,7 +347,6 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
                         selectTime.setText(selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
-                mTimePicker.setTitle("Select Time");
                 mTimePicker.show();
 
             }
@@ -372,7 +361,7 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
             Toast.makeText(getActivity(), "Sehir Seçiniz", Toast.LENGTH_LONG).show();
             return false;
         }
-        if (statusString.equals(driverString)) {
+        if (statusString.equals(getResources().getString(R.string.chauffeur))) {
             if (carModelSpinner.getSelectedItem().toString()
                     .equals(getResources().getString(R.string.car_model_default_spin))) {
                 Toast.makeText(getActivity(), "Araç cinsi seçiniz ", Toast.LENGTH_LONG).show();
@@ -387,7 +376,7 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
             }
             return true;
         }
-        if (statusString.equals(travelerString)) {
+        if (statusString.equals(getResources().getString(R.string.passenger))) {
             if (travelerPersonSpinner.getSelectedItem().toString()
                     .equals(getResources().getString(R.string.person_traveler_default_spin))) {
                 Toast.makeText(getActivity(), "Kişi Seçiniz", Toast.LENGTH_LONG).show();
@@ -410,39 +399,32 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
         } else return true;
     }
 
-    public void postSend() {
-        /*
+    private void getNameAndPhoto() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        userPhoto = sharedPreferences.getString(CURRENT_PHOTO_URL, "");
+        userNameSurname = sharedPreferences.getString(CURRENT_NAME, "");
+    }
 
-    private String advertId;
-    private String userId;
-    private String nameSurname;
-    private String fromCity;
-    private String toCity;
-    private String material;
-    private String travelerPerson;
-    private String carModel;
-    private String driverPerson;
-    private String plate;
-    private String date;
-    private String time;
-    private String description;
-    private String price;
-     */
+    public void postSend(String name, String photo) {
+
         UUID uuıd = UUID.randomUUID();
         uuidString = uuıd.toString();
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-        DocumentReference newAdvert = firebaseFirestore.collection("ilan").document();
+        DocumentReference newAdvert = firebaseFirestore.collection("ilan").document(uuidString);
         Advert advert = new Advert();
         advert.setAdvertId(uuidString);
         advert.setUserId(userId);
-        advert.setNameSurname("cuma Soyak");
+        advert.setImageUrl(photo);
+        advert.setNameSurname(name);
         advert.setFromCity(fromCity.getText().toString());
         advert.setToCity(toCity.getText().toString());
-        if (statusString.equals(travelerString)) {
+        if (statusString.equals(getResources().getString(R.string.passenger))) {
+            advert.setStatus(getResources().getString(R.string.passenger));
             advert.setMaterial(materialSpinner.getSelectedItem().toString());
             advert.setTravelerPerson(travelerPersonSpinner.getSelectedItem().toString());
         }
-        if (statusString.equals(driverString)) {
+        if (statusString.equals(getResources().getString(R.string.chauffeur))) {
+            advert.setStatus(getResources().getString(R.string.chauffeur));
             advert.setCarModel(carModelSpinner.getSelectedItem().toString());
             advert.setDriverPerson(driverPersonSpinner.getSelectedItem().toString());
             advert.setPlate(plate.getText().toString());
@@ -465,6 +447,5 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
         });
 
     }
-
 
 }

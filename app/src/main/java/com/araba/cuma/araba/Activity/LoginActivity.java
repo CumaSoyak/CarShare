@@ -28,13 +28,8 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     ProgressBar progressBar;
     private static String URL_lOGIN = "";
-
-    private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
-    private FirebaseUser user;
     private FirebaseAuth firebaseAuth;
-    private String user_id;
-    private String uuid_String;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,9 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         initView();
         firebaseAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference();
-        user = firebaseAuth.getCurrentUser();
+
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (checkEditTexts()) {
                     giris();
                 } else {
-                    Toast.makeText(getBaseContext(), "Girişleri chechkEmpty et", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "E-mail veya parola doğru değil", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -67,13 +60,18 @@ public class LoginActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
     private void initView() {
         email = findViewById(R.id.email);
         parola = findViewById(R.id.parola);
         progressBar = findViewById(R.id.progressBar);
         login = findViewById(R.id.login);
         kayit_buton = findViewById(R.id.kayit_buton);
-        progressBar.setVisibility(View.GONE);
 
     }
     public void giris() {
@@ -95,8 +93,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("Login", "Error" + e.getLocalizedMessage());
-                Toast.makeText(getApplicationContext(), e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
-                progressBar.setVisibility(View.GONE);
+                 progressBar.setVisibility(View.GONE);
 
             }
         });
@@ -104,66 +101,13 @@ public class LoginActivity extends AppCompatActivity {
 
     public boolean checkEditTexts() {
         if (email.getText().toString().isEmpty() || parola.getText().toString().isEmpty()) {
-            if (email.length() == 0)
-                email.setError("Email boş geçilemez");
-
-            if (parola.length() == 0) {
-                parola.setError("Parola boş geçilemez");
-            }
+            email.setError("Kontrol ediniz");
+            parola.setError("Kontrol ediniz");
             return false;
         } else {
-            if (email.length() == 0) {
-                email.setError("Email can not null");
-                return false;
-            } else if (parola.length() == 0 || parola.length() < 6 || parola.length() > 20) {
-                parola.setError("Password length must be between 6 - 20");
-                return false;
-            } else {
-                return true;
-            }
+            return true;
         }
     }
 
-   /* public void getir_user() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Api.BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
 
-
-        Api api = retrofit.create(Api.class);
-        Call<List<Users>> call = api.getUsers();
-
-        call.enqueue(new Callback<List<Users>>() {
-            @Override
-            public void onResponse(Call<List<Users>> call, Response<List<Users>> response) {
-                List<Users> members = response.body();
-                boolean entry = false;
-
-                for (Users m : members) {
-                    String e_mail = m.getEmail();
-                    String password_ = m.getParola();
-                    if (!e_mail.matches("") && !password_.matches("") && e_mail != null && password_ != null) {
-                        if (e_mail.equals(email.getText().toString()) && password_.equals(password.getText().toString())) {
-                            entry = true;
-                            break;
-                        }
-                    }
-                }
-                if (entry) {
-                    Intent i = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(i);
-                } else {
-                    email.setError("Check E mail");
-                    password.setError("Check Password");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Users>> call, Throwable t) {
-                Toast.makeText(getBaseContext(), "onFailure" + t.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        });
-
-    }*/
 }
