@@ -153,7 +153,7 @@
 
             <include layout="@layout/view_bottom" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/layout_car"
                 style="@style/RelativeLayoutStyle"
                 android:layout_gravity="center">
@@ -162,23 +162,23 @@
                     android:id="@+id/imageView6"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/linarStart"
-                    android:layout_marginRight="100dp"
+                    android:layout_marginEnd="50dp"
                     android:src="@drawable/ic_car" />
 
 
                 <Spinner
                     android:id="@+id/car_driver"
                     style="@style/AdvertCustomStyle"
-                    android:layout_width="275dp"
-                    android:layout_alignParentRight="true" />
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <include layout="@layout/view_bottom" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/layout_material"
                 style="@style/RelativeLayoutStyle">
 
@@ -186,138 +186,124 @@
                     android:id="@+id/kisi_image2"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/linarStart"
-                    android:layout_marginRight="100dp"
+                    android:layout_marginEnd="50dp"
                     android:src="@drawable/ic_material" />
 
 
                 <Spinner
                     android:id="@+id/material_traveler"
                     style="@style/AdvertCustomStyle"
-                    android:layout_width="275dp"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
             <include layout="@layout/view_bottom" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/layout_person_driver"
                 style="@style/RelativeLayoutStyle">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/linarStart"
-                    android:layout_marginRight="100dp"
+                    android:layout_marginEnd="50dp"
                     android:src="@drawable/ic_traveler" />
 
 
                 <Spinner
                     android:id="@+id/person_driver"
                     style="@style/AdvertCustomStyle"
-                    android:layout_width="275dp"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
             <include layout="@layout/view_bottom" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/layout_person_traveler"
                 style="@style/RelativeLayoutStyle">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/linarStart"
-                    android:layout_marginRight="100dp"
+                    android:layout_marginEnd="50dp"
                     android:src="@drawable/ic_traveler" />
 
 
                 <Spinner
                     android:id="@+id/person_traveler"
                     style="@style/AdvertCustomStyle"
-                    android:layout_width="275dp"
-                    android:layout_alignParentRight="true" />
-            </RelativeLayout>
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
 
             <include layout="@layout/view_bottom" />
 
-            <RelativeLayout style="@style/RelativeLayoutStyle">
+            <LinearLayout
+                style="@style/RelativeLayoutStyle"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/linarStart"
-                    android:layout_marginRight="100dp"
+                    android:layout_marginEnd="50dp"
                     android:src="@drawable/ic_date_range_black_24dp" />
 
-                <RelativeLayout
-                    android:layout_width="275dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true">
 
-                    <Button
-                        android:id="@+id/date"
-                        style="@style/AdvertCustomStyle"
-                        android:layout_width="200dp"
-                        android:layout_alignParentLeft="true"
-                        android:text="@string/select_date"
-                        android:textColor="@color/acik_gri" />
+                <Button
+                    android:id="@+id/date"
+                    style="@style/AdvertCustomStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/select_date"
+                    android:textColor="@color/acik_gri" />
 
-                    <ImageButton
-                        android:id="@+id/two_date_between_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="32dp"
-                        android:background="?android:selectableItemBackground"
-                        android:src="@drawable/ic_date_two" />
-                </RelativeLayout>
+                <ImageButton
+                    android:id="@+id/two_date_between_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:background="?android:selectableItemBackground"
+                    android:src="@drawable/ic_date_two" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <include layout="@layout/view_bottom" />
 
-            <RelativeLayout style="@style/RelativeLayoutStyle">
+            <LinearLayout style="@style/RelativeLayoutStyle">
 
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="@dimen/linarStart"
-                    android:layout_marginRight="100dp"
+                    android:layout_marginEnd="50dp"
                     android:src="@drawable/ic_access_time_black_24dp" />
 
-                <RelativeLayout
-                    android:layout_width="275dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentRight="true">
+                <Button
+                    android:id="@+id/hour"
+                    style="@style/AdvertCustomStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/select_time"
+                    android:textColor="@color/acik_gri" />
 
-                    <Button
-                        android:id="@+id/hour"
-                        style="@style/AdvertCustomStyle"
-                        android:layout_width="200dp"
-                        android:layout_alignParentLeft="true"
-                        android:text="@string/select_time"
-                        android:textColor="@color/acik_gri" />
+                <ImageButton
+                    android:id="@+id/two_between_hour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="32dp"
+                    android:background="?android:selectableItemBackground"
+                    android:src="@drawable/ic_date_two" />
 
-                    <ImageButton
-                        android:id="@+id/two_between_hour"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="32dp"
-                        android:background="?android:selectableItemBackground"
-                        android:src="@drawable/ic_date_two" />
-                </RelativeLayout>
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <include layout="@layout/view_bottom" />
 

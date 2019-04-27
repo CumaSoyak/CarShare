@@ -13,15 +13,18 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.araba.cuma.araba.Adapter.BidAdapter;
-import com.araba.cuma.araba.Class.Bid;
+import com.araba.cuma.araba.Model.Bid;
 import com.araba.cuma.araba.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -36,7 +39,8 @@ public class BidFragment extends Fragment {
     private DatabaseReference databaseReference;
     private FirebaseUser user;
     private FirebaseAuth firebaseAuth;
-    private String user_id;
+    private String currentUserId;
+    private Bid mBid;
 
 
     @Override
@@ -47,43 +51,50 @@ public class BidFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();
         user = firebaseAuth.getCurrentUser();
-        user_id = user.getUid();
+        currentUserId = user.getUid();
 
         recyclerView = view.findViewById(R.id.teklif_recylerview);
         bidList = new ArrayList<Bid>();
-        bidAdapter = new BidAdapter(bidList,getActivity());
+        bidAdapter = new BidAdapter(bidList, getActivity());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
-        Firebase_get_yolcu();
-
+        getBid();
         return view;
     }
 
-    public void Firebase_get_yolcu() {
-        databaseReference.child("Teklif").child(user_id).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                    mteklifler = ds.getValue(Bid.class);
-                    if (mteklifler.getNereden().matches(""))
-                    {
-                        Toast.makeText(getActivity(), "Alınan teklif bulunmamaktadır !", Toast.LENGTH_LONG).show();
+    private void getBid() {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("teklif").whereEqualTo("receiveBidUserId",currentUserId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                mBid = document.toObject(Bid.class);
+                                if ((!mBid.getGiveBidUserId().equals(currentUserId))) {
+                                    bidList.add(mBid);
+                                    if (bidList.size() == 0)
+                                        getBid();
+                                    recyclerView.setAdapter(bidAdapter);
+                                    bidAdapter.notifyDataSetChanged();
+                                }
+                            }
+                        } else {
+                            Toast.makeText(getActivity(), (CharSequence) task.getException(), Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    else {
-                        bidList.add(mteklifler);
-                        recyclerView.setAdapter(bidAdapter);
-                    }
-
-                }
-            }
-
+                }).addOnFailureListener(new OnFailureListener() {
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getActivity(), e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
             }
         });
 
+
     }
+
+
 }

@@ -1,8 +1,10 @@
 package com.araba.cuma.araba.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -17,7 +19,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.araba.cuma.araba.Class.Users;
+import com.araba.cuma.araba.Model.Users;
 import com.araba.cuma.araba.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -35,17 +37,18 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
-import java.util.UUID;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
+import static com.araba.cuma.araba.Constant.*;
+
 public class RegisterActivity extends AppCompatActivity {
-    private static final int CHOOSE_IMAGE = 101;
+    private final int CHOOSE_IMAGE = 101;
     private final int PICK_IMAGE_REQUEST = 71;
     Button registerButton;
-    TextView loginTextview;
-    EditText name,email, phone, password;
-    CheckBox rememberMe;
+    TextView loginTextview, conditions;
+    EditText name, email, passwordRepeat, password;
+    CheckBox conditions_check;
     ProgressBar progressBar;
     CircleImageView profileImage;
     Uri uriProfileImagePath;
@@ -56,6 +59,8 @@ public class RegisterActivity extends AppCompatActivity {
     private FirebaseStorage storage;
     private StorageReference storageReference;
     private FirebaseFirestore firebaseFirestore;
+    private TextView selectPhoto;
+
 
     @Override
 
@@ -71,14 +76,13 @@ public class RegisterActivity extends AppCompatActivity {
         databaseReference = database.getReference();
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
-        progressBar.setVisibility(View.INVISIBLE);
-        registerButton.setOnClickListener(new View.OnClickListener() {
+         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isCheck()) {
                     register();
                 } else {
-                    Toast.makeText(RegisterActivity.this, "Bilgileri chechkEmpty et", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterActivity.this, "Bilgileri kontrol ediniz", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -102,15 +106,17 @@ public class RegisterActivity extends AppCompatActivity {
     public void initView() {
         name = findViewById(R.id.adSoyad);
         email = findViewById(R.id.email);
-        phone = findViewById(R.id.telefon);
+        passwordRepeat = findViewById(R.id.parola_tekrar);
         password = findViewById(R.id.parola);
-        rememberMe = findViewById(R.id.hatirla_beni);
+        conditions_check = findViewById(R.id.conditions_check);
         progressBar = findViewById(R.id.progressBar);
         profileImage = findViewById(R.id.profile_image);
         loginTextview = findViewById(R.id.giris_signup);
         registerButton = findViewById(R.id.login);
-        progressBar.setVisibility(View.GONE);
-    }
+        conditions = findViewById(R.id.conditions);
+        selectPhoto=findViewById(R.id.select_photo_text);
+
+     }
 
     @Override
     protected void onStart() {
@@ -128,15 +134,15 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            progressBar.setVisibility(View.GONE);
-                            uploadImage();
+                            user = firebaseAuth.getCurrentUser();
+                            String userId = user.getUid();
+                            uploadImage(userId);
                         }
                     }
                 }).addOnFailureListener(this, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Log.i("Hata", ":" + e.getLocalizedMessage());
-                progressBar.setVisibility(View.GONE);
+                  progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -145,16 +151,33 @@ public class RegisterActivity extends AppCompatActivity {
         if (uriProfileImagePath == null) {
             return false;
         }
-        if (name.getText().toString().isEmpty()) {
+        if (!name.getText().toString().contains(" ")) {
+            name.setError("Ad soyad arasında boşluk olmalıdır");
+            return false;
+        }
+        if (!email.getText().toString().contains("@")) {
+            email.setError("E-mail doğru değildir");
             return false;
         }
         if (email.getText().toString().isEmpty()) {
+            email.setError("E-mail giriniz");
             return false;
         }
-        if (phone.getText().toString().isEmpty()) {
+        if (passwordRepeat.getText().toString().isEmpty()) {
+             return false;
+        }
+        if (!password.getText().toString().trim().equals(passwordRepeat.getText().toString().trim())) {
+            password.setError("Parola aynı olmalıdır");
             return false;
         }
         if (password.getText().toString().isEmpty()) {
+             return false;
+        }
+        if (password.getText().toString().length()<6) {
+            password.setError("En az 6 karakter");
+            return false;
+        }
+        if (!conditions_check.isChecked()) {
             return false;
         }
         return true;
@@ -166,6 +189,7 @@ public class RegisterActivity extends AppCompatActivity {
         if (requestCode == CHOOSE_IMAGE && resultCode == RESULT_OK && data != null && data.getData() != null) {
             uriProfileImagePath = data.getData();
             try {
+                selectPhoto.setVisibility(View.GONE);
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uriProfileImagePath);
                 profileImage.setImageBitmap(bitmap);
             } catch (IOException e) {
@@ -182,42 +206,68 @@ public class RegisterActivity extends AppCompatActivity {
         startActivityForResult(Intent.createChooser(intent, "Select Profile Image"), CHOOSE_IMAGE);
     }
 
-    private void uploadImage() {
+    private void uploadImage(final String userId) {
         if (uriProfileImagePath != null) {
-            StorageReference ref = storageReference.child("images/" + UUID.randomUUID().toString());
+            StorageReference ref = storageReference.child("images/" + userId);
             ref.putFile(uriProfileImagePath)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            user = firebaseAuth.getCurrentUser();
-                            String userId = user.getUid();
-                            firebaseFirestore = FirebaseFirestore.getInstance();
-
-                            DocumentReference newUser = firebaseFirestore.collection("users").document();
-                            Users users = new Users();
-                            users.setName(name.getText().toString());
-                            users.setPhone(phone.getText().toString());
-                            users.setUserId(userId);
-                            newUser.set(users).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                @Override
-                                public void onComplete(@NonNull Task<Void> task) {
-                                    if (task.isSuccessful()){
-                                        Toast.makeText(RegisterActivity.this, "Kayıt Başırıl", Toast.LENGTH_SHORT).show();
-                                        Intent ıntent = new Intent(getApplicationContext(), MainActivity.class);
-                                        startActivity(ıntent);
-                                     }
-                                }
-                            });
-
+                            getUserPhoto(userId);
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(RegisterActivity.this, "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
+
                         }
                     });
         }
+
+    }
+
+    public void getUserPhoto(final String userId) {
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        StorageReference storageRef = storage.getReference();
+        storageRef.child("images/" + userId).getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(final Uri uri) {
+                firebaseFirestore = FirebaseFirestore.getInstance();
+                DocumentReference newUser = firebaseFirestore.collection("users").document();
+                Users users = new Users();
+                users.setName(name.getText().toString());
+                users.setPhone(passwordRepeat.getText().toString());
+                users.setUserId(userId);
+                users.setUserImage(String.valueOf(uri));
+                newUser.set(users).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            progressBar.setVisibility(View.GONE);
+                            savePhotoUrl(uri,name.getText().toString());
+                            Intent ıntent = new Intent(getApplicationContext(), MainActivity.class);
+                            startActivity(ıntent);
+                        }
+                    }
+                });
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+                progressBar.setVisibility(View.GONE);
+
+            }
+        });
+
+    }
+
+    private void savePhotoUrl(Uri uri,String name) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(CURRENT_PHOTO_URL, uri.toString());
+        editor.putString(CURRENT_NAME,name);
+        editor.commit();
 
     }
 

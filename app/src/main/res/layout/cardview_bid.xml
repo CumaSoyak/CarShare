@@ -17,7 +17,7 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:background="@drawable/filtrele_ust_cubuk"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
@@ -38,8 +38,8 @@
 
         <LinearLayout
             android:id="@+id/linearLayout6"
-            android:layout_width="150dp"
-            android:layout_height="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -48,12 +48,12 @@
 
             <TextView
                 android:id="@+id/from_bid"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/baloo"
                 android:gravity="center"
+                android:layout_gravity="center"
                 android:text="Niğde"
-                android:layout_marginTop="@dimen/linearTop"
                 tools:layout_editor_absoluteX="133dp"
                 tools:layout_editor_absoluteY="55dp" />
 
@@ -61,15 +61,16 @@
                 android:id="@+id/imageView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_gravity="center"
                 app:srcCompat="@drawable/ic_direction_right"
                 tools:ignore="VectorDrawableCompat" />
 
             <TextView
                 android:id="@+id/to_bid"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/baloo"
+                android:layout_gravity="center"
                 android:gravity="center"
                 android:text="AfyonK."
                 tools:layout_editor_absoluteX="317dp"
@@ -81,43 +82,26 @@
             android:id="@+id/userImage_bid"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
             android:src="@drawable/dddd"
-            app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout2"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout2"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout"
             tools:ignore="MissingConstraints" />
 
 
-        <LinearLayout
-            android:id="@+id/linearLayout2"
-            android:layout_width="125dp"
+        <TextView
+            android:id="@+id/name_bid"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:layout_marginBottom="4dp"
-            android:orientation="vertical"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/baloo"
+            android:gravity="center_horizontal"
+            android:text="Muhammed"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/linearLayout6"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/userImage_bid">
-
-            <TextView
-                android:id="@+id/name_bid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/baloo"
-                android:gravity="center_horizontal"
-                android:text="Muhammed" />
-
-            <TextView
-                android:id="@+id/surname_bid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/baloo"
-                android:gravity="center_horizontal"
-                android:text="Can" />
-        </LinearLayout>
+            app:layout_constraintStart_toStartOf="@+id/userImage_bid"
+            app:layout_constraintTop_toBottomOf="@+id/userImage_bid" />
 
         <LinearLayout
             android:id="@+id/linearLayout9"
@@ -125,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout6"
             app:layout_constraintEnd_toStartOf="@+id/settings_bid"
             app:layout_constraintStart_toEndOf="@+id/linearLayout6"
             app:layout_constraintTop_toTopOf="@+id/linearLayout6"
@@ -154,32 +138,42 @@
             android:id="@+id/settings_bid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="4dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintTop_toTopOf="@+id/linearLayout"
             card_view:srcCompat="@drawable/ic_menu_bid" />
 
         <ImageView
             android:id="@+id/user_point_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="4dp"
             android:src="@drawable/ic_stars"
-            app:layout_constraintBottom_toTopOf="@+id/user_point_bid"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
         <TextView
             android:id="@+id/user_point_bid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
             android:text="4.8"
+            android:textColor="@color/mavi"
             android:textSize="10dp"
-            android:textColor="@color/color_six"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/user_point_text"
-            app:layout_constraintStart_toStartOf="@+id/user_point_text" />
+            app:layout_constraintStart_toStartOf="@+id/user_point_text"
+            app:layout_constraintTop_toBottomOf="@+id/user_point_text" />
+
+        <ImageView
+            android:id="@+id/bid_review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            card_view:srcCompat="@drawable/ic_direction_review" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>

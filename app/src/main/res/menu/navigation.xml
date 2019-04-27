@@ -18,7 +18,7 @@
     <item
         android:id="@+id/navigation_teklifler"
         android:icon="@drawable/ic_megaphone"
-        android:title="Teklifler" />
+        android:title="Bildirimler" />
     <item
         android:id="@+id/navigation_profil"
         android:icon="@drawable/ic_user"

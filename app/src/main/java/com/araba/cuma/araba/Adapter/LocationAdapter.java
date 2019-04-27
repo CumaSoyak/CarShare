@@ -12,7 +12,7 @@ import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.araba.cuma.araba.Class.Location;
+import com.araba.cuma.araba.Model.Location;
 import com.araba.cuma.araba.R;
 
 import java.util.ArrayList;

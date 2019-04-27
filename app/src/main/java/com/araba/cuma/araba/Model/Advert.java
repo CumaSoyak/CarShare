@@ -1,15 +1,16 @@
 
-package com.araba.cuma.araba.Class;
+package com.araba.cuma.araba.Model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class Advert {
 
+    private String status;
+    private String imageUrl;
     private String advertId;
     private String userId;
     private String nameSurname;
-
     private String fromCity;
     private String toCity;
     private String material;
@@ -21,15 +22,17 @@ public class Advert {
     private String time;
     private String description;
     private String price;
-
-    public Advert(){
+    public Advert() {
 
     }
-    public Advert(String advertId, String userId, String nameSurname,   String fromCity, String toCity, String material, String travelerPerson, String carModel, String driverPerson, String plate, String date, String time, String description, String price) {
+
+    public Advert(String status, String advertId, String userId, String nameSurname, String fromCity,
+                  String toCity, String material, String travelerPerson, String carModel, String driverPerson,
+                  String plate, String date, String time, String description, String price,String imageUrl) {
+        this.status = status;
         this.advertId = advertId;
         this.userId = userId;
         this.nameSurname = nameSurname;
-
         this.fromCity = fromCity;
         this.toCity = toCity;
         this.material = material;
@@ -41,6 +44,17 @@ public class Advert {
         this.time = time;
         this.description = description;
         this.price = price;
+        this.imageUrl=imageUrl;
+    }
+
+
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getAdvertId() {
@@ -153,5 +167,13 @@ public class Advert {
 
     public void setPrice(String price) {
         this.price = price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

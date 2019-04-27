@@ -1,4 +1,4 @@
-package com.araba.cuma.araba.Class;
+package com.araba.cuma.araba.Model;
 
 public class Location {
     private int imageResource;

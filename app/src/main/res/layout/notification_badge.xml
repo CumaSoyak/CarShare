@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/notifications.badge"
+        android:layout_width="7dp"
+        android:layout_height="7dp"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginStart="15dp"
+        android:background="@drawable/notification_bottom_bar"
+        android:gravity="center"
+        android:padding="3dp"
+         />
+</merge>

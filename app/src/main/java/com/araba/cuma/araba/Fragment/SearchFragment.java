@@ -14,28 +14,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.araba.cuma.araba.Adapter.AdvertAdapter;
-import com.araba.cuma.araba.Class.Advert;
+import com.araba.cuma.araba.Model.Advert;
 import com.araba.cuma.araba.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -65,7 +58,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     private View view;
     private String cityInfoFrom = null, cityInfoTo = null;
     private SharedPreferences preferences;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String userId;
+    private String statusString = null;
+    private String passengerString;
+    private String chauffeurString;
 
 
     @Override
@@ -78,6 +74,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();//todo
         user = firebaseAuth.getCurrentUser();
+        userId = user.getUid();
         preferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
         initView();
 
@@ -87,7 +84,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
-        info.setVisibility(View.GONE);
 
         initLayoutChoose();
 
@@ -144,7 +140,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 break;
         }
         fragment.setArguments(args);
-        getFragmentManager().beginTransaction().replace(R.id.main_framelayout, fragment).commit();
+        getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+                .replace(R.id.main_framelayout, fragment).addToBackStack(null).commit();
 
     }
 
@@ -165,19 +162,29 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         toggleDriver.setVisibility(View.GONE);
     }
 
-    private void getSearch() {
-        db.collection("ilan").whereEqualTo("aaaa", "price")
+    private void getSearch(String statusString) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        db.collection("ilan").
+                whereEqualTo("fromCity", fromCity.getText().toString()).
+                whereEqualTo("toCity", toCity.getText().toString()).
+                whereEqualTo("status", statusString)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        advertList.clear();
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 mılanlar = document.toObject(Advert.class);
-                                advertList.add(mılanlar);
-                                recyclerView.setAdapter(advertAdapter);
-                                advertAdapter.notifyDataSetChanged();
-                                Toast.makeText(getActivity(), "ok", Toast.LENGTH_SHORT).show();
+                                if (!mılanlar.getUserId().equals(userId)) {
+                                    advertList.add(mılanlar);
+                                    recyclerView.setAdapter(advertAdapter);
+                                    advertAdapter.notifyDataSetChanged();
+                                }
+
+                            }
+                            if (advertList.size() == 0) {
+                                info.setVisibility(View.VISIBLE);
                             }
                         } else {
                             Toast.makeText(getActivity(), (CharSequence) task.getException(), Toast.LENGTH_SHORT).show();
@@ -198,13 +205,16 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 if (kontrol()) {
-                    getSearch();
+                    advertList.clear();
                     layout_sofor.setBackgroundResource(R.drawable.anasayfa_secenek_right_tikla);
                     layout_yolcu.setBackgroundResource(R.drawable.anasayfa_secenek_left);
                     yolcu_tex.setTextColor(ContextCompat.getColor(getActivity(), R.color.beyaz));
                     sofor_text.setTextColor(ContextCompat.getColor(getActivity(), R.color.mavi));
                     toggleTraveler.setVisibility(View.VISIBLE);
                     toggleDriver.setVisibility(View.GONE);
+                    statusString = getResources().getString(R.string.passenger);
+                    getSearch(statusString);
+
 
                 } else {
                     Toast.makeText(getActivity(), "Alanları boş geçmeyiniz", Toast.LENGTH_LONG).show();
@@ -216,13 +226,17 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 if (kontrol()) {
-                    getSearch();
+                    advertList.clear();
                     layout_yolcu.setBackgroundResource(R.drawable.anasayfa_secenek_left_tikla);
                     layout_sofor.setBackgroundResource(R.drawable.anasayfa_secenek_right);
                     yolcu_tex.setTextColor(ContextCompat.getColor(getActivity(), R.color.mavi));
                     sofor_text.setTextColor(ContextCompat.getColor(getActivity(), R.color.beyaz));
                     toggleTraveler.setVisibility(View.GONE);
                     toggleDriver.setVisibility(View.VISIBLE);
+                    statusString = getResources().getString(R.string.chauffeur);
+                    getSearch(statusString);
+
+
                 } else {
                     Toast.makeText(getActivity(), "Alanları boş geçmeyiniz", Toast.LENGTH_LONG).show();
                 }
@@ -239,36 +253,6 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
             return false;
         } else return true;
     }
-/*
-    public void Firebase_get_yolcu() {
-        advertList.clear();
-        databaseReference.child("Yolcu").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-
-                    if ((mılanlar.getNereden().equals(fromCity.getText().toString())) &&
-                            (mılanlar.getNereye().equals(toCity.getText().toString())) &&
-                            mılanlar.getStatu().equals("Yolcu")) {
-                        info.setVisibility(View.GONE);
-                        advertList.add(mılanlar);
-                        recyclerView.setAdapter(advertAdapter);
-
-                    } else {
-                        info.setVisibility(View.VISIBLE);
-                    }
-
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-    } */
 
 
 }

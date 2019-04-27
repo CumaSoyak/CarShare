@@ -29,7 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="3dp"
         android:backgroundTint="@color/mavi"
         android:clickable="true"
         app:elevation="9dp"
@@ -37,6 +37,7 @@
         app:layout_constraintBottom_toBottomOf="@+id/navigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/main_framelayout"
         app:srcCompat="@mipmap/ilanver" />
 
     <FrameLayout

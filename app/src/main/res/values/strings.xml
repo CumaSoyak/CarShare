@@ -42,10 +42,12 @@
     </string-array>
 
 
-    <string name ="select_date">Tarih seç</string>
-    <string name ="select_time">Saat seç</string>
+    <string name="select_date">Tarih seç</string>
+    <string name="select_time">Saat seç</string>
 
-    <string-array name ="citys">
+    <string name="passenger">Passenger</string>
+    <string name="chauffeur">Chauffeur</string>
+    <string-array name="citys">
         <item>Adana</item>
         <item>Adıyaman</item>
         <item>Afyon</item>
