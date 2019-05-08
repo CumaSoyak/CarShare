@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ProfileChooseFragment.AdvertisFragment">
+
+    <include
+        android:id="@+id/app_bar_layout"
+        layout="@layout/app_bar_layout" />
+
+    <EditText
+        android:id="@+id/e_mail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="100dp"
+        android:layout_marginEnd="50dp"
+
+        android:background="@drawable/edit_text_background"
+        android:gravity="center"
+        android:hint="E-posta"
+        android:inputType="textPersonName"
+        android:textColor="@color/text_color_black" />
+
+    <EditText
+        android:id="@+id/message_advertis"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@id/e_mail"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="20dp"
+        android:gravity="center"
+        android:background="@drawable/edit_text_background"
+        android:ems="10"
+        android:textColor="@color/text_color_black"
+        android:hint="Mesajınızı giriniz"
+        android:inputType="textPersonName" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/message_advertis"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/custom_save_button"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp"
+        android:text="iletişime geç"
+        android:textColor="@color/beyaz" />
+
+</RelativeLayout>

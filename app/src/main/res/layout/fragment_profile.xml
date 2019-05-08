@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="20dp"
     android:orientation="vertical"
     tools:context=".Fragment.ProfileFragment">
 
@@ -13,11 +12,13 @@
         android:layout_height="150dp"
         tools:ignore="MissingConstraints">
 
+
+
         <ImageView
             android:id="@+id/view"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@drawable/word"
+            android:background="@drawable/ic_london"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -38,35 +39,40 @@
             app:layout_constraintTop_toTopOf="@+id/view"
             tools:ignore="MissingConstraints" />
 
-        <ImageView
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            android:src="@drawable/ic_edit_profile"
-            app:layout_constraintBottom_toBottomOf="@+id/view"
-            app:layout_constraintEnd_toEndOf="@+id/view"
-            tools:ignore="MissingConstraints" />
-
         <TextView
             android:id="@+id/profile_user_name"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
+            android:layout_marginBottom="8dp"
+            android:background="@color/beyaz"
             android:fontFamily="@font/baloo"
+            android:gravity="center"
             android:text="TextView"
             android:textColor="@color/mavi"
             android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="@+id/profile_photo"
-            app:layout_constraintStart_toStartOf="@+id/profile_photo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/profile_photo" />
+
+        <ImageView
+            android:id="@+id/sign_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/ic_exit"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintTop_toTopOf="parent" />
     </android.support.constraint.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/linearTop">
+        android:layout_marginTop="5dp"
+        android:overScrollMode="never"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -74,13 +80,14 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/my_info_layout"
                 style="@style/RelativeLayoutStyle"
                 android:layout_height="wrap_content">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_location" />
+                    android:src="@drawable/ic_account" />
 
                 <TextView
                     style="@style/ProfileTextViewStyle"
@@ -123,30 +130,6 @@
             <include layout="@layout/view_bottom" />
 
             <LinearLayout
-                style="@style/RelativeLayoutStyle"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_location" />
-
-                <TextView
-                    style="@style/ProfileTextViewStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="start"
-                    android:text="Reklam Anlaşması" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_profile_direction" />
-            </LinearLayout>
-
-            <include layout="@layout/view_bottom" />
-
-            <LinearLayout
                 android:id="@+id/saved_advert_layout"
                 style="@style/RelativeLayoutStyle"
                 android:layout_height="wrap_content">
@@ -172,20 +155,71 @@
             <include layout="@layout/view_bottom" />
 
             <LinearLayout
+                android:id="@+id/help_layout"
                 style="@style/RelativeLayoutStyle"
                 android:layout_height="wrap_content">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_location" />
+                    android:src="@drawable/ic_help" />
 
                 <TextView
                     style="@style/ProfileTextViewStyle"
                     android:layout_width="wrap_content"
                     android:layout_weight="1"
                     android:gravity="start"
-                    android:text="Cuma Soyak" />
+                    android:text="Yardım" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_profile_direction" />
+            </LinearLayout>
+
+            <include layout="@layout/view_bottom" />
+
+            <LinearLayout
+                android:id="@+id/advertisment_layout"
+                style="@style/RelativeLayoutStyle"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_megaphone_profile" />
+
+                <TextView
+                    style="@style/ProfileTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="Reklam Anlaşması" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_profile_direction" />
+            </LinearLayout>
+
+            <include layout="@layout/view_bottom" />
+
+            <LinearLayout
+                android:id="@+id/condition_layout"
+                style="@style/RelativeLayoutStyle"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_assignment" />
+
+                <TextView
+                    style="@style/ProfileTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="Koşul ve Şartlar" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -196,12 +230,6 @@
             <include layout="@layout/view_bottom" />
 
             <RelativeLayout style="@style/RelativeLayoutStyle">
-
-                <Button
-                    android:id="@+id/sign_out"
-                    android:layout_width="wrap_content"
-                    android:layout_height="100dp"
-                    android:text="Button" />
 
 
             </RelativeLayout>

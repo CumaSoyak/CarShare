@@ -1,8 +1,13 @@
 package com.araba.cuma.araba.Model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Location {
+    @SerializedName("imageResource")
     private int imageResource;
+    @SerializedName("city")
     private String city;
+    @SerializedName("area")
     private String area;
 
     public Location(){

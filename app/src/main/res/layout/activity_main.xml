@@ -12,33 +12,30 @@
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:itemBackground="@color/beyaz"
-        app:itemIconTint="@color/mavi"
+        app:itemIconTint="@drawable/item_selected"
         app:labelVisibilityMode="labeled"
-        app:itemTextColor="@color/kahverengi"
-        app:menu="@menu/navigation" />
+        app:itemTextColor="@drawable/item_selected"
+        app:menu="@menu/navigation" >
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/floatingActionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:backgroundTint="@color/mavi"
+            android:clickable="true"
+            app:elevation="9dp"
+            app:fabSize="mini"
+            app:srcCompat="@drawable/ic_float_action" />
+    </android.support.design.widget.BottomNavigationView>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="3dp"
-        android:backgroundTint="@color/mavi"
-        android:clickable="true"
-        app:elevation="9dp"
-        app:fabSize="normal"
-        app:layout_constraintBottom_toBottomOf="@+id/navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/main_framelayout"
-        app:srcCompat="@mipmap/ilanver" />
+
 
     <FrameLayout
         android:id="@+id/main_framelayout"
@@ -50,6 +47,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
     </FrameLayout>
+
+
 
 
 </android.support.constraint.ConstraintLayout>

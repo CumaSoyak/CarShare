@@ -12,9 +12,9 @@ class PrefManager {
     int PRIVATE_MODE = 0;
 
     // Shared preferences file name
-    private static final String PREF_NAME = "arabam.com";
+    private static final String PREF_NAME = "androidhive-welcome";
 
-    private static final String IS_FIRST_TIME_LAUNCH = "lastonelogin";
+    private static final String IS_FIRST_TIME_LAUNCH = "IsFirstTimeLaunch";
 
     public PrefManager(Context context) {
         this._context = context;
@@ -30,4 +30,5 @@ class PrefManager {
     public boolean isFirstTimeLaunch() {
         return pref.getBoolean(IS_FIRST_TIME_LAUNCH, true);
     }
+
 }

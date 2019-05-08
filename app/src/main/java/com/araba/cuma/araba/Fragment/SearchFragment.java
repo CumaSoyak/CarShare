@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,28 +28,23 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import static com.araba.cuma.araba.Constant.*;
+
 import java.util.ArrayList;
 
-import static com.araba.cuma.araba.Fragment.LocationFragment.CITY;
-import static com.araba.cuma.araba.Fragment.LocationFragment.SEARCH_FROM_CITY;
-import static com.araba.cuma.araba.Fragment.LocationFragment.SEARCH_TO_CITY;
 
 public class SearchFragment extends Fragment implements View.OnClickListener {
     private RelativeLayout layout_yolcu, layout_sofor;
-    private TextView yolcu_tex, sofor_text, info;
+    private TextView yolcu_tex, sofor_text, infoSearch;
 
     private Button fromCity;
     private Button toCity;
     private View toggleTraveler, toggleDriver;
 
-    private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
     private FirebaseUser user;
     private FirebaseAuth firebaseAuth;
 
@@ -60,8 +57,8 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     private SharedPreferences preferences;
     private String userId;
     private String statusString = null;
-    private String passengerString;
-    private String chauffeurString;
+    private ImageView womanImage;
+    private ProgressBar progressBar;
 
 
     @Override
@@ -71,10 +68,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_search, container, false);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference();//todo
         user = firebaseAuth.getCurrentUser();
-        userId = user.getUid();
         preferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
         initView();
 
@@ -85,18 +79,12 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
 
+
+        fromCity.setText(FROM);
+        toCity.setText(TO);
+
+
         initLayoutChoose();
-
-
-        if (!preferences.getString(SEARCH_FROM_CITY, "0").equals("0")) {
-
-            fromCity.setText(preferences.getString(SEARCH_FROM_CITY, "1"));
-        }
-
-        if (!preferences.getString(SEARCH_TO_CITY, "0").equals("0")) {
-
-            toCity.setText(preferences.getString(SEARCH_TO_CITY, "1"));
-        }
 
 
         return view;
@@ -110,21 +98,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            cityInfoFrom = getArguments().getString(SEARCH_FROM_CITY);
-            cityInfoTo = getArguments().getString(SEARCH_TO_CITY);
-            SharedPreferences preferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-            if (cityInfoFrom != null) {
-                editor.putString(SEARCH_FROM_CITY, cityInfoFrom);
-                editor.commit();
-            }
-            if (cityInfoTo != null) {
-                editor.putString(SEARCH_TO_CITY, cityInfoTo);
-                editor.commit();
 
-            }
-        }
     }
 
     @Override
@@ -140,7 +114,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 break;
         }
         fragment.setArguments(args);
-        getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left)
+        getFragmentManager().beginTransaction().setCustomAnimations(R.anim.search_in_down, R.anim.search_out_up)
                 .replace(R.id.main_framelayout, fragment).addToBackStack(null).commit();
 
     }
@@ -150,7 +124,9 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         fromCity.setOnClickListener(this);
         toCity = view.findViewById(R.id.search_to);
         toCity.setOnClickListener(this);
-        info = view.findViewById(R.id.info);
+
+        womanImage = view.findViewById(R.id.woman);
+        progressBar = view.findViewById(R.id.progressbar);
         recyclerView = view.findViewById(R.id.search_recylerview);
         layout_yolcu = view.findViewById(R.id.traveler_layout);
         layout_sofor = view.findViewById(R.id.driver_layout);
@@ -160,9 +136,16 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         toggleDriver = view.findViewById(R.id.toggle_driver);
         toggleTraveler.setVisibility(View.GONE);
         toggleDriver.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.GONE);
+        infoSearch = view.findViewById(R.id.deneme);
     }
 
     private void getSearch(String statusString) {
+        infoSearch.setVisibility(View.GONE);
+        womanImage.setVisibility(View.GONE);
+        progressBar.setVisibility(View.VISIBLE);
+
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("ilan").
                 whereEqualTo("fromCity", fromCity.getText().toString()).
@@ -172,22 +155,28 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        advertList.clear();
                         if (task.isSuccessful()) {
+                            advertList.clear();
+                            advertAdapter.notifyDataSetChanged();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 mılanlar = document.toObject(Advert.class);
-                                if (!mılanlar.getUserId().equals(userId)) {
-                                    advertList.add(mılanlar);
-                                    recyclerView.setAdapter(advertAdapter);
-                                    advertAdapter.notifyDataSetChanged();
-                                }
-
+                                advertList.add(mılanlar);
+                                recyclerView.setAdapter(advertAdapter);
+                                advertAdapter.notifyDataSetChanged();
                             }
+                            progressBar.setVisibility(View.GONE);
                             if (advertList.size() == 0) {
-                                info.setVisibility(View.VISIBLE);
+                                infoSearch.setVisibility(View.VISIBLE);
+                                recyclerView.setVisibility(View.GONE);
+
+                            } else
+                            {
+                                recyclerView.setVisibility(View.VISIBLE);
+                                infoSearch.setVisibility(View.GONE);
                             }
-                        } else {
-                            Toast.makeText(getActivity(), (CharSequence) task.getException(), Toast.LENGTH_SHORT).show();
+
+
+
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {

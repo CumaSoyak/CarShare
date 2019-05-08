@@ -1,154 +1,163 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/advert_cardview"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    app:cardCornerRadius="@dimen/radius">
+    android:layout_height="140dp"
+    android:layout_marginBottom="15dp"
+    android:background="@color/beyaz"
+    tools:context=".Fragment.ReviewAdvertFragment"
+    tools:ignore="MissingConstraints">
 
-    <android.support.constraint.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="150dp">
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/userImage_advert"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="4dp"
+        android:src="@drawable/dddd"
+        app:layout_constraintBottom_toTopOf="@+id/user_surname_advert"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/user_surname_advert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/baloo"
-            android:gravity="start"
-            android:text="Cuma Soyak"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/userImage_advert"
-            app:layout_constraintTop_toBottomOf="@+id/userImage_advert" />
+    <include
+        android:id="@+id/include3"
+        layout="@layout/view_bottom"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <TextView
-            android:id="@+id/statu_advert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="8dp"
-            android:fontFamily="@font/baloo"
-            android:text="Yolcu"
-            android:textColor="@color/mavi"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+    <include
+        android:id="@+id/include2"
+        layout="@layout/view_bottom"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <RelativeLayout
-            android:id="@+id/linearLayout"
-            android:layout_width="0dp"
-            android:layout_height="40dp"
-            android:background="@drawable/filtrele_ust_cubuk"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <TextView
+        android:id="@+id/advert_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="5 Mayıs "
+        android:textColor="@color/text_color"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/from_driver_advert" />
 
-            <TextView
-                android:id="@+id/from_driver_advert"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/imageView5"
-                android:fontFamily="@font/baloo"
-                android:gravity="center"
-                android:text="Niğde"
-                android:layout_marginEnd="30dp"
-                android:textColor="@color/beyaz" />
+    <TextView
+        android:id="@+id/advert_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="21:30"
+        android:textColor="@color/text_color"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/to__driver_advert"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_weight="1"
-                android:src="@drawable/ic_direction_right" />
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginBottom="8dp"
+        android:src="@drawable/ic_menu_bid"
+        app:layout_constraintBottom_toBottomOf="@+id/user_surname_advert"
+        app:layout_constraintStart_toEndOf="@+id/user_surname_advert"
+        app:layout_constraintTop_toTopOf="@+id/userImage_advert" />
 
-            <TextView
-                android:id="@+id/to__driver_advert"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toRightOf="@id/imageView5"
-                android:fontFamily="@font/baloo"
-                android:gravity="center"
-                android:layout_marginStart="30dp"
-                android:text="Afyonkarahisar"
-                android:textColor="@color/beyaz" />
+    <TextView
+        android:id="@+id/from_driver_advert"
+        style="@style/CityStyle"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Niğde/Çiftlik"
+        app:layout_constraintStart_toEndOf="@+id/imageView12"
+        app:layout_constraintTop_toTopOf="@+id/imageView12" />
 
-        </RelativeLayout>
+    <TextView
+        android:id="@+id/to__driver_advert"
+        style="@style/CityStyle"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:text="Amasya/Uluağaç"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+        app:layout_constraintStart_toEndOf="@+id/imageView12" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/userImage_advert"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="16dp"
-            android:src="@drawable/dddd"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-            tools:ignore="MissingConstraints" />
+    <TextView
+        android:id="@+id/bid_button"
+        android:layout_width="50dp"
+        android:layout_height="25dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/teklif_buton"
+        android:gravity="center"
+        android:text="incele"
+        android:textColor="@color/beyaz"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include2" />
 
-        <TextView
-            android:id="@+id/bid_button"
-            android:layout_width="60dp"
-            android:layout_height="25dp"
-            android:layout_marginEnd="4dp"
-            android:layout_marginBottom="4dp"
-            android:background="@drawable/teklif_buton"
-            android:fontFamily="@font/baloo"
-            android:gravity="center"
-            android:text="Teklif"
-            android:textColor="@color/beyaz"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+    <TextView
+        style="@style/NameStyle"
+        android:id="@+id/user_surname_advert"
+         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="4dp"
+        android:text="Cuma Soyak dsfddcccccccccc"
 
-        <ImageView
-            android:id="@+id/option_advert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="4dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_menu_bid" />
+        app:layout_constraintBottom_toBottomOf="@+id/include2"
+        app:layout_constraintStart_toStartOf="parent" />
 
-        <ImageView
-            android:id="@+id/user_point_text_advert"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="4dp"
-            android:src="@drawable/ic_stars"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+    <TextView
+        android:id="@+id/statu_advert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Şoför"
+        android:textColor="@color/mavi"
+        app:layout_constraintBottom_toTopOf="@+id/include3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include2" />
 
-        <TextView
-            android:id="@+id/user_point_advert"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="4.8"
-            android:textColor="@color/mavi"
-            android:textSize="10dp"
-            app:layout_constraintEnd_toEndOf="@+id/user_point_text_advert"
-            app:layout_constraintStart_toStartOf="@+id/user_point_text_advert"
-            app:layout_constraintTop_toBottomOf="@+id/user_point_text_advert" />
+    <ImageView
+        android:id="@+id/user_point_text_advert"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginStart="8dp"
+        android:src="@drawable/ic_stars"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include2" />
 
-        <TextView
-            android:id="@+id/advert_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="24/05/2019"
-            app:layout_constraintEnd_toEndOf="@+id/statu_advert"
-            app:layout_constraintStart_toStartOf="@+id/statu_advert"
-            app:layout_constraintTop_toBottomOf="@+id/statu_advert" />
+    <TextView
+        android:id="@+id/user_point_advert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="4.8"
+        android:textColor="@color/mavi"
+        android:textSize="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/user_point_text_advert"
+        app:layout_constraintStart_toEndOf="@+id/user_point_text_advert"
+        app:layout_constraintTop_toTopOf="@+id/user_point_text_advert" />
 
-
-    </android.support.constraint.ConstraintLayout>
-</android.support.v7.widget.CardView>
+    <ImageView
+        android:id="@+id/option_advert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_menu_bid" />
+</android.support.constraint.ConstraintLayout>

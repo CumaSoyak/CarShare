@@ -3,14 +3,14 @@ package com.araba.cuma.araba.Adapter;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -46,7 +46,6 @@ public class AdvertAdapter extends RecyclerView.Adapter<AdvertAdapter.MyviewHold
     private Context context;
     private boolean visibleChoose = false;
 
-
     public AdvertAdapter(ArrayList<Advert> advertList, Context context) {
         this.context = context;
         this.advertList = advertList;
@@ -68,10 +67,9 @@ public class AdvertAdapter extends RecyclerView.Adapter<AdvertAdapter.MyviewHold
 
     @Override
     public void onBindViewHolder(@NonNull final MyviewHolder myviewHolder, final int i) {
-        final Advert advert = advertList.get(i);
+        final Advert advert= advertList.get(i);
         if (visibleChoose) {
-            myviewHolder.optionAdvert.setVisibility(View.GONE);
-            myviewHolder.bidButton.setVisibility(View.GONE);
+             myviewHolder.bidButton.setVisibility(View.GONE);
         }
         myviewHolder.nameSurnameAdvert.setText(advert.getNameSurname());
         myviewHolder.fromAdvert.setText(advert.getFromCity());
@@ -119,33 +117,7 @@ public class AdvertAdapter extends RecyclerView.Adapter<AdvertAdapter.MyviewHold
         myviewHolder.optionAdvert.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                PopupMenu popupMenu = new PopupMenu(context, myviewHolder.optionAdvert);
-                popupMenu.inflate(R.menu.advert_option);
-                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem menuItem) {
-                        String dbName = null;
-                        AdvertOption advertOption;
-                        advertOption = new AdvertOption(context);
-                        switch (menuItem.getItemId()) {
-                            case R.id.complaint:
-                                dbName = "ComplaintAdvert";
-                                break;
-                            case R.id.save:
-                                dbName = "SaveAdvert";
-                                break;
-                        }
-                        if (dbName != null) {
-                            advertOption.optionAdvert(dbName,
-                                    advert.getAdvertId(), advert.getUserId(), advert.getStatus(), advert.getImageUrl(),
-                                    advert.getNameSurname(), advert.getFromCity(), advert.getToCity(), advert.getDate(),
-                                    advert.getTime(), advert.getDescription(), advert.getDriverPerson(),
-                                    advert.getTravelerPerson(), advert.getCarModel(), advert.getMaterial(), fuser.getUid());
-                        }
-                        return false;
-                    }
-                });
-                popupMenu.show();
+                optionAdvert(myviewHolder,advert,visibleChoose);
             }
         });
     }
@@ -159,9 +131,9 @@ public class AdvertAdapter extends RecyclerView.Adapter<AdvertAdapter.MyviewHold
     public class MyviewHolder extends RecyclerView.ViewHolder {
         private TextView statusAdvert, fromAdvert,
                 toAdvert, nameSurnameAdvert;
-        private CardView cardViewAdvert;
+        private ConstraintLayout cardViewAdvert;
         private ImageView userImageAdvert, optionAdvert;
-        private TextView userPointAdvert, advertDate;
+        private TextView userPointAdvert, advertDate, advertTime;
         private TextView bidButton;
 
         public MyviewHolder(@NonNull View itemView) {
@@ -176,6 +148,55 @@ public class AdvertAdapter extends RecyclerView.Adapter<AdvertAdapter.MyviewHold
             userPointAdvert = itemView.findViewById(R.id.user_point_advert);
             optionAdvert = itemView.findViewById(R.id.option_advert);
             advertDate = itemView.findViewById(R.id.advert_date);
+            advertTime = itemView.findViewById(R.id.advert_time);
         }
+    }
+
+    private void optionAdvert(MyviewHolder myviewHolder,final Advert advert,boolean visibleChoose) {
+        final PopupMenu popupMenu = new PopupMenu(context, myviewHolder.optionAdvert);
+        Menu menu=popupMenu.getMenu();
+        popupMenu.inflate(R.menu.advert_option);
+        if (visibleChoose){
+            menu.findItem(R.id.complaint).setVisible(false);
+            menu.findItem(R.id.save).setVisible(false);
+            menu.findItem(R.id.delete).setVisible(true);
+
+        }
+        if (fuser.getUid().equals(advert.getUserId())) {
+            menu.findItem(R.id.delete).setVisible(true);
+        }
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                String dbName ;
+                AdvertOption advertOption;
+                advertOption = new AdvertOption(context);
+                switch (menuItem.getItemId()) {
+                    case R.id.complaint:
+                        dbName = "ComplaintAdvert";
+                        advertOption.advertAddOrComplation(dbName,
+                                advert.getAdvertId(), advert.getUserId(), advert.getStatus(), advert.getImageUrl(),
+                                advert.getNameSurname(), advert.getFromCity(), advert.getToCity(), advert.getDate(),
+                                advert.getTime(), advert.getDescription(), advert.getDriverPerson(),
+                                advert.getTravelerPerson(), advert.getCarModel(), advert.getMaterial(), fuser.getUid());
+                        break;
+                    case R.id.save:
+                        dbName = "SaveAdvert";
+                        advertOption.advertAddOrComplation(dbName,
+                                advert.getAdvertId(), advert.getUserId(), advert.getStatus(), advert.getImageUrl(),
+                                advert.getNameSurname(), advert.getFromCity(), advert.getToCity(), advert.getDate(),
+                                advert.getTime(), advert.getDescription(), advert.getDriverPerson(),
+                                advert.getTravelerPerson(), advert.getCarModel(), advert.getMaterial(), fuser.getUid());
+                        break;
+                    case R.id.delete:
+                        advertOption.deleteAdvert(advert.getAdvertId());
+                        notifyDataSetChanged();
+                        break;
+                }
+                return false;
+            }
+        });
+        popupMenu.show();
     }
 }

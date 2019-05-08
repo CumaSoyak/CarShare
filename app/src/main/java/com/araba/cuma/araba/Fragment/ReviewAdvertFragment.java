@@ -6,7 +6,11 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +20,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.araba.cuma.araba.Activity.MainActivity;
 import com.araba.cuma.araba.Model.Bid;
 import com.araba.cuma.araba.Model.Users;
 import com.araba.cuma.araba.R;
+import com.araba.cuma.araba.ToolbarSetup;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -26,6 +32,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
@@ -55,7 +62,7 @@ public class ReviewAdvertFragment extends Fragment {
 
     private String mUserId, mStatus, mUserPhoto, mUserName, mFromCity, mToCity, mdate,
             mTime, mPerson, mCar, mMaterial, mDescription, mAdvertId;
-    private String currentUserPhoto,currentUserName;
+    private String currentUserPhoto, currentUserName;
 
 
     public ReviewAdvertFragment() {
@@ -63,17 +70,21 @@ public class ReviewAdvertFragment extends Fragment {
 
     private ImageView imagePhoto, carOrMaterialImage;
     private TextView nameSurname, fromcity, toCity, date,
-            time, person, carOrMaterial;
+            time, person, carOrMaterial, status;
     @Nullable
     private TextView description;
-    private Button bid;
+    private TextView bid;
     private EditText bidEdittext;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private FirebaseUser user;
     private FirebaseAuth firebaseAuth;
     private String currentUserId;
+    private Toolbar toolbar;
+    private AppBarLayout appBarLayout;
+
     View view;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -82,24 +93,35 @@ public class ReviewAdvertFragment extends Fragment {
         firebaseAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();//todo
-        user = firebaseAuth.getCurrentUser();
-        currentUserId = user.getUid();
+
         initView();
         printData();
         getNameAndPhoto();
+        MainActivity.navigation.setVisibility(View.GONE);
+        setupToolbar();
         bid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                bidPost(currentUserPhoto,currentUserName);
+                user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    currentUserId = user.getUid();
+                    if ((!currentUserId.equals(mUserId) && !(bidEdittext.getText().toString().isEmpty() || bidEdittext.getText().toString().matches("")))) {
+                        bidPost(currentUserPhoto, currentUserName);
+                    }
+                } else {
+                    getFragmentManager().beginTransaction().replace(R.id.main_framelayout, new RegisterFragment()).commit();
+
+                }
+
             }
         });
         return view;
 
     }
 
-
     private void initView() {
         imagePhoto = view.findViewById(R.id.review_image);
+        status = view.findViewById(R.id.status);
         nameSurname = view.findViewById(R.id.review_name);
         fromcity = view.findViewById(R.id.review_from_city);
         toCity = view.findViewById(R.id.review_to_city);
@@ -111,7 +133,23 @@ public class ReviewAdvertFragment extends Fragment {
         description = view.findViewById(R.id.review_decription);
         bidEdittext = view.findViewById(R.id.review_edit_text);
         bid = view.findViewById(R.id.review_bid_button);
+        appBarLayout = view.findViewById(R.id.app_bar_layout);
+        toolbar = appBarLayout.findViewById(R.id.toolbar);
 
+    }
+
+    private void setupToolbar() {
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Teklif ver");
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.main_framelayout, new HomeFragment()).addToBackStack(null).commit();
+
+            }
+        });
     }
 
     @Override
@@ -134,53 +172,61 @@ public class ReviewAdvertFragment extends Fragment {
 
         }
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        MainActivity.navigation.setVisibility(View.VISIBLE);
+    }
+
     private void getNameAndPhoto() {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         currentUserPhoto = sharedPreferences.getString(CURRENT_PHOTO_URL, "");
         currentUserName = sharedPreferences.getString(CURRENT_NAME, "");
     }
 
-
-    private void bidPost(String photo,String name) {
-        UUID uuıd = UUID.randomUUID();
-        String uuıdString = uuıd.toString();
-        FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
-        DocumentReference newAdvert = firebaseFirestore.collection("teklif").document(mAdvertId);
-        Bid bid = new Bid();
-        bid.setAdvertId(mAdvertId);
-        bid.setGiveBidUserId(currentUserId);//teklif veren id
-        bid.setReceiveBidUserId(mUserId);//teklif alan id
-        bid.setImageUrl(photo);
-        bid.setNameSurname(name);
-        bid.setFromCity(mFromCity);
-        bid.setToCity(mToCity);
+    private void bidPost(String photo, String name) {
+        final DatabaseReference bidReference =
+                FirebaseDatabase.getInstance().getReference("teklif")
+                        .child(mUserId)
+                        .child(currentUserId);
+        bidReference.child("receiveBidUserId").setValue(mUserId);
+        bidReference.child("imageUrl").setValue(photo);
+        bidReference.child("advertId").setValue(mAdvertId);
+        bidReference.child("giveBidUserId").setValue(currentUserId);
+        bidReference.child("nameSurname").setValue(name);
+        bidReference.child("fromCity").setValue(mFromCity);
+        bidReference.child("toCity").setValue(mToCity);
+        bidReference.child("time").setValue(mTime);
+        bidReference.child("description").setValue(mDescription);
         if (mStatus.equals(getResources().getString(R.string.passenger))) {
-            bid.setStatus(getResources().getString(R.string.passenger));
-            bid.setMaterial(mMaterial);
-            bid.setTravelerPerson(mPerson);
+
+            bidReference.child("status").setValue(getResources().getString(R.string.passenger));
+            bidReference.child("material").setValue(mMaterial);
+            bidReference.child("travelerPerson").setValue(mPerson);
+
         }
         if (mStatus.equals(getResources().getString(R.string.chauffeur))) {
-            bid.setStatus(getResources().getString(R.string.chauffeur));
-            bid.setCarModel(mCar);
-            bid.setDriverPerson(mPerson);
-        }
-        bid.setDate(mdate);
-        bid.setTime(mTime);
-        bid.setDescription(mDescription);
-        bid.setPrice(bidEdittext.getText().toString());
-        newAdvert.set(bid).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(getActivity(), "Paylaşılmıştır", Toast.LENGTH_SHORT).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            bidReference.child("status").setValue(getResources().getString(R.string.chauffeur));
+            bidReference.child("carModel").setValue(mCar);
+            bidReference.child("driverPerson").setValue(mPerson);
 
+        }
+        bidReference.child("price").setValue(bidEdittext.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    MessageFragment messageFragment = new MessageFragment();
+                    messageFragment.createNotification(mUserId, "display");
+                    Snackbar snackBar = Snackbar.make(getActivity().findViewById(android.R.id.content),
+                            "Teklifiniz iletilmiştir. İyi bir teklifti :)", Snackbar.LENGTH_LONG);
+                    snackBar.show();
+                } else {
+                    Snackbar snackBar = Snackbar.make(getActivity().findViewById(android.R.id.content),
+                            "Daha sonra tekrar deneyiniz", Snackbar.LENGTH_LONG);
+                }
             }
         });
-
     }
 
     private void printData() {
@@ -191,9 +237,10 @@ public class ReviewAdvertFragment extends Fragment {
         date.setText(mdate);
         time.setText(mTime);
         person.setText(mPerson);
+        status.setText(mStatus);
         if (mStatus.equals(getResources().getString(R.string.passenger))) {
             carOrMaterial.setText(mMaterial);
-            carOrMaterialImage.setImageResource(R.drawable.ic_material);
+            carOrMaterialImage.setImageResource(R.drawable.ic_material_review);
         } else {
             carOrMaterial.setText(mCar);
         }

@@ -6,6 +6,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -21,9 +22,9 @@ public class AdvertOption {
         this.context = context;
     }
 
-    public void optionAdvert(final String dbName, String advertId, String userId, String status, String imageUrl, String nameSurname,
-                             String fromCity, String toCity, String date, String time, String description, String driverPerson,
-                             String travelerPerson, String carModel, String material, String savedUserId) {
+    public void advertAddOrComplation(final String dbName, String advertId, String userId, String status, String imageUrl, String nameSurname,
+                                      String fromCity, String toCity, String date, String time, String description, String driverPerson,
+                                      String travelerPerson, String carModel, String material, String savedUserId) {
         optionAdvert.put("advertId", advertId);
         optionAdvert.put("userId", userId);
         optionAdvert.put("status", status);
@@ -56,4 +57,31 @@ public class AdvertOption {
             }
         });
     }
+    public  void deleteAdvert(String advertId){
+        firebaseFirestore.collection("ilan").document(advertId)
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Toast.makeText(context, "İlan silinmiştir", Toast.LENGTH_SHORT).show();
+                    return;
+                      }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                     }
+                });
+
+    }
+    public void deleteBid(String userId,String bidId){
+        FirebaseDatabase.getInstance().getReference()
+                .child("teklif").child(userId).child(bidId).removeValue().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(context, "Teklif silinmiştir", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }

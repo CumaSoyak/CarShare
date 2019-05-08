@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.araba.cuma.araba.Model.Chat;
@@ -53,6 +54,10 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.MyviewHolder
         myviewHolder.fromCity.setText(chats.getFromCity());
         myviewHolder.toCity.setText(chats.getToCity());
         myviewHolder.friendName.setText(chats.getFriendName());
+        if (chats.getSeenMessage().equals("display")) {
+            myviewHolder.seenMessage.setVisibility(View.VISIBLE);
+        } else
+            myviewHolder.seenMessage.setVisibility(View.GONE);
         myviewHolder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,7 +85,8 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.MyviewHolder
 
     public class MyviewHolder extends RecyclerView.ViewHolder {
         ImageView photo;
-        TextView fromCity, toCity,friendName;
+        TextView fromCity, toCity, friendName;
+        RelativeLayout seenMessage;
         ConstraintLayout cardView;
 
         public MyviewHolder(@NonNull View itemView) {
@@ -89,7 +95,8 @@ public class ChatsAdapter extends RecyclerView.Adapter<ChatsAdapter.MyviewHolder
             fromCity = itemView.findViewById(R.id.from_chats);
             toCity = itemView.findViewById(R.id.to_chats);
             cardView = itemView.findViewById(R.id.chat_cardview);
-            friendName=itemView.findViewById(R.id.friend_name);
+            friendName = itemView.findViewById(R.id.friend_name);
+            seenMessage = itemView.findViewById(R.id.seen_message);
         }
     }
 }

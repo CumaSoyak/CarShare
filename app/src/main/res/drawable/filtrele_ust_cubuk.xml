@@ -4,9 +4,7 @@
      <size
         android:width="100dp"
         android:height="25dp"/>
-    <corners
-        android:topLeftRadius="@dimen/radius"
-        android:topRightRadius="@dimen/radius"/>
+
      <solid android:color="@color/mavi"/>
 
 </shape>

@@ -11,11 +11,13 @@ public class Chat {
     private String message;
     private String receiver;
     private String sender;
+    private String seenMessage;
 
     public Chat() {
     }
 
-    public Chat(String friendId, String friendName, String friendPhoto, String fromCity, String messageUuid, String toCity, String message, String receiver, String sender) {
+    public Chat(String friendId, String friendName, String friendPhoto, String fromCity,
+                String messageUuid, String toCity, String message, String receiver, String sender,String seenMessage) {
         this.friendId = friendId;
         this.friendName = friendName;
         this.friendPhoto = friendPhoto;
@@ -25,6 +27,15 @@ public class Chat {
         this.message = message;
         this.receiver = receiver;
         this.sender = sender;
+        this.seenMessage=seenMessage;
+    }
+
+    public String getSeenMessage() {
+        return seenMessage;
+    }
+
+    public void setSeenMessage(String seenMessage) {
+        this.seenMessage = seenMessage;
     }
 
     public String getFriendId() {
