@@ -9,4 +9,9 @@
         android:id="@+id/save"
         android:title="Kaydet"
          />
+    <item
+        android:id="@+id/delete"
+        android:title="Sil"
+        android:visible="false"
+        />
 </menu>

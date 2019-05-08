@@ -10,39 +10,32 @@
 
     <TextView
         android:id="@+id/to_chats"
-        android:layout_width="150dp"
+        style="@style/CityStyle"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        android:layout_weight="1"
-        android:gravity="start"
         android:text="Malatya/Pütürge"
         app:layout_constraintBottom_toTopOf="@+id/include"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/from_chats"
         app:layout_constraintTop_toBottomOf="@+id/from_chats" />
 
     <TextView
         android:id="@+id/from_chats"
-        android:layout_width="150dp"
+        style="@style/CityStyle"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:layout_weight="1"
-        android:gravity="start"
-        android:text="Niğde/bor"
+        android:text="AfonKarahisar/kiçağaç"
         app:layout_constraintBottom_toTopOf="@+id/to_chats"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/imageView8"
         app:layout_constraintTop_toTopOf="parent" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/chats_photo_user"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
         android:src="@drawable/dddd"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -61,12 +54,48 @@
 
     <TextView
         android:id="@+id/friend_name"
-        android:layout_width="wrap_content"
+        style="@style/NameStyle"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="Cuma Soyak"
+        android:layout_width="100dp"
+        android:layout_marginStart="8dp"
+        android:text="Cuma Soyak Deniz"
         app:layout_constraintBottom_toBottomOf="@+id/chats_photo_user"
         app:layout_constraintStart_toEndOf="@+id/chats_photo_user"
         app:layout_constraintTop_toTopOf="@+id/chats_photo_user" />
+
+    <ImageView
+        android:id="@+id/imageView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.485"
+        app:srcCompat="@drawable/ic_menu_bid" />
+
+    <RelativeLayout
+        android:id="@+id/seen_message"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/include"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@drawable/button_blue"
+            android:gravity="center"
+            android:text="1"
+            android:textColor="@color/beyaz" />
+    </RelativeLayout>
+
+
+
 
 </android.support.constraint.ConstraintLayout>

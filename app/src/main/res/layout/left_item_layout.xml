@@ -3,27 +3,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:padding="8dp">
+    android:paddingStart="10dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image_message"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_gravity="center"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="center|top"
         android:src="@mipmap/ic_launcher" />
 
     <TextView
         android:id="@+id/show_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:minWidth="100dp"
         android:layout_gravity="center"
+        android:minWidth="100dp"
+        android:minHeight="40dp"
+        android:layout_margin="2dp"
+        android:layout_marginStart="4dp"
+        android:textColor="@color/text_color_black"
+        android:text="scscsdcsefse  scscsdcsefse scscsdcsefse scscsdcsefse scscsdcsefse scscsdcsefse scscsdcsefse  scscsdcsefse scscsdcsefse scscsdcsefse scscsdcsefse scscsdcsefse scscsdcsefse scscsdcsefse scscsdcsefse scscsdcsefse scscsdcsefse"
         android:layout_marginLeft="5dp"
-        android:paddingLeft="10dp"
         android:layout_marginTop="5dp"
         android:background="@drawable/custom_message_left"
         android:gravity="center_vertical"
-         android:textSize="18sp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:textSize="14sp"
         tools:ignore="InefficientWeight,RtlHardcoded" />
 
 

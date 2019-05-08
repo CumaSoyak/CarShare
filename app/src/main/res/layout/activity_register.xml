@@ -4,113 +4,136 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/review_back"
-    android:fillViewport="true"
-    android:cursorVisible="false">
+    android:cursorVisible="false"
+    android:fillViewport="true">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp">
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profile_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_gravity="center"
-                android:src="@color/beyaz"
-                app:civ_border_color="@color/mavi"
-                app:civ_border_width="2dp" />
+        android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/select_photo_text"
-                android:layout_width="75dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="Fotoğraf seçiniz"
-                android:textColor="@color/mavi" />
-            <ProgressBar
-                android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:visibility="gone"/>
-        </FrameLayout>
-
-        <EditText
-            android:id="@+id/adSoyad"
-            style="@style/RegisterEditTextStyle"
-            android:hint="Ad Soyad" />
-
-        <EditText
-            android:id="@+id/email"
-            style="@style/RegisterEditTextStyle"
-            android:hint="E mail adresi " />
-
-        <EditText
-            android:id="@+id/parola_tekrar"
-            style="@style/RegisterEditTextStyle"
-            android:hint="Parola" />
-
-        <EditText
-            android:id="@+id/parola"
-            style="@style/RegisterEditTextStyle"
-            android:hint="Parola(Tekrar)" />
-
-        <LinearLayout
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginBottom="3dp"
-            android:orientation="horizontal">
+            android:layout_gravity="center"
+            android:elevation="2dp"
+            android:visibility="gone" />
 
-            <CheckBox
-                android:id="@+id/conditions_check"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/select_photo"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="20dp">
+
+
+                <TextView
+                    android:id="@+id/select_photo_text"
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="Fotoğraf seçiniz"
+                    android:textColor="@color/mavi" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="50dp"
+                    android:src="@drawable/ic_touch_app" />
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="5dp"
+                    android:elevation="3dp" />
+
+
+            </RelativeLayout>
+
+
+            <EditText
+                android:id="@+id/adSoyad"
+                style="@style/RegisterEditTextStyle"
+                android:hint="Ad Soyad" />
+
+            <EditText
+                android:id="@+id/email"
+                style="@style/RegisterEditTextStyle"
+                android:hint="E mail adresi " />
+
+            <EditText
+                android:id="@+id/parola_tekrar"
+                style="@style/RegisterEditTextStyle"
+                android:hint="Parola" />
+
+            <EditText
+                android:id="@+id/parola"
+                style="@style/RegisterEditTextStyle"
+                android:hint="Parola(Tekrar)" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Agress with the "
-                android:checked="true"
-                android:textColor="@color/text_color" />
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/conditions_check"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:fontFamily="@font/capriola"
+                    android:text="Agress with the "
+                    android:textColor="@color/text_color_black" />
+
+                <TextView
+                    android:id="@+id/conditions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/capriola"
+                    android:gravity="center"
+                    android:text="conditions"
+                    android:textColor="@color/mavi" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="32dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/custom_register_login_button"
+                android:text="Kaydol"
+                android:textColor="@color/beyaz" />
 
             <TextView
-                android:id="@+id/conditions"
-                android:layout_width="wrap_content"
-                android:layout_height="25dp"
-                android:layout_marginStart="5dp"
-                android:text="conditions"
-                android:textColor="@color/mavi" />
+                android:id="@+id/giris_signup"
+                style="@style/RegistretionTextStyle"
+                android:layout_height="40dp"
+                android:layout_marginBottom="50dp"
+                android:fontFamily="@font/capriola"
+                android:text="Giriş Yap"
+                android:textColor="@color/text_color_black" />
+
+
         </LinearLayout>
-
-        <Button
-            android:id="@+id/login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/custom_register_login_button"
-            android:text="Kaydol"
-            android:textColor="@color/beyaz" />
-
-        <TextView
-            android:id="@+id/giris_signup"
-            style="@style/RegistretionTextStyle"
-            android:fontFamily="@font/baloo"
-            android:layout_height="40dp"
-            android:text="Giriş Yap" />
-
-
-
-
-    </LinearLayout>
-
+    </FrameLayout>
 </ScrollView>
 
 

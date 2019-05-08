@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.araba.cuma.araba.Adapter.ChatsAdapter;
@@ -40,6 +42,8 @@ public class ChatsFragment extends Fragment {
     private FirebaseUser fuser;
     private DatabaseReference reference;
     private String currentUserId;
+    private ProgressBar progressBar;
+    private LinearLayout emptyChatsInfo;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,8 +53,10 @@ public class ChatsFragment extends Fragment {
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         currentUserId = fuser.getUid();
 
-
         recyclerView = view.findViewById(R.id.recylerview_chat_list);
+        progressBar = view.findViewById(R.id.progressbar);
+        emptyChatsInfo = view.findViewById(R.id.info);
+
         chatList = new ArrayList<>();
         chatsAdapter = new ChatsAdapter(chatList, getActivity());
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -58,6 +64,8 @@ public class ChatsFragment extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
         chatList();
+        MessageFragment messageFragment=new MessageFragment();
+        messageFragment.createNotification(currentUserId,"nondisplay");
         updateToken(FirebaseInstanceId.getInstance().getToken());
 
 
@@ -76,7 +84,14 @@ public class ChatsFragment extends Fragment {
                     recyclerView.setAdapter(chatsAdapter);
                     chatsAdapter.notifyDataSetChanged();
                 }
+                progressBar.setVisibility(View.GONE);
+                if (chatList.size() == 0) {
+                    emptyChatsInfo.setVisibility(View.VISIBLE);
+                }
+                else
+                    emptyChatsInfo.setVisibility(View.GONE);
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

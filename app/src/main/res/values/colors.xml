@@ -10,8 +10,10 @@
     <color name="acik_mavi">#0066FF</color>
     <color name="mor">#7714a1</color>
     <color name="renk">#6956F7</color>
-    <color name="gri">#f3fffc</color>
-    <color name="text_color">#787883</color>
+    <color name="gri">#f1f4f7</color>
+    <color name="koyu_gri">#e8edf1</color>
+    <color name="text_color">#bac9d8</color>
+    <color name="text_color_black">#46515e</color>
     <color name="acik_gri">#D3D3D3</color>
     <color name="cok_acik_gri">#ededed</color>
 

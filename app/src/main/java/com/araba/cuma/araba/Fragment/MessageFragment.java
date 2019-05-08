@@ -17,12 +17,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.araba.cuma.araba.Activity.MainActivity;
 import com.araba.cuma.araba.Adapter.MessageAdapter;
 import com.araba.cuma.araba.Api.APIService;
 import com.araba.cuma.araba.Model.Chat;
-import com.araba.cuma.araba.Model.Users;
 import com.araba.cuma.araba.Notifications.Client;
 import com.araba.cuma.araba.Notifications.Data;
 import com.araba.cuma.araba.Notifications.MyResponse;
@@ -30,9 +29,7 @@ import com.araba.cuma.araba.Notifications.Sender;
 import com.araba.cuma.araba.Notifications.Token;
 import com.araba.cuma.araba.R;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -42,8 +39,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import static com.araba.cuma.araba.Constant.*;
@@ -61,11 +56,10 @@ import retrofit2.Response;
 
 public class MessageFragment extends Fragment {
     private RecyclerView recyclerView;
-    private CircleImageView circleImageView;
     private MessageAdapter messageAdapter;
     private FirebaseUser fuser;
     private DatabaseReference reference;
-    private ImageButton btn_send;
+    private TextView btn_send;
     private EditText text_send;
     private Toolbar toolbar;
     private APIService apiService;
@@ -93,6 +87,7 @@ public class MessageFragment extends Fragment {
     private List<String> messageUuidList;
     private List<Chat> messageList;
     private String msg;
+    private boolean firstMessageCretad=false;
 
     public static MessageFragment newInstance(String param1) {
         MessageFragment fragment = new MessageFragment();
@@ -107,6 +102,7 @@ public class MessageFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_message, container, false);
         initView();
         setupToolbar();
+        MainActivity.navigation.setVisibility(View.GONE);
         fuser = FirebaseAuth.getInstance().getCurrentUser();
         db = FirebaseFirestore.getInstance();
         currentUserId = fuser.getUid();
@@ -122,15 +118,11 @@ public class MessageFragment extends Fragment {
             public void onClick(View view) {
                 msg = text_send.getText().toString();
                 if (!msg.equals("")) {
-                    if (messageUuidListKey.contains(friendUserId)) {
+                     if (messageUuidListKey.contains(friendUserId)) {
                         getMessageUuidSender();
-                        Toast.makeText(getActivity(), "Var", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(getActivity(), "Yok", Toast.LENGTH_SHORT).show();
-                        createMessageUuid();
+                     } else {
+                         createMessageUuid();
                     }
-                } else {
-                    Toast.makeText(getActivity(), "Mesaj giriniz", Toast.LENGTH_SHORT).show();
                 }
                 text_send.setText("");
             }
@@ -153,8 +145,40 @@ public class MessageFragment extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onStop() {
+        super.onStop();
+        if (firstMessageCretad) {
+            seenPositionChangeFriend("display");
+            createNotification(friendUserId,"display");
+            firstMessageCretad=false;
+        }
+        MainActivity.navigation.setVisibility(View.VISIBLE);
+
+    }
+    @Override
+    public void onDetach() {
+        super.onDetach();
+    }
+    public void createNotification(String friendUserId,String value) {
+        final DatabaseReference chatRefReceiverCurrent =
+                FirebaseDatabase.getInstance().getReference("Notification")
+                        .child(friendUserId);
+        chatRefReceiverCurrent.child("notification").setValue(value);
+
+    }
+    private void seenPositionChangeFriend(String position) {
+        final DatabaseReference chatRefReceiverCurrent =
+                FirebaseDatabase.getInstance().getReference("Chatlist")
+                        .child(friendUserId)
+                        .child(currentUserId);
+        chatRefReceiverCurrent.child("seenMessage").setValue(position);
+    }
+    private void seenPositionChangeCurrent(String position) {
+        final DatabaseReference chatRefReceiverCurrent =
+                FirebaseDatabase.getInstance().getReference("Chatlist")
+                        .child(currentUserId)
+                        .child(friendUserId);
+        chatRefReceiverCurrent.child("seenMessage").setValue(position);
     }
 
     private void print() {
@@ -181,7 +205,7 @@ public class MessageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 NotificationFragment notificationFragment = new NotificationFragment();
-                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left)
+                getFragmentManager().beginTransaction()
                         .replace(R.id.main_framelayout, notificationFragment).addToBackStack(null).commit();
 
             }
@@ -190,8 +214,9 @@ public class MessageFragment extends Fragment {
 
     public void setupRecylerView() {
         messageList = new ArrayList<>();
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setHasFixedSize(true);
     }
@@ -215,6 +240,7 @@ public class MessageFragment extends Fragment {
                     if (messageUuidListKey.contains(friendUserId)) {
                         if (valueCheck) {
                             getMessageUuid();
+                       seenPositionChangeCurrent("nondisplay");
                             valueCheck = false;
                         }
                     }
@@ -232,7 +258,8 @@ public class MessageFragment extends Fragment {
     private void getMessageUuid() {
         messageUuidList = new ArrayList<>();
         messageUuidList.clear();
-        reference = FirebaseDatabase.getInstance().getReference("Chatlist").child(currentUserId).child(friendUserId);
+        reference = FirebaseDatabase.getInstance().getReference("Chatlist").
+                child(currentUserId).child(friendUserId);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -289,6 +316,7 @@ public class MessageFragment extends Fragment {
                 }
 
 
+
             }
 
             @Override
@@ -304,6 +332,7 @@ public class MessageFragment extends Fragment {
         final DatabaseReference chatRefReceiverCurrent = FirebaseDatabase.getInstance().getReference("Chatlist")
                 .child(currentUserId)
                 .child(friendUserId);
+        chatRefReceiverCurrent.child("seenMessage").setValue("display");
         chatRefReceiverCurrent.child("friendId").setValue(friendUserId);
         chatRefReceiverCurrent.child("friendName").setValue(friendName);
         chatRefReceiverCurrent.child("friendPhoto").setValue(friendUserPhoto);
@@ -313,28 +342,29 @@ public class MessageFragment extends Fragment {
         final DatabaseReference chatRefReceiverFriend = FirebaseDatabase.getInstance().getReference("Chatlist")
                 .child(friendUserId)
                 .child(currentUserId);
+        chatRefReceiverFriend.child("seenMessage").setValue("display");
         chatRefReceiverFriend.child("friendId").setValue(currentUserId);
         chatRefReceiverFriend.child("friendName").setValue(currentUserName);
         chatRefReceiverFriend.child("friendPhoto").setValue(currentUserPhoto);
         chatRefReceiverFriend.child("messageUuid").setValue(messageUuid);
         chatRefReceiverFriend.child("fromCity").setValue(fromCity);
         chatRefReceiverFriend.child("toCity").setValue(toCity);
-
         sendMessage(currentUserId, friendUserId, msg, messageUuid);
 
 
     }
 
     private void sendMessage(String sender, String receiver, String message, String messageUuid) {
-
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference();
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("sender", sender);
         hashMap.put("receiver", receiver);
         hashMap.put("message", message);
         reference.child("Message").child(messageUuid).push().setValue(hashMap);
-
+        sendNotifiaction(friendUserId, sender, message);
+        firstMessageCretad = true;
     }
+
 
     private void updateToken(String token) {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Tokens");
@@ -354,15 +384,13 @@ public class MessageFragment extends Fragment {
                             friendUserId);
 
                     Sender sender = new Sender(data, token.getToken());
-
                     apiService.sendNotification(sender)
                             .enqueue(new Callback<MyResponse>() {
                                 @Override
                                 public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                                     if (response.code() == 200) {
                                         if (response.body().success != 1) {
-                                            Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_SHORT).show();
-                                        }
+                                         }
                                     }
                                 }
 

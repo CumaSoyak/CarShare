@@ -16,7 +16,7 @@ public class ToolbarSetup {
             @Override
             public void onClick(View view) {
                 ((AppCompatActivity) context).getSupportFragmentManager().beginTransaction()
-                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_left)
+                        .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
                         .replace(R.id.main_framelayout, new ProfileFragment())
                         .addToBackStack(null).commit();
 

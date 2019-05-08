@@ -12,6 +12,9 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.BottomSheetDialogFragment;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
@@ -30,8 +33,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.araba.cuma.araba.DateParse;
 import com.araba.cuma.araba.Model.Advert;
 import com.araba.cuma.araba.Model.Users;
+import com.araba.cuma.araba.Notifications.Data;
 import com.araba.cuma.araba.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -51,56 +56,41 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
-import static com.araba.cuma.araba.Constant.CURRENT_NAME;
-import static com.araba.cuma.araba.Constant.CURRENT_PHOTO_URL;
-import static com.araba.cuma.araba.Fragment.LocationFragment.ADVERT_FROM_CITY;
-import static com.araba.cuma.araba.Fragment.LocationFragment.ADVERT_TO_CITY;
-import static com.araba.cuma.araba.Fragment.LocationFragment.CITY;
-import static com.araba.cuma.araba.Fragment.LocationFragment.SEARCH_FROM_CITY;
-import static com.araba.cuma.araba.Fragment.LocationFragment.SEARCH_TO_CITY;
+import static com.araba.cuma.araba.Constant.*;
+
 
 public class AdvertFragment extends Fragment implements View.OnClickListener {
     View view;
-    private LinearLayout linearLayoutTraveler, linearLayoutDriver, layoutPlate;
+    private RelativeLayout linearLayoutTraveler, linearLayoutDriver;
     private ImageView driverImage, travelerImage;
     private TextView travelerText, driverText;
-    private Spinner travelerPersonSpinner, materialSpinner, driverPersonSpinner, carModelSpinner;
-    private EditText description, price, plate;
-    private Button selectDate, selectTime, post, fromCity, toCity;
+    private TextView travelerPersonSpinner, materialSpinner, driverPersonSpinner, carModelSpinner;
+    private EditText description;
+    private TextView selectDate, selectTime, post, fromCity, toCity;
     private ImageButton iki_tarih_arasi, iki_saat_arasi;
-    private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
     private FirebaseUser user;
     private FirebaseAuth firebaseAuth;
     private String userId;
     private String uuidString;
     private LinearLayout layoutCar, layoutMaterial, layoutPersonDriver, layoutPersonTraveler;
-    Activity activity = getActivity();
 
-    private List<String> personListTraveler;
-    private List<String> materialList;
-    private List<String> personListDriver;
-    private List<String> carModelList;
-
-    private ArrayAdapter<String> adapterPersonTraveler, adapterMaterial;
-    private ArrayAdapter<String> adapterPersonDriver, adapterCarModel;
 
     private DatePickerDialog.OnDateSetListener dateSetListener;
+    private BottomSheetDialog bottomSheetDialog;
 
-    private String cityInfoFrom = null, cityInfoTo = null;
     private SharedPreferences preferences;
     private static String statusString;
     private String userNameSurname = null;
     private String userPhoto = null;
-    private Users mUsers;
     private static final String LAYOUT_CHOOSE = "LAYOUT_CHOOSE";
+    private View lineOne, lineTwo, lineThree, lineFour, lineFive;
+    private TextView menuOne, menuTwo, menuThree, menuFour;
+    private String bottomSheetStatus;
+    private View mBottomViewTraveler, mBottomViewDriver;
 
 
     public static AdvertFragment newInstance(String param1, String param2) {
-        AdvertFragment fragment = new AdvertFragment();
-        Bundle args = new Bundle();
-
-        return fragment;
+        return new AdvertFragment();
     }
 
     @Override
@@ -108,19 +98,19 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_advert, container, false);
 
         firebaseAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference();//todo
+
+
         user = firebaseAuth.getCurrentUser();
         userId = user.getUid();
         preferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
 
 
         initView();
-        initSpinner();
+        bottomSheetSetup();
         selectDate();
         selectTime();
         getNameAndPhoto();
-getLayoutChoose();
+        getLayoutChoose();
         post.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -130,89 +120,62 @@ getLayoutChoose();
 
             }
         });
-        if (!preferences.getString(SEARCH_FROM_CITY, "0").equals("0")) {
 
-            fromCity.setText(preferences.getString(ADVERT_FROM_CITY, "1"));
-        }
+        fromCity.setText(FROM);
+        toCity.setText(TO);
 
-        if (!preferences.getString(SEARCH_TO_CITY, "0").equals("0")) {
 
-            toCity.setText(preferences.getString(ADVERT_TO_CITY, "1"));
-        }
         return view;
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            cityInfoFrom = getArguments().getString(ADVERT_FROM_CITY);
-            cityInfoTo = getArguments().getString(ADVERT_TO_CITY);
-            SharedPreferences preferences = this.getActivity().getSharedPreferences("pref", Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor = preferences.edit();
-            if (cityInfoFrom != null) {
-                editor.putString(ADVERT_FROM_CITY, cityInfoFrom);
-                editor.commit();
-            }
-            if (cityInfoTo != null) {
-                editor.putString(ADVERT_TO_CITY, cityInfoTo);
-                editor.commit();
 
-            }
-        }
         statusString = getResources().getString(R.string.passenger);
 
     }
 
-    private void saveLayoutChoose(String choose) {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(LAYOUT_CHOOSE, choose);
-        editor.commit();
 
-    }
-    private void getLayoutChoose() {
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String layoutChoose = sharedPreferences.getString(LAYOUT_CHOOSE, "0");
-     if (layoutChoose.equals("0")){
-         linearLayoutTraveler.performClick();
-     }
-     else if (layoutChoose.equals("1")){
-         linearLayoutDriver.performClick();
-     }
-    }
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.traveler_layout:
-                linearLayoutDriver.setBackgroundResource(R.drawable.anasayfa_secenek_right_tikla);
-                driverImage.setImageResource(R.drawable.ic_car_blue);
-                travelerImage.setImageResource(R.drawable.ic_traveler_white);
-                linearLayoutTraveler.setBackgroundResource(R.drawable.anasayfa_secenek_left);
-                travelerText.setTextColor(ContextCompat.getColor(getActivity(), R.color.beyaz));
-                driverText.setTextColor(ContextCompat.getColor(getActivity(), R.color.mavi));
-                layoutPlate.setVisibility(View.GONE);
+                linearLayoutTraveler.setBackgroundResource(R.color.beyaz);
+                travelerImage.setImageResource(R.drawable.ic_traveler_blue);
+                travelerText.setTextColor(ContextCompat.getColor(getActivity(), R.color.mavi));
+                mBottomViewTraveler.setBackgroundResource(R.color.mavi);
+                linearLayoutDriver.setBackgroundResource(R.color.gri);
+                driverImage.setImageResource(R.drawable.ic_car);
+                driverText.setTextColor(ContextCompat.getColor(getActivity(),
+                        R.color.text_color));
+                mBottomViewDriver.setBackgroundResource(R.color.gri);
                 layoutCar.setVisibility(View.GONE);
                 layoutPersonDriver.setVisibility(View.GONE);
                 layoutMaterial.setVisibility(View.VISIBLE);
                 layoutPersonTraveler.setVisibility(View.VISIBLE);
                 statusString = getResources().getString(R.string.passenger);
-        saveLayoutChoose("0");
+                saveLayoutChoose("0");
                 break;
             case R.id.driver_layout:
-                linearLayoutTraveler.setBackgroundResource(R.drawable.anasayfa_secenek_left_tikla);
-                travelerImage.setImageResource(R.drawable.ic_traveler_blue);
-                driverImage.setImageResource(R.drawable.ic_car_white);
-                linearLayoutDriver.setBackgroundResource(R.drawable.anasayfa_secenek_right);
-                travelerText.setTextColor(ContextCompat.getColor(getActivity(), R.color.mavi));
-                driverText.setTextColor(ContextCompat.getColor(getActivity(), R.color.beyaz));
-                layoutPlate.setVisibility(View.VISIBLE);
+
+                linearLayoutDriver.setBackgroundResource(R.color.beyaz);
+                driverImage.setImageResource(R.drawable.ic_car_blue);
+                driverText.setTextColor(ContextCompat.getColor(getActivity(), R.color.mavi));
+                mBottomViewDriver.setBackgroundResource(R.color.mavi);
+
+                linearLayoutTraveler.setBackgroundResource(R.color.gri);
+                travelerImage.setImageResource(R.drawable.ic_traveler);
+                travelerText.setTextColor(ContextCompat.getColor(getActivity(),
+                        R.color.text_color));
+                mBottomViewTraveler.setBackgroundResource(R.color.gri);
+
                 layoutCar.setVisibility(View.VISIBLE);
                 layoutPersonDriver.setVisibility(View.VISIBLE);
                 layoutMaterial.setVisibility(View.GONE);
                 layoutPersonTraveler.setVisibility(View.GONE);
                 statusString = getResources().getString(R.string.chauffeur);
-          saveLayoutChoose("1");
+                saveLayoutChoose("1");
                 break;
         }
         LocationFragment fragment = new LocationFragment();
@@ -221,24 +184,107 @@ getLayoutChoose();
             case R.id.from:
                 args.putString(CITY, ADVERT_FROM_CITY);
                 fragment.setArguments(args);
-                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left).replace(R.id.main_framelayout, fragment).addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().setCustomAnimations(
+                        R.anim.search_in_down, R.anim.search_out_up).replace(R.id.main_framelayout, fragment).addToBackStack(null).commit();
                 break;
             case R.id.to:
                 args.putString(CITY, ADVERT_TO_CITY);
                 fragment.setArguments(args);
-                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left).replace(R.id.main_framelayout, fragment).addToBackStack(null).commit();
+                getFragmentManager().beginTransaction().setCustomAnimations(R.anim.search_in_down, R.anim.search_out_up).replace(R.id.main_framelayout, fragment).addToBackStack(null).commit();
 
+                break;
+        }
+        switch (view.getId()) {
+            case R.id.menu_one:
+                printSpinner(menuOne.getText().toString());
+                break;
+            case R.id.menu_two:
+                printSpinner(menuTwo.getText().toString());
+                break;
+            case R.id.menu_three:
+                printSpinner(menuThree.getText().toString());
+                break;
+            case R.id.menu_four:
+                printSpinner(menuFour.getText().toString());
+
+                break;
+        }
+        switch (view.getId()) {
+            case R.id.person_traveler:
+                menuOne.setText("1 kişiyiz");
+                menuTwo.setText("2 kişiyiz");
+                menuThree.setText("3 kişiyiz");
+                menuFour.setText("4 veya daha fazlası");
+                bottomSheetStatus = "person_traveler";
+                bottomSheetDialog.show();
+                break;
+            case R.id.material_traveler:
+                menuOne.setText("Mutfak eşyası");
+                menuTwo.setText("Ev eşyası");
+                menuThree.setText("Kişisel eşya");
+                menuFour.setText("Paket");
+                bottomSheetStatus = "material_traveler";
+                bottomSheetDialog.show();
+                break;
+            case R.id.car_driver:
+                menuOne.setText("Otomobil");
+                menuTwo.setText("Kamyon");
+                menuThree.setText("Motosiklet");
+                menuFour.setText("Ticari");
+                bottomSheetStatus = "car_driver";
+
+                bottomSheetDialog.show();
+                break;
+            case R.id.person_driver:
+                menuOne.setText("1 kişi götürebilirim");
+                menuTwo.setText("2 kişi götürebilirim");
+                menuThree.setText("3 kişi götürebilirim");
+                menuFour.setText("4 veya daha  fazlası");
+                bottomSheetStatus = "person_driver";
+
+                bottomSheetDialog.show();
                 break;
         }
 
     }
 
+    private void printSpinner(String menu) {
+        bottomSheetDialog.show();
+        if (bottomSheetStatus.equals("person_traveler"))
+            travelerPersonSpinner.setText(menu);
+        if (bottomSheetStatus.equals("material_traveler"))
+            materialSpinner.setText(menu);
+        if (bottomSheetStatus.equals("car_driver"))
+            carModelSpinner.setText(menu);
+        if (bottomSheetStatus.equals("person_driver"))
+            driverPersonSpinner.setText(menu);
+
+        bottomSheetDialog.dismiss();
+
+    }
+
+    private void bottomSheetSetup() {
+        bottomSheetDialog = new BottomSheetDialog(getActivity());
+        View bottomSheetDialogView = getLayoutInflater().inflate(R.layout.bottom_sheet, null);
+        bottomSheetDialog.setContentView(bottomSheetDialogView);
+        menuOne = bottomSheetDialogView.findViewById(R.id.menu_one);
+        menuTwo = bottomSheetDialogView.findViewById(R.id.menu_two);
+        menuThree = bottomSheetDialogView.findViewById(R.id.menu_three);
+        menuFour = bottomSheetDialogView.findViewById(R.id.menu_four);
+        travelerPersonSpinner.setOnClickListener(this);
+        materialSpinner.setOnClickListener(this);
+        carModelSpinner.setOnClickListener(this);
+        driverPersonSpinner.setOnClickListener(this);
+
+        menuOne.setOnClickListener(this);
+        menuTwo.setOnClickListener(this);
+        menuThree.setOnClickListener(this);
+        menuFour.setOnClickListener(this);
+    }
 
     private void initView() {
-        personListTraveler = Arrays.asList(getResources().getStringArray(R.array.person_traveler_default_spin_array));
-        personListDriver = Arrays.asList(getResources().getStringArray(R.array.person_driver_default_spin_array));
-        materialList = Arrays.asList(getResources().getStringArray(R.array.material_default_spin_array));
-        carModelList = Arrays.asList(getResources().getStringArray(R.array.car_model_default_spin_array));
+
+
         linearLayoutTraveler = view.findViewById(R.id.traveler_layout);
         linearLayoutDriver = view.findViewById(R.id.driver_layout);
         travelerImage = view.findViewById(R.id.traveler_image);
@@ -246,7 +292,9 @@ getLayoutChoose();
         travelerText = view.findViewById(R.id.traveler_text);
         driverText = view.findViewById(R.id.driver_text);
 
-        layoutPlate = view.findViewById(R.id.layout_plate);
+        mBottomViewDriver = view.findViewById(R.id.driver_bottom_view);
+        mBottomViewTraveler = view.findViewById(R.id.traveler_bottom_view);
+
         layoutCar = view.findViewById(R.id.layout_car);
         layoutMaterial = view.findViewById(R.id.layout_material);
         layoutPersonDriver = view.findViewById(R.id.layout_person_driver);
@@ -270,41 +318,37 @@ getLayoutChoose();
         selectTime = view.findViewById(R.id.hour);
         iki_tarih_arasi = view.findViewById(R.id.two_date_between_date);
         iki_saat_arasi = view.findViewById(R.id.two_between_hour);
-        price = view.findViewById(R.id.price);
-        plate = view.findViewById(R.id.plate_driver);
-        /*
-        radioGroup = view.findViewById(R.id.radioGroup);
-        kisi = radioGroup.findViewById(R.id.radioButton_person);
-        kisi_ve_esya = radioGroup.findViewById(R.id.radioButton_person_and_material);
-        esya = radioGroup.findViewById(R.id.radioButton_material);
 
-        */
+
+        lineOne = view.findViewById(R.id.line_one);
+        lineTwo = view.findViewById(R.id.line_two);
+        lineThree = view.findViewById(R.id.line_theree);
+        lineFour = view.findViewById(R.id.line_four);
+        lineFive = view.findViewById(R.id.line_five);
+
 
     }
 
-    public void initSpinner() {
+    private void saveLayoutChoose(String choose) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(LAYOUT_CHOOSE, choose);
+        editor.commit();
 
-        adapterMaterial = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, materialList);
-        adapterPersonTraveler = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, personListTraveler);
-        adapterCarModel = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, carModelList);
-        adapterPersonDriver = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, personListDriver);
+    }
 
-
-        adapterMaterial.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterPersonTraveler.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterCarModel.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapterPersonDriver.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-
-        travelerPersonSpinner.setAdapter(adapterPersonTraveler);
-        materialSpinner.setAdapter(adapterMaterial);
-
-        carModelSpinner.setAdapter(adapterCarModel);
-        driverPersonSpinner.setAdapter(adapterPersonDriver);
-
+    private void getLayoutChoose() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String layoutChoose = sharedPreferences.getString(LAYOUT_CHOOSE, "0");
+        if (layoutChoose.equals("0")) {
+            linearLayoutTraveler.performClick();
+        } else if (layoutChoose.equals("1")) {
+            linearLayoutDriver.performClick();
+        }
     }
 
     private void selectDate() {
+        final DateParse dataParse = new DateParse();
         selectDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -325,7 +369,8 @@ getLayoutChoose();
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
                 month = month + 1;
-                String date = year + "-" + month + "-" + day;
+                dataParse.dateParse(month);
+                String date = day + " " + dataParse.dateParse(month);
                 selectDate.setText(date);
             }
         };
@@ -362,26 +407,23 @@ getLayoutChoose();
             return false;
         }
         if (statusString.equals(getResources().getString(R.string.chauffeur))) {
-            if (carModelSpinner.getSelectedItem().toString()
+            if (carModelSpinner.getText().toString()
                     .equals(getResources().getString(R.string.car_model_default_spin))) {
                 Toast.makeText(getActivity(), "Araç cinsi seçiniz ", Toast.LENGTH_LONG).show();
                 return false;
-            } else if (driverPersonSpinner.getSelectedItem().toString().
+            } else if (driverPersonSpinner.getText().toString().
                     equals(getResources().getString(R.string.person_driver_default_spin))) {
                 Toast.makeText(getActivity(), "Kişi Seçiniz Araba", Toast.LENGTH_LONG).show();
-                return false;
-            } else if (plate.getText().toString().matches("")) {
-                Toast.makeText(getActivity(), "Plaka seçiniz", Toast.LENGTH_LONG).show();
                 return false;
             }
             return true;
         }
         if (statusString.equals(getResources().getString(R.string.passenger))) {
-            if (travelerPersonSpinner.getSelectedItem().toString()
+            if (travelerPersonSpinner.getText().toString()
                     .equals(getResources().getString(R.string.person_traveler_default_spin))) {
                 Toast.makeText(getActivity(), "Kişi Seçiniz", Toast.LENGTH_LONG).show();
                 return false;
-            } else if (materialSpinner.getSelectedItem().toString()
+            } else if (materialSpinner.getText().toString()
                     .equals(getResources().getString(R.string.material_default_spin))) {
                 Toast.makeText(getActivity(), "Eşya veya Kişi Seçiniz", Toast.LENGTH_LONG).show();
                 return false;
@@ -392,9 +434,6 @@ getLayoutChoose();
             return false;
         } else if (selectTime.getText().toString().equals(getResources().getString(R.string.select_time))) {
             Toast.makeText(getActivity(), "Saat Seçiniz", Toast.LENGTH_LONG).show();
-            return false;
-        } else if (price.getText().toString().equals("Fiyat Seç")) {
-            Toast.makeText(getActivity(), "Fiyat Seçiniz", Toast.LENGTH_LONG).show();
             return false;
         } else return true;
     }
@@ -420,29 +459,31 @@ getLayoutChoose();
         advert.setToCity(toCity.getText().toString());
         if (statusString.equals(getResources().getString(R.string.passenger))) {
             advert.setStatus(getResources().getString(R.string.passenger));
-            advert.setMaterial(materialSpinner.getSelectedItem().toString());
-            advert.setTravelerPerson(travelerPersonSpinner.getSelectedItem().toString());
+            advert.setMaterial(materialSpinner.getText().toString());
+            advert.setTravelerPerson(travelerPersonSpinner.getText().toString());
         }
         if (statusString.equals(getResources().getString(R.string.chauffeur))) {
             advert.setStatus(getResources().getString(R.string.chauffeur));
-            advert.setCarModel(carModelSpinner.getSelectedItem().toString());
-            advert.setDriverPerson(driverPersonSpinner.getSelectedItem().toString());
-            advert.setPlate(plate.getText().toString());
+            advert.setCarModel(carModelSpinner.getText().toString());
+            advert.setDriverPerson(driverPersonSpinner.getText().toString());
+
         }
         advert.setDate(selectDate.getText().toString());
         advert.setTime(selectTime.getText().toString());
         advert.setDescription(description.getText().toString());
-        advert.setPrice(price.getText().toString());
         newAdvert.set(advert).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Toast.makeText(getActivity(), "Paylaşılmıştır", Toast.LENGTH_SHORT).show();
+                Snackbar snackBar = Snackbar.make(getActivity().findViewById(android.R.id.content),
+                        "Yolculuk paylaşılmıştır . İyi yolculuklar :)", Snackbar.LENGTH_LONG);
+                snackBar.show();
             }
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getActivity(), "Failed " + e.getMessage(), Toast.LENGTH_SHORT).show();
-
+                Snackbar snackBar = Snackbar.make(getActivity().findViewById(android.R.id.content),
+                        "! Hata Tekrar deneyiniz", Snackbar.LENGTH_LONG);
+                snackBar.show();
             }
         });
 

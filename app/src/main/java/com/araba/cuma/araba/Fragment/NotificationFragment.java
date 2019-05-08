@@ -12,10 +12,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.araba.cuma.araba.Activity.MainActivity;
 import com.araba.cuma.araba.R;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.araba.cuma.araba.Activity.MainActivity.itemView;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +44,7 @@ public class NotificationFragment extends Fragment {
         tabLayout=view.findViewById(R.id.tab_layout);
         notificationAdapter = new NotificationAdapter(getChildFragmentManager());
         setupViewPager(viewPager);
+       MainActivity.badge = LayoutInflater.from(getActivity()).inflate(R.layout.notification_badge_non, itemView, true);
 
         return view;
     }

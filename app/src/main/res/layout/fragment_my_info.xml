@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ProfileChooseFragment.MyInfoFragment">
+    <include android:id="@+id/toolbar_info"
+        layout="@layout/app_bar_layout" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar_info"
+        android:layout_marginTop="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_photo"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/dddd"
+                    app:civ_border_color="@color/mavi"
+                    app:civ_border_width="4dp" />
+
+                <TextView
+                    android:id="@+id/photo_change"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:text="Fotoğraf değiştir"
+                    android:textColor="@color/mavi"
+                    android:visibility="gone" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/display_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/mavi"
+                    android:text="Ad soyad " />
+
+                <TextView
+                    android:id="@+id/name_surname"
+                    style="@style/MyınfoStyle"
+                    android:layout_marginTop="0dp"
+                    android:background="@color/gri"
+                     />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/mavi"
+                    android:text="E-mail " />
+
+                <TextView
+                    android:id="@+id/email"
+                    style="@style/MyınfoStyle"
+                    android:layout_marginTop="0dp"
+                    android:background="@color/gri"
+                      />
+
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/mavi"
+                    android:text="Parola" />
+
+                <TextView
+                    android:id="@+id/password"
+                    style="@style/MyınfoStyle"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="0dp"
+                    android:background="@color/gri"
+                    android:inputType="textPersonName"
+                    />
+
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:id="@+id/edit_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/mavi"
+
+                        android:text="Ad soyad " />
+
+                    <EditText
+                        android:id="@+id/name_surname_edit"
+                        style="@style/MyınfoStyle"
+                        android:layout_marginTop="0dp"
+                        android:background="@color/gri"
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/mavi"
+
+                        android:text="E-mail" />
+
+                    <EditText
+                        android:id="@+id/email_edit"
+                        style="@style/MyınfoStyle"
+                        android:layout_marginTop="0dp"
+                        android:background="@color/gri"
+
+                        />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/mavi"
+
+                        android:text="Parola" />
+
+                    <EditText
+                        android:id="@+id/password_edit"
+                        style="@style/MyınfoStyle"
+                        android:layout_marginTop="0dp"
+                        android:background="@color/gri"
+                        android:inputType="textPersonName" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:textColor="@color/mavi"
+
+                        android:text="Parola(Tekrar)" />
+
+                    <EditText
+                        android:id="@+id/paswword_replay_edit"
+                        style="@style/MyınfoStyle"
+                        android:layout_marginTop="0dp"
+                        android:background="@color/gri"
+                        android:inputType="textPersonName" />
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/progressBar_myınfo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/edit"
+                style="@style/MyınfoStyle"
+                android:text="Düzenle"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:textColor="@color/mavi"
+                android:background="@drawable/custom_edit_button"/>
+
+            <LinearLayout
+                android:id="@+id/cancel_or_save"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="50dp">
+
+                <Button
+                    android:id="@+id/cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="İptal"
+                    android:layout_marginEnd="10dp"
+                    android:textColor="@color/mavi"
+                    android:background="@drawable/custom_edit_button"/>
+
+                <Button
+                    android:id="@+id/save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/beyaz"
+                    android:background="@drawable/custom_save_button"
+                    android:text="Kaydet" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</RelativeLayout>

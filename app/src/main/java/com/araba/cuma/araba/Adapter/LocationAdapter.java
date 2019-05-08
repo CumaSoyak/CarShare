@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.araba.cuma.araba.Model.Location;
@@ -69,7 +70,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.Locati
         ImageView imageView;
         TextView textView1;
         TextView textView2;
-        CardView cardView;
+        LinearLayout cardView;
 
         LocationViewHolder(View itemView) {
             super(itemView);

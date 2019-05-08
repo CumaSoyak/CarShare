@@ -21,17 +21,19 @@ import android.widget.TextView;
 import com.araba.cuma.araba.R;
 
 public class WelcomeActivity extends AppCompatActivity {
+
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
     private LinearLayout dotsLayout;
     private TextView[] dots;
     private int[] layouts;
-    private Button btnSkip, btnNext;
+    private Button   btnNext;
     private PrefManager prefManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
+
         // Checking for first time launch - before calling setContentView()
         prefManager = new PrefManager(this);
         if (!prefManager.isFirstTimeLaunch()) {
@@ -46,10 +48,9 @@ public class WelcomeActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_welcome);
 
-        viewPager =findViewById(R.id.viewPager);
+        viewPager = (ViewPager) findViewById(R.id.view_pager);
         dotsLayout = (LinearLayout) findViewById(R.id.layoutDots);
-        btnSkip = (Button) findViewById(R.id.next);
-        btnNext = (Button) findViewById(R.id.pervious);
+         btnNext = (Button) findViewById(R.id.btn_next);
 
 
         // layouts of all welcome sliders
@@ -57,8 +58,8 @@ public class WelcomeActivity extends AppCompatActivity {
         layouts = new int[]{
                 R.layout.welcome_slide1,
                 R.layout.welcome_slide2,
-                R.layout.welcome_slide3
-                 };
+                R.layout.welcome_slide3,
+                R.layout.welcome_slide4};
 
         // adding bottom dots
         addBottomDots(0);
@@ -70,12 +71,7 @@ public class WelcomeActivity extends AppCompatActivity {
         viewPager.setAdapter(myViewPagerAdapter);
         viewPager.addOnPageChangeListener(viewPagerPageChangeListener);
 
-        btnSkip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                launchHomeScreen();
-            }
-        });
+
 
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,12 +128,12 @@ public class WelcomeActivity extends AppCompatActivity {
             // changing the next button text 'NEXT' / 'GOT IT'
             if (position == layouts.length - 1) {
                 // last page. make button text to GOT IT
-                btnNext.setText(getString(R.string.sayfa1));
-                btnSkip.setVisibility(View.GONE);
+                btnNext.setText(getString(R.string.start));
+
             } else {
                 // still pages are left
-                btnNext.setText(getString(R.string.sayfa1));
-                btnSkip.setVisibility(View.VISIBLE);
+                btnNext.setText(getString(R.string.next));
+
             }
         }
 

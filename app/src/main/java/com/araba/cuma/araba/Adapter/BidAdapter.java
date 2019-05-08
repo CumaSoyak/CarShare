@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.araba.cuma.araba.AdvertOption;
 import com.araba.cuma.araba.Model.Bid;
 import com.araba.cuma.araba.Fragment.MessageFragment;
 import com.araba.cuma.araba.R;
@@ -51,33 +52,34 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.MyviewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final MyviewHolder myviewHolder, final int i) {
-        if (bidList.get(i).getStatus().equals(context.getResources().getString(R.string.chauffeur))) {
+        final Bid bid=bidList.get(i);
+        if (bid.getStatus().equals(context.getResources().getString(R.string.chauffeur))) {
             myviewHolder.statuBid.setText(context.getResources().getString(R.string.passenger));
         }
-        if (bidList.get(i).getStatus().equals(context.getResources().getString(R.string.passenger))) {
+        if (bid.getStatus().equals(context.getResources().getString(R.string.passenger))) {
             myviewHolder.statuBid.setText(context.getResources().getString(R.string.chauffeur));
         }
-        myviewHolder.nameBid.setText(bidList.get(i).getNameSurname());
-        myviewHolder.priceBid.setText(bidList.get(i).getPrice());
-        myviewHolder.fromBid.setText(bidList.get(i).getFromCity());
-        myviewHolder.toBid.setText(bidList.get(i).getToCity());
+        myviewHolder.nameBid.setText(bid.getNameSurname());
+        myviewHolder.priceBid.setText(bid.getPrice());
+        myviewHolder.fromBid.setText(bid.getFromCity());
+        myviewHolder.toBid.setText(bid.getToCity());
         myviewHolder.bidReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 MessageFragment fragment = new MessageFragment();
                 Bundle bundle = new Bundle();
-                if (currentUserId.equals(bidList.get(i).getGiveBidUserId())) {
-                    bundle.putString(FRIEND_USER_ID, bidList.get(i).getReceiveBidUserId());
+                if (currentUserId.equals(bid.getGiveBidUserId())) {
+                    bundle.putString(FRIEND_USER_ID, bid.getReceiveBidUserId());
 
                 } else {
-                    bundle.putString(FRIEND_USER_ID, bidList.get(i).getGiveBidUserId());
+                    bundle.putString(FRIEND_USER_ID, bid.getGiveBidUserId());
 
                 }
-                bundle.putString(ADVERT_ID, bidList.get(i).getAdvertId());
-                bundle.putString(NAME, bidList.get(i).getNameSurname());
-                bundle.putString(FROM_CITY, bidList.get(i).getFromCity());
-                bundle.putString(TO_CITY, bidList.get(i).getToCity());
-                bundle.putString(USER_PHOTO, bidList.get(i).getImageUrl());
+                bundle.putString(ADVERT_ID, bid.getAdvertId());
+                bundle.putString(NAME,bid.getNameSurname());
+                bundle.putString(FROM_CITY, bid.getFromCity());
+                bundle.putString(TO_CITY, bid.getToCity());
+                bundle.putString(USER_PHOTO, bid.getImageUrl());
                 fragment.setArguments(bundle);
                 ((AppCompatActivity) context).getSupportFragmentManager().
                         beginTransaction().
@@ -85,19 +87,31 @@ public class BidAdapter extends RecyclerView.Adapter<BidAdapter.MyviewHolder> {
                         addToBackStack(null).commit();
             }
         });
-        Glide.with(context).load(bidList.get(i).getImageUrl()).into(myviewHolder.userImageBid);
+        Glide.with(context).load(bid.getImageUrl()).into(myviewHolder.userImageBid);
         myviewHolder.optionsBid.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 PopupMenu popupMenu = new PopupMenu(context, myviewHolder.optionsBid);
-                popupMenu.inflate(R.menu.bid_settings);
+                popupMenu.inflate(R.menu.bid_option);
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
+                         AdvertOption advertOption;
+                        advertOption = new AdvertOption(context);
                         switch (menuItem.getItemId()) {
-                            case R.id.complaint:
+                            case R.id.complaintBid:
+                                String dbName = "ComplaintAdvert";
+                                advertOption.advertAddOrComplation(dbName,
+                                        bid.getAdvertId(), bid.getGiveBidUserId(), bid.getStatus(), bid.getImageUrl(),
+                                        bid.getNameSurname(), bid.getFromCity(), bid.getToCity(), bid.getDate(),
+                                        bid.getTime(), bid.getDescription(), bid.getDriverPerson(),
+                                        bid.getTravelerPerson(), bid.getCarModel(), bid.getMaterial(), fuser.getUid());
+                                break;
+                            case R.id.deleteBid:
+                                advertOption.deleteBid(currentUserId,bid.getGiveBidUserId());
                                 break;
                         }
+
                         return false;
                     }
                 });

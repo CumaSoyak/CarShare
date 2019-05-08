@@ -10,6 +10,19 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/saved_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gri"
+            />
+        <ProgressBar
+            android:id="@+id/progressBar_saved"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
         <TextView
             android:id="@+id/my_saved_dont_foud"
             android:layout_width="wrap_content"
@@ -17,11 +30,6 @@
             android:layout_gravity="center"
             android:text="Kaydedilmiş ilanınız yok"
             android:visibility="gone" />
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/saved_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
     </FrameLayout>
 
 </LinearLayout>

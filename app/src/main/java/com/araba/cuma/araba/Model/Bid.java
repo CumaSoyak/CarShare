@@ -1,5 +1,7 @@
 package com.araba.cuma.araba.Model;
 
+import android.support.annotation.NonNull;
+
 import com.google.firebase.database.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
@@ -7,6 +9,7 @@ public class Bid {
     private String status;
     private String imageUrl;
     private String advertId;
+    @NonNull
     private String giveBidUserId;   /**teklif veren user id*/
     private String receiveBidUserId; /**teklif alan user id*/
     private String nameSurname;

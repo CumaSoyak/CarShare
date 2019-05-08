@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/beyaz"
     android:orientation="vertical"
     tools:context=".Fragment.SearchFragment">
 
@@ -18,7 +19,8 @@
             android:id="@+id/search_from"
             style="@style/AdvertCustomStyle"
             android:layout_width="match_parent"
-            android:layout_weight="1"            android:layout_height="50dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
             android:gravity="center"
             android:hint="Nereden "
             android:inputType="text" />
@@ -35,9 +37,9 @@
             android:id="@+id/search_to"
             style="@style/AdvertCustomStyle"
             android:layout_width="match_parent"
-            android:layout_weight="1"
             android:layout_height="50dp"
             android:layout_marginEnd="16dp"
+            android:layout_weight="1"
             android:ems="10"
             android:gravity="center"
             android:hint="Nereye"
@@ -128,20 +130,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/info"
+        <ProgressBar
+            android:id="@+id/progressbar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="32dp"
-            android:visibility="gone"
-            android:text="Arama sonucu bulunamadı"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/search_recylerview" />
+            android:layout_gravity="center"
+            android:elevation="2dp"
+            android:visibility="gone" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/woman"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="100dp"
@@ -153,11 +151,28 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
+            android:background="@color/gri"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/traveler_layout" />
+            app:layout_constraintTop_toBottomOf="@+id/traveler_layout">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/deneme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:elevation="10dp"
+            android:visibility="gone"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/capriola"
+             android:text="Arama sonucu bulunamadı"
+            android:textColor="@color/text_color_black"
+            android:textSize="14sp" />
+
 
     </FrameLayout>
 

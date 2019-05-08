@@ -7,17 +7,25 @@ public class Users {
     private String userId;
     private String name;
     private String userImage;
-    private String phone;
+    private String password;
 
     public Users(){
 
     }
-    public Users(String userId, String name, String userImage, String phone) {
+    public Users(String userId, String name, String userImage,  String password) {
         this.userId = userId;
         this.name = name;
-
         this.userImage = userImage;
-        this.phone = phone;
+
+        this.password=password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getUserId() {
@@ -44,11 +52,5 @@ public class Users {
         this.userImage = userImage;
     }
 
-    public String getPhone() {
-        return phone;
-    }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
 }

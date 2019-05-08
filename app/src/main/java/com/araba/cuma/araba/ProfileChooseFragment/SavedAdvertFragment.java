@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class SavedAdvertFragment extends Fragment {
     private String userId;
     private AppBarLayout appBarLayout;
     private Toolbar toolbar;
+    private ProgressBar progressBar;
 
     public SavedAdvertFragment() {
 
@@ -71,6 +73,7 @@ public class SavedAdvertFragment extends Fragment {
         dontFound = view.findViewById(R.id.my_saved_dont_foud);
         appBarLayout = view.findViewById(R.id.include_app_bar);
         toolbar = appBarLayout.findViewById(R.id.toolbar);
+        progressBar=view.findViewById(R.id.progressBar_saved);
     }
 
     private void getAdvert() {
@@ -89,6 +92,7 @@ public class SavedAdvertFragment extends Fragment {
                                 recyclerView.setAdapter(advertAdapter);
                                 advertAdapter.notifyDataSetChanged();
                             }
+                            progressBar.setVisibility(View.GONE);
                             if (advertList.size() == 0)
                                 dontFound.setVisibility(View.VISIBLE);
                         }

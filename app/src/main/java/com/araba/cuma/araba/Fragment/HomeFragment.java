@@ -13,13 +13,16 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.araba.cuma.araba.Adapter.AdvertAdapter;
+import com.araba.cuma.araba.Constant;
 import com.araba.cuma.araba.Model.Advert;
 import com.araba.cuma.araba.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -35,15 +38,13 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
+import static com.araba.cuma.araba.Constant.seeImage;
+
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     LinearLayout layoutTravels;
-    ImageView imageTraveler, imageDriver;
-    private FirebaseDatabase database;
-    private DatabaseReference databaseReference;
     FirebaseUser fuser;
-    private FirebaseAuth firebaseAuth;
-    private String userId;
+
 
     private RecyclerView recyclerView;
     private AdvertAdapter advertAdapter;
@@ -51,12 +52,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private Advert mAdvert;
     private LinearLayout toolbar;
     private FrameLayout frameLayoutImage;
-
-
     private TextView info_home;
-    final String PREFS_NAME = "MyPrefsFile";
-    SharedPreferences settings;
-    View arka, view;
+
+    View view;
+    private ProgressBar progressBar;
+    private static int y;
+    LinearLayout.LayoutParams params;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -64,12 +65,15 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         view = inflater.inflate(R.layout.fragment_home, container, false);
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
-        settings = getActivity().getSharedPreferences(PREFS_NAME, 0);
+
         fuser = FirebaseAuth.getInstance().getCurrentUser();
-        userId = fuser.getUid();
         initView();
-        //animation();
-        setupRecylerView();
+         setupRecylerView();
+        if (seeImage) {
+            frameLayoutImage.setVisibility(View.GONE);
+            layoutTravels.performClick();
+
+        }
 
 
         return view;
@@ -78,32 +82,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     private void initView() {
         info_home = view.findViewById(R.id.info_home);
         recyclerView = view.findViewById(R.id.home_recylerview);
-        toolbar = view.findViewById(R.id.toolbar);
+        toolbar = view.findViewById(R.id.toolbar_home);
         frameLayoutImage = view.findViewById(R.id.reklam);
         layoutTravels = view.findViewById(R.id.travels);
+        progressBar = view.findViewById(R.id.progressbar);
+        progressBar.setVisibility(View.GONE);
         layoutTravels.setOnClickListener(this);
 
 
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
 
-    }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        frameLayoutImage.setVisibility(View.GONE);
-        getAdvert();
-    }
 
     private void setupRecylerView() {
         advertList = new ArrayList<>();
@@ -115,6 +105,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     }
 
     private void getAdvert() {
+        progressBar.setVisibility(View.VISIBLE);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         db.collection("ilan")
                 .get()
@@ -122,18 +113,20 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            advertList.clear();
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 mAdvert = document.toObject(Advert.class);
-                                if ((!mAdvert.getUserId().equals(userId))) {
-                                    advertList.add(mAdvert);
-                                    if (advertList.size() == 0)
-                                        getAdvert();
-                                    recyclerView.setAdapter(advertAdapter);
-                                    advertAdapter.notifyDataSetChanged();
-                                }
+                                 advertList.add(mAdvert);
+                                recyclerView.setAdapter(advertAdapter);
+                                advertAdapter.notifyDataSetChanged();
+                            }
+                            if (advertList.size() > 0) {
+                                progressBar.setVisibility(View.GONE);
+                                recyclerView.setVisibility(View.VISIBLE);
+
                             }
                         } else {
-                            Toast.makeText(getActivity(), (CharSequence) task.getException(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getActivity(), task.getException().toString(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -150,8 +143,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.travels:
-                // layoutTravels.setBackgroundResource(R.drawable.custom_layout_home_click);
+                // layoutTravels.setBackgroundResource(R.drawable.custom_floatin_button);
                 frameLayoutImage.setVisibility(View.GONE);
+                seeImage = true;
                 getAdvert();
                 animation();
                 break;
