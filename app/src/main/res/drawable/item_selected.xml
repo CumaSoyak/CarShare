@@ -6,6 +6,6 @@
     </item>
 
     <item android:state_checked="false"
-        android:color = "#808080"/>
+        android:color = "@color/navigation_enable"/>
 
 </selector>

@@ -1,59 +1,44 @@
 package com.araba.cuma.araba.Fragment;
 
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.araba.cuma.araba.DateParse;
 import com.araba.cuma.araba.Model.Advert;
-import com.araba.cuma.araba.Model.Users;
-import com.araba.cuma.araba.Notifications.Data;
 import com.araba.cuma.araba.R;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.List;
 import java.util.UUID;
 
 import static com.araba.cuma.araba.Constant.*;
@@ -83,10 +68,11 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
     private String userNameSurname = null;
     private String userPhoto = null;
     private static final String LAYOUT_CHOOSE = "LAYOUT_CHOOSE";
-    private View lineOne, lineTwo, lineThree, lineFour, lineFive;
+    private View lineOne, lineTwo, lineThree, lineFour;
     private TextView menuOne, menuTwo, menuThree, menuFour;
     private String bottomSheetStatus;
     private View mBottomViewTraveler, mBottomViewDriver;
+    private ProgressBar progressBar;
 
 
     public static AdvertFragment newInstance(String param1, String param2) {
@@ -115,8 +101,10 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
             @Override
             public void onClick(View view) {
                 if (chechkEmpty()) {
+                    progressBar.setVisibility(View.VISIBLE);
                     postSend(userNameSurname, userPhoto);
-                }
+                } else
+                    Toast.makeText(getActivity(), "Bilgileri kontrol ediniz", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -154,6 +142,10 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
                 layoutPersonDriver.setVisibility(View.GONE);
                 layoutMaterial.setVisibility(View.VISIBLE);
                 layoutPersonTraveler.setVisibility(View.VISIBLE);
+                lineTwo.setVisibility(View.VISIBLE);
+                lineFour.setVisibility(View.VISIBLE);
+                lineOne.setVisibility(View.GONE);
+                lineThree.setVisibility(View.GONE);
                 statusString = getResources().getString(R.string.passenger);
                 saveLayoutChoose("0");
                 break;
@@ -174,6 +166,10 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
                 layoutPersonDriver.setVisibility(View.VISIBLE);
                 layoutMaterial.setVisibility(View.GONE);
                 layoutPersonTraveler.setVisibility(View.GONE);
+                lineOne.setVisibility(View.VISIBLE);
+                lineThree.setVisibility(View.VISIBLE);
+                lineTwo.setVisibility(View.GONE);
+                lineFour.setVisibility(View.GONE);
                 statusString = getResources().getString(R.string.chauffeur);
                 saveLayoutChoose("1");
                 break;
@@ -213,8 +209,8 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
             case R.id.person_traveler:
                 menuOne.setText("1 kişiyiz");
                 menuTwo.setText("2 kişiyiz");
-                menuThree.setText("3 kişiyiz");
-                menuFour.setText("4 veya daha fazlası");
+                menuThree.setText("4 veya daha fazlası");
+                menuFour.setText("Sadece eşya göndereceğim");
                 bottomSheetStatus = "person_traveler";
                 bottomSheetDialog.show();
                 break;
@@ -222,7 +218,7 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
                 menuOne.setText("Mutfak eşyası");
                 menuTwo.setText("Ev eşyası");
                 menuThree.setText("Kişisel eşya");
-                menuFour.setText("Paket");
+                menuFour.setText("Eşyam yok sadece ben/biz");
                 bottomSheetStatus = "material_traveler";
                 bottomSheetDialog.show();
                 break;
@@ -238,8 +234,8 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
             case R.id.person_driver:
                 menuOne.setText("1 kişi götürebilirim");
                 menuTwo.setText("2 kişi götürebilirim");
-                menuThree.setText("3 kişi götürebilirim");
-                menuFour.setText("4 veya daha  fazlası");
+                menuThree.setText("4 veya daha  fazlası");
+                menuFour.setText("Sadece eşya götürebilirim");
                 bottomSheetStatus = "person_driver";
 
                 bottomSheetDialog.show();
@@ -324,7 +320,8 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
         lineTwo = view.findViewById(R.id.line_two);
         lineThree = view.findViewById(R.id.line_theree);
         lineFour = view.findViewById(R.id.line_four);
-        lineFive = view.findViewById(R.id.line_five);
+
+        progressBar = view.findViewById(R.id.progressBar_advert);
 
 
     }
@@ -399,43 +396,29 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
     }
 
     public boolean chechkEmpty() {
-        if (fromCity.getText().equals("")) {
-            Toast.makeText(getActivity(), "Sehir Seçiniz", Toast.LENGTH_LONG).show();
+        if (fromCity.getText().equals(getString(R.string.nereden))) {
             return false;
-        } else if (toCity.getText().equals("")) {
-            Toast.makeText(getActivity(), "Sehir Seçiniz", Toast.LENGTH_LONG).show();
+        } else if (fromCity.getText().toString().equals(toCity.getText().toString()))
             return false;
-        }
-        if (statusString.equals(getResources().getString(R.string.chauffeur))) {
-            if (carModelSpinner.getText().toString()
-                    .equals(getResources().getString(R.string.car_model_default_spin))) {
-                Toast.makeText(getActivity(), "Araç cinsi seçiniz ", Toast.LENGTH_LONG).show();
-                return false;
-            } else if (driverPersonSpinner.getText().toString().
-                    equals(getResources().getString(R.string.person_driver_default_spin))) {
-                Toast.makeText(getActivity(), "Kişi Seçiniz Araba", Toast.LENGTH_LONG).show();
-                return false;
-            }
-            return true;
-        }
-        if (statusString.equals(getResources().getString(R.string.passenger))) {
-            if (travelerPersonSpinner.getText().toString()
-                    .equals(getResources().getString(R.string.person_traveler_default_spin))) {
-                Toast.makeText(getActivity(), "Kişi Seçiniz", Toast.LENGTH_LONG).show();
-                return false;
-            } else if (materialSpinner.getText().toString()
-                    .equals(getResources().getString(R.string.material_default_spin))) {
-                Toast.makeText(getActivity(), "Eşya veya Kişi Seçiniz", Toast.LENGTH_LONG).show();
-                return false;
-            }
-            return true;
-        } else if (selectDate.getText().toString().equals(getResources().getString(R.string.select_date))) {
-            Toast.makeText(getActivity(), "Tarih Seçiniz", Toast.LENGTH_LONG).show();
+        else if (toCity.getText().equals(getString(R.string.nereye))) {
             return false;
-        } else if (selectTime.getText().toString().equals(getResources().getString(R.string.select_time))) {
-            Toast.makeText(getActivity(), "Saat Seçiniz", Toast.LENGTH_LONG).show();
+        } else if (statusString.equals(getResources().getString(R.string.chauffeur)) &&
+                carModelSpinner.getText().toString().equals(getResources().getString(R.string.car_select)))
             return false;
-        } else return true;
+        else if (statusString.equals(getResources().getString(R.string.chauffeur)) &&
+                driverPersonSpinner.getText().toString().equals(getResources().getString(R.string.person_driver_select))) {
+            return false;
+        } else if (statusString.equals(getResources().getString(R.string.passenger)) &&
+                travelerPersonSpinner.getText().toString().equals(getResources().getString(R.string.person_traveler_select)))
+            return false;
+        else if (statusString.equals(getResources().getString(R.string.passenger)) &&
+                materialSpinner.getText().toString().equals(getResources().getString(R.string.material_select)))
+            return false;
+        else if (selectDate.getText().toString().equals(getResources().getString(R.string.select_date)))
+            return false;
+        else if (selectTime.getText().toString().equals(getResources().getString(R.string.select_time)))
+            return false;
+        else return true;
     }
 
     private void getNameAndPhoto() {
@@ -474,6 +457,7 @@ public class AdvertFragment extends Fragment implements View.OnClickListener {
         newAdvert.set(advert).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
+                progressBar.setVisibility(View.GONE);
                 Snackbar snackBar = Snackbar.make(getActivity().findViewById(android.R.id.content),
                         "Yolculuk paylaşılmıştır . İyi yolculuklar :)", Snackbar.LENGTH_LONG);
                 snackBar.show();

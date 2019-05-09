@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/review_back"
     android:orientation="vertical"
+    android:scrollbars="none"
     tools:context=".Fragment.LoginFragment">
 
     <FrameLayout
@@ -87,7 +88,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="5dp"
                     android:fontFamily="@font/capriola"
-                    android:text="Don't you an account?"
+                    android:text="@string/hesabin_yokmu"
                     android:textColor="@color/text_color_black" />
 
                 <TextView
@@ -97,7 +98,7 @@
                     android:layout_height="40dp"
                     android:layout_marginLeft="5dp"
                     android:fontFamily="@font/capriola"
-                    android:text="Sign Up"
+                    android:text="@string/sign_up"
                     android:textColor="@color/mavi" />
 
             </LinearLayout>

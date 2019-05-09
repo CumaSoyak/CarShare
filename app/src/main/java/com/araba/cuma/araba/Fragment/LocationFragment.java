@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static com.araba.cuma.araba.Constant.*;
 
@@ -61,14 +63,13 @@ public class LocationFragment extends Fragment implements LocationAdapter.OnItem
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int count) {
-                if (count > 0 && (charSequence.charAt(0) != '1')) {
-                    filter(charSequence.toString());
-                }
+
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
-                filter(editable.toString());
+                if (editable.toString().length() > 0)
+                    filter(editable.toString());
             }
         });
 
@@ -153,12 +154,18 @@ public class LocationFragment extends Fragment implements LocationAdapter.OnItem
     private void filter(String text) {
         ArrayList<Location> filderList = new ArrayList<>();
         for (Location location : locationList) {
-            if (location.getCity().toLowerCase().contains(text.toLowerCase()) ||
-                    location.getCity().toLowerCase().equals(text.toLowerCase())||
-                    location.getArea().toLowerCase().contains(text.toLowerCase())) {
-                filderList.add(location);
+            try {
+                if (location.getCity().toLowerCase().substring(0, text.length()).equals(text.toLowerCase().substring(0, text.length()))
+                         ) {
+                    filderList.add(location);
+                 }
+            }
+            catch (Exception e)
+            {
 
             }
+
+
         }
         locationAdapter.filterList(filderList);
     }

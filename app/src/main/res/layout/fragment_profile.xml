@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/beyaz"
     tools:context=".Fragment.ProfileFragment">
 
     <android.support.constraint.ConstraintLayout
@@ -71,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
-        android:overScrollMode="never"
+        android:scrollbars="none"
         >
 
         <LinearLayout
@@ -153,7 +154,30 @@
             </LinearLayout>
 
             <include layout="@layout/view_bottom" />
+            <LinearLayout
+                android:id="@+id/myabout"
+                style="@style/RelativeLayoutStyle"
+                android:layout_height="wrap_content">
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_stars" />
+
+                <TextView
+                    style="@style/ProfileTextViewStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="start"
+                    android:text="Hakkımda yorumlar" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_profile_direction" />
+            </LinearLayout>
+
+            <include layout="@layout/view_bottom" />
             <LinearLayout
                 android:id="@+id/help_layout"
                 style="@style/RelativeLayoutStyle"

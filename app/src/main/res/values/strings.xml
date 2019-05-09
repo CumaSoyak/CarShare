@@ -7,9 +7,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sayfa1">Hello blank fragment</string>
-    <string name="next">NEXT</string>
+    <string name="next">GEÇ</string>
     <string name="skip">SKIP</string>
-    <string name="start">GOT IT</string>
+    <string name="start">BAŞLA</string>
 
     <string name="slide_1_title">Hello Food!</string>
     <string name="slide_1_desc">The easiest way to order food from your favourite restaurant!</string>
@@ -26,44 +26,46 @@
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
 
-    <string name="person_traveler_default_spin">Kaç kişisiniz</string>
-    <string-array name="person_traveler_default_spin_array">
-        <item name="person_traveler_default_spin">Kaç kişisiniz</item>
-        <item name="person_traveler_default_spin_1">1 kişiyiz</item>
-        <item name="person_traveler_default_spin_2">2 kişiyiz</item>
-        <item name="person_traveler_default_spin_3">3 kişiyiz</item>
-    </string-array>
-    <string name="person_driver_default_spin">Kaç kişi götürebilirsin</string>
-    <string-array name="person_driver_default_spin_array">
-        <item name="person_driver_default_spin">Kaç kişi götürebilirsin</item>
-        <item name="person_driver_default_spin_1">1 kişi götürebilirim</item>
-        <item name="person_driver_default_spin_2">2 kişi götürebilirim</item>
-        <item name="person_driver_default_spin_3">3 kişi götürebilirim</item>
-    </string-array>
+    <string name="person_traveler_select">Kaç kişisiniz</string>
+
+    <string name="person_driver_select">Kaç kişi götürebilirsin</string>
 
 
-    <string name="material_default_spin">Eşya seçiniz</string>
-    <string-array name="material_default_spin_array">
-        <item name="material_default_spin">Eşya seçiniz</item>
-        <item name="material_default_spin_ev">Ev eşyası</item>
-        <item name="material_default_spin_mutfak">Mutfak eşyası</item>
-        <item name="material_default_spin_beyaz">Beyaz eşya</item>
-    </string-array>
 
-    <string name="car_model_default_spin">Araç seçiniz</string>
-    <string-array name="car_model_default_spin_array">
-        <item name="car_model_spin">Araç seçiniz</item>
-        <item name="car_model_spin_ticari">Otomobil</item>
-        <item name="car_model_spin_binek">Taksi</item>
-        <item name="car_model_spin_tır">Kamyon</item>
-    </string-array>
+    <string name="material_select">Eşya seçiniz</string>
+
+
+    <string name="car_select">Araç seçiniz</string>
+
 
 
     <string name="select_date">Tarih seç</string>
     <string name="select_time">Saat seç</string>
 
-    <string name="passenger">Passenger</string>
-    <string name="chauffeur">Chauffeur</string>
+    <string name="passenger">Yolcu</string>
+    <string name="chauffeur">Şoför</string>
+    <string name="talkOne">Merhaba ilgileniyorum !</string>
+    <string name="talkTwo">Fiyatta pazarlık payı var mı ?</string>
+    <string name="talkThree">Nerede görüşelim</string>
+    <string name="talkFour">Ne zaman yolculuk</string>
+    <string name="nereden">Nereden</string>
+    <string name="nereye">Nereye</string>
+    <string name="hesabin_yokmu">Hesabın yokmu ?</string>
+    <string name="sign_up">Kaydol</string>
+    <string name="what_is_your_price">Teklifiniz nedir ?</string>
+    <string name="give_bid">Teklif Ver</string>
+    <string name="no_description">Açıklama yok</string>
+    <string name="select_photo">Fotoğraf seçiniz</string>
+    <string name="name_surname">Ad Soyad</string>
+    <string name="e_mail">E mail adresi</string>
+    <string name="password">Parola</string>
+    <string name="parola_replay">Parola(Tekrar)</string>
+    <string name="agress">Kabul ediyorum</string>
+    <string name="conditions">koşulları</string>
+    <string name="register">Kaydol</string>
+    <string name="login">Giriş Yap</string>
+    <string name="add_description">Açıklama ekle(isteğe bağlı)</string>
+    <string name="search_city_area">Şehir veya ilçe ara</string>
     <string-array name="citys">
         <item>Adana</item>
         <item>Adıyaman</item>

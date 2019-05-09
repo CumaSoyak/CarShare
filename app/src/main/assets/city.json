@@ -1,5 +1,54 @@
 [
   {
+    "il": "İstanbul",
+    "plaka": 34,
+    "ilceleri": [
+      "Merkez"
+    ]
+  },
+  {
+    "il": "Ankara",
+    "plaka": 34,
+    "ilceleri": [
+      "Merkez"
+    ]
+  },
+  {
+    "il": "İzmir",
+    "plaka": 34,
+    "ilceleri": [
+      "Merkez"
+    ]
+  },
+  {
+    "il": "Antalya",
+    "plaka": 34,
+    "ilceleri": [
+      "Merkez"
+    ]
+  },
+  {
+    "il": "Trabzon",
+    "plaka": 34,
+    "ilceleri": [
+      "Merkez"
+    ]
+  },
+  {
+    "il": "Eskişehir",
+    "plaka": 34,
+    "ilceleri": [
+      "Merkez"
+    ]
+  },
+  {
+    "il": "Samsun",
+    "plaka": 34,
+    "ilceleri": [
+      "Merkez"
+    ]
+  },
+  {
     "il": "Adana",
     "plaka": 1,
     "ilceleri": [

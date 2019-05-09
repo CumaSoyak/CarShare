@@ -14,33 +14,20 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.araba.cuma.araba.Activity.MainActivity;
-import com.araba.cuma.araba.Model.Bid;
-import com.araba.cuma.araba.Model.Users;
 import com.araba.cuma.araba.R;
-import com.araba.cuma.araba.ToolbarSetup;
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.UUID;
 
 import static com.araba.cuma.araba.Constant.CURRENT_NAME;
 import static com.araba.cuma.araba.Constant.CURRENT_PHOTO_URL;
@@ -73,7 +60,7 @@ public class ReviewAdvertFragment extends Fragment {
             time, person, carOrMaterial, status;
     @Nullable
     private TextView description;
-    private TextView bid;
+    private ImageView bidButton;
     private EditText bidEdittext;
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
@@ -82,6 +69,7 @@ public class ReviewAdvertFragment extends Fragment {
     private String currentUserId;
     private Toolbar toolbar;
     private AppBarLayout appBarLayout;
+    private ProgressBar progressBar;
 
     View view;
 
@@ -99,13 +87,14 @@ public class ReviewAdvertFragment extends Fragment {
         getNameAndPhoto();
         MainActivity.navigation.setVisibility(View.GONE);
         setupToolbar();
-        bid.setOnClickListener(new View.OnClickListener() {
+        bidButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 user = firebaseAuth.getCurrentUser();
                 if (user != null) {
                     currentUserId = user.getUid();
                     if ((!currentUserId.equals(mUserId) && !(bidEdittext.getText().toString().isEmpty() || bidEdittext.getText().toString().matches("")))) {
+                        progressBar.setVisibility(View.VISIBLE);
                         bidPost(currentUserPhoto, currentUserName);
                     }
                 } else {
@@ -132,9 +121,10 @@ public class ReviewAdvertFragment extends Fragment {
         carOrMaterialImage = view.findViewById(R.id.review_material_otomobile_image);
         description = view.findViewById(R.id.review_decription);
         bidEdittext = view.findViewById(R.id.review_edit_text);
-        bid = view.findViewById(R.id.review_bid_button);
+        bidButton = view.findViewById(R.id.review_bid_button);
         appBarLayout = view.findViewById(R.id.app_bar_layout);
         toolbar = appBarLayout.findViewById(R.id.toolbar);
+        progressBar=view.findViewById(R.id.progressBar_bid);
 
     }
 
@@ -218,9 +208,11 @@ public class ReviewAdvertFragment extends Fragment {
                 if (task.isSuccessful()) {
                     MessageFragment messageFragment = new MessageFragment();
                     messageFragment.createNotification(mUserId, "display");
+                    progressBar.setVisibility(View.GONE);
                     Snackbar snackBar = Snackbar.make(getActivity().findViewById(android.R.id.content),
                             "Teklifiniz iletilmiştir. İyi bir teklifti :)", Snackbar.LENGTH_LONG);
                     snackBar.show();
+                    bidEdittext.setText("");
                 } else {
                     Snackbar snackBar = Snackbar.make(getActivity().findViewById(android.R.id.content),
                             "Daha sonra tekrar deneyiniz", Snackbar.LENGTH_LONG);

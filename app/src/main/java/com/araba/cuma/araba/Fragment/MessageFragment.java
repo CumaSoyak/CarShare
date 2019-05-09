@@ -11,11 +11,11 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.araba.cuma.araba.Activity.MainActivity;
@@ -29,7 +29,6 @@ import com.araba.cuma.araba.Notifications.Sender;
 import com.araba.cuma.araba.Notifications.Token;
 import com.araba.cuma.araba.R;
 import com.bumptech.glide.Glide;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -54,13 +53,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class MessageFragment extends Fragment {
+public class MessageFragment extends Fragment implements View.OnClickListener {
     private RecyclerView recyclerView;
     private MessageAdapter messageAdapter;
     private FirebaseUser fuser;
     private DatabaseReference reference;
-    private TextView btn_send;
-    private EditText text_send;
+    private ImageView btn_send;
+    private EditText messageEdittext;
     private Toolbar toolbar;
     private APIService apiService;
     private CircleImageView profileImage;
@@ -87,7 +86,8 @@ public class MessageFragment extends Fragment {
     private List<String> messageUuidList;
     private List<Chat> messageList;
     private String msg;
-    private boolean firstMessageCretad=false;
+    private boolean firstMessageCretad = false;
+    private TextView talkOne, talkTwo, talkTheree, talkFour;
 
     public static MessageFragment newInstance(String param1) {
         MessageFragment fragment = new MessageFragment();
@@ -116,15 +116,15 @@ public class MessageFragment extends Fragment {
         btn_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                msg = text_send.getText().toString();
+                msg = messageEdittext.getText().toString();
                 if (!msg.equals("")) {
-                     if (messageUuidListKey.contains(friendUserId)) {
+                    if (messageUuidListKey.contains(friendUserId)) {
                         getMessageUuidSender();
-                     } else {
-                         createMessageUuid();
+                    } else {
+                        createMessageUuid();
                     }
                 }
-                text_send.setText("");
+                messageEdittext.setText("");
             }
         });
         return view;
@@ -149,23 +149,26 @@ public class MessageFragment extends Fragment {
         super.onStop();
         if (firstMessageCretad) {
             seenPositionChangeFriend("display");
-            createNotification(friendUserId,"display");
-            firstMessageCretad=false;
+            createNotification(friendUserId, "display");
+            firstMessageCretad = false;
         }
         MainActivity.navigation.setVisibility(View.VISIBLE);
 
     }
+
     @Override
     public void onDetach() {
         super.onDetach();
     }
-    public void createNotification(String friendUserId,String value) {
+
+    public void createNotification(String friendUserId, String value) {
         final DatabaseReference chatRefReceiverCurrent =
                 FirebaseDatabase.getInstance().getReference("Notification")
                         .child(friendUserId);
         chatRefReceiverCurrent.child("notification").setValue(value);
 
     }
+
     private void seenPositionChangeFriend(String position) {
         final DatabaseReference chatRefReceiverCurrent =
                 FirebaseDatabase.getInstance().getReference("Chatlist")
@@ -173,6 +176,7 @@ public class MessageFragment extends Fragment {
                         .child(currentUserId);
         chatRefReceiverCurrent.child("seenMessage").setValue(position);
     }
+
     private void seenPositionChangeCurrent(String position) {
         final DatabaseReference chatRefReceiverCurrent =
                 FirebaseDatabase.getInstance().getReference("Chatlist")
@@ -192,9 +196,37 @@ public class MessageFragment extends Fragment {
         profileImage = view.findViewById(R.id.message_profile_image);
         username = view.findViewById(R.id.username);
         btn_send = view.findViewById(R.id.btn_send);
-        text_send = view.findViewById(R.id.text_send);
+        messageEdittext = view.findViewById(R.id.text_send);
+        talkOne = view.findViewById(R.id.talk_one);
+        talkTwo = view.findViewById(R.id.talk_two);
+        talkTheree = view.findViewById(R.id.talk_three);
+        talkFour = view.findViewById(R.id.talk_four);
+
+        talkOne.setOnClickListener(this);
+        talkTwo.setOnClickListener(this);
+        talkTheree.setOnClickListener(this);
+        talkFour.setOnClickListener(this);
 
 
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId())
+        {
+            case R.id.talk_one:
+                messageEdittext.setText(getResources().getString(R.string.talkOne));
+                break;
+            case R.id.talk_two:
+                messageEdittext.setText(getResources().getString(R.string.talkTwo));
+                break;
+            case R.id.talk_three:
+                messageEdittext.setText(getResources().getString(R.string.talkThree));
+                break;
+            case R.id.talk_four:
+                messageEdittext.setText(getResources().getString(R.string.talkFour));
+                break;
+        }
     }
 
     private void setupToolbar() {
@@ -240,7 +272,7 @@ public class MessageFragment extends Fragment {
                     if (messageUuidListKey.contains(friendUserId)) {
                         if (valueCheck) {
                             getMessageUuid();
-                       seenPositionChangeCurrent("nondisplay");
+                            seenPositionChangeCurrent("nondisplay");
                             valueCheck = false;
                         }
                     }
@@ -316,7 +348,6 @@ public class MessageFragment extends Fragment {
                 }
 
 
-
             }
 
             @Override
@@ -390,7 +421,7 @@ public class MessageFragment extends Fragment {
                                 public void onResponse(Call<MyResponse> call, Response<MyResponse> response) {
                                     if (response.code() == 200) {
                                         if (response.body().success != 1) {
-                                         }
+                                        }
                                     }
                                 }
 
