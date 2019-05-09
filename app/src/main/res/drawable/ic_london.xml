@@ -1,57 +1,57 @@
 <vector android:height="259dp" android:viewportHeight="259.4"
     android:viewportWidth="1102.72" android:width="1103dp" xmlns:android="http://schemas.android.com/apk/res/android">
-    <path android:fillColor="@color/mavi"
+    <path android:fillColor="#00000000"
         android:pathData="M747.16,127.18L792.16,127.18"
-        android:strokeColor="@color/mavi" android:strokeWidth="1.5"/>
-    <path android:fillColor="@color/mavi"
+        android:strokeColor="#00000000" android:strokeWidth="1.5"/>
+    <path android:fillColor="#00000000"
         android:pathData="M747.16,109.18L792.16,109.18"
-        android:strokeColor="@color/mavi" android:strokeWidth="1.5"/>
-    <path android:fillColor="@color/mavi"
+        android:strokeColor="#00000000" android:strokeWidth="1.5"/>
+    <path android:fillColor="#00000000"
         android:pathData="M769.24,113.85L769.24,123.1"
-        android:strokeColor="@color/mavi" android:strokeWidth="1"/>
-    <path android:fillColor="@color/mavi"
+        android:strokeColor="#00000000" android:strokeWidth="1"/>
+    <path android:fillColor="#00000000"
         android:pathData="M757.03,127.18L757.03,197.68"
-        android:strokeColor="@color/mavi" android:strokeWidth="1"/>
-    <path android:fillColor="@color/mavi"
+        android:strokeColor="#00000000" android:strokeWidth="1"/>
+    <path android:fillColor="#00000000"
         android:pathData="M749.91,127.18l0,-18l0,-7.08l3.56,-11.88l3.56,11.88l0,7.08"
-        android:strokeColor="@color/mavi" android:strokeWidth="1.5"/>
-    <path android:fillColor="@color/mavi"
+        android:strokeColor="#00000000" android:strokeWidth="1.5"/>
+    <path android:fillColor="#00000000"
         android:pathData="M753.47,90.22L753.47,85.47"
         android:strokeColor="#000" android:strokeWidth="1"/>
-    <path android:fillColor="@color/mavi"
+    <path android:fillColor="#00000000"
         android:pathData="M789.03,109.18L789.03,127.18"
         android:strokeColor="#000" android:strokeWidth="1.5"/>
-    <path android:fillColor="@color/mavi"
+    <path android:fillColor="#00000000"
         android:pathData="M781.91,109.18l0,18l0,70.5"
         android:strokeColor="#000" android:strokeWidth="1"/>
-    <path android:fillColor="@color/mavi"
+    <path android:fillColor="#00000000"
         android:pathData="M781.91,109.18l0,-7.08l3.56,-11.88l3.56,11.88l0,7.08"
         android:strokeColor="#000" android:strokeWidth="1.5"/>
-    <path android:fillColor="@color/mavi"
+    <path android:fillColor="#00000000"
         android:pathData="M785.47,90.22L785.47,85.47"
         android:strokeColor="#000" android:strokeWidth="1"/>
     <path android:fillColor="#00000000"
         android:pathData="M765.24,113.85L765.24,123.1"
         android:strokeColor="#000" android:strokeWidth="1"/>
-    <path android:fillColor="@color/mavi"
+    <path android:fillColor="#00000000"
         android:pathData="M761.24,113.85L761.24,123.1"
         android:strokeColor="#000" android:strokeWidth="1"/>
-    <path android:fillColor="@color/mavi"
+    <path android:fillColor="#00000000"
         android:pathData="M773.24,113.85L773.24,123.1"
         android:strokeColor="#000" android:strokeWidth="1"/>
-    <path android:fillColor="@color/mavi"
+    <path android:fillColor="#00000000"
         android:pathData="M777.24,113.85L777.24,123.1"
         android:strokeColor="#000" android:strokeWidth="1"/>
-    <path android:fillColor="@color/mavi"
+    <path android:fillColor="#00000000"
         android:pathData="M761.24,109.18l0,-14.25l6,-16.91l4,0l6,16.91l0,14.25"
         android:strokeColor="#000" android:strokeWidth="1.5"/>
-    <path android:fillColor="@color/mavi"
+    <path android:fillColor="#00000000"
         android:pathData="M769.24,78.02L769.24,71.77"
         android:strokeColor="#000" android:strokeWidth="1"/>
-    <path android:fillColor="@color/mavi"
+    <path android:fillColor="#00000000"
         android:pathData="M767.07,100.02L767.07,104.77"
         android:strokeColor="#000" android:strokeWidth="1"/>
-    <path android:fillColor="@color/mavi"
+    <path android:fillColor="#00000000"
         android:pathData="M771.07,100.02L771.07,104.77"
         android:strokeColor="#000" android:strokeWidth="1"/>
     <path android:fillColor="#00000000"

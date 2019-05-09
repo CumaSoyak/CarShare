@@ -107,7 +107,10 @@ public class LoginFragment extends Fragment {
                             user = firebaseAuth.getCurrentUser();
                             String userId = user.getUid();
                             getUsersInfo(userId);
-
+                        }
+                        else {
+                            Toast.makeText(getActivity(), "Bilgileri kontol ediniz", Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.GONE);
 
                         }
 
@@ -117,6 +120,8 @@ public class LoginFragment extends Fragment {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Log.d("Login", "Error" + e.getLocalizedMessage());
+                Toast.makeText(getActivity(), "Bilgileri kontol ediniz", Toast.LENGTH_SHORT).show();
+
                 progressBar.setVisibility(View.GONE);
 
             }

@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class AdvertAdapter extends RecyclerView.Adapter<AdvertAdapter.MyviewHolder> {
     private static final String USER_ID = "USER_ID";
@@ -76,6 +77,7 @@ public class AdvertAdapter extends RecyclerView.Adapter<AdvertAdapter.MyviewHold
         myviewHolder.toAdvert.setText(advert.getToCity());
         myviewHolder.statusAdvert.setText(advert.getStatus());
         myviewHolder.advertDate.setText(advert.getDate());
+        myviewHolder.advertTime.setText(advert.getTime());
         Glide.with(context).load(advert.getImageUrl()).into(myviewHolder.userImageAdvert);
         myviewHolder.bidButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,6 +122,8 @@ public class AdvertAdapter extends RecyclerView.Adapter<AdvertAdapter.MyviewHold
                 optionAdvert(myviewHolder,advert,visibleChoose);
             }
         });
+
+        myviewHolder.userPointAdvert.setText("1.0");
     }
 
     @Override

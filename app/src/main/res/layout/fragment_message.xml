@@ -44,14 +44,46 @@
         android:id="@+id/recylerview_message"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom"
-        app:layout_constraintEnd_toEndOf="parent"
         android:background="@color/koyu_gri"
         android:overScrollMode="never"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
 
+    <HorizontalScrollView
+        android:id="@+id/scrollView3"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:scrollbars="none"
+        app:layout_constraintStart_toStartOf="parent">
+        <LinearLayout
+             android:layout_gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/talk_one"
+                style="@style/TalkStyle"
+                android:text="@string/talkOne" />
+            <TextView
+                android:id="@+id/talk_two"
+                style="@style/TalkStyle"
+                android:text="@string/talkTwo" />
+
+            <TextView
+                android:id="@+id/talk_three"
+                style="@style/TalkStyle"
+                android:text="@string/talkThree" />
+
+            <TextView
+                android:id="@+id/talk_four"
+                style="@style/TalkStyle"
+                android:text="@string/talkFour" />
+        </LinearLayout>
+
+    </HorizontalScrollView>
     <LinearLayout
         android:id="@+id/bottom"
         android:layout_width="match_parent"
@@ -67,25 +99,27 @@
         <EditText
             android:id="@+id/text_send"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="60dp"
             android:layout_gravity="center"
+            android:layout_marginTop="2dp"
             android:layout_weight="1"
-            android:background="@color/beyaz"
+            android:background="@drawable/edit_text_background"
             android:hint="Mesaj giriniz ..."
             android:paddingLeft="10dp" />
 
-        <TextView
+        <ImageView
             android:id="@+id/btn_send"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
             android:layout_gravity="center"
-            android:background="@color/mavi"
+            android:background="@drawable/button_blue"
+            android:src="@drawable/ic_send"
             android:gravity="center"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:fontFamily="@font/capriola"
-            android:text="Gönder"
-            android:textColor="@color/beyaz" />
+
+
+           />
 
     </LinearLayout>
 

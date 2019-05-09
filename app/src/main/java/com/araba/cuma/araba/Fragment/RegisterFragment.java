@@ -47,7 +47,6 @@ import static com.araba.cuma.araba.Constant.sigIn;
 
 
 public class RegisterFragment extends Fragment {
-    private final int CHOOSE_IMAGE = 101;
     private final int PICK_IMAGE_REQUEST = 71;
     Button registerButton;
     TextView loginTextview, conditions;
@@ -67,6 +66,7 @@ public class RegisterFragment extends Fragment {
     private View view;
     private RelativeLayout relativeLayout;
     int RESULT_OK = -1;
+    private final int CHOOSE_IMAGE = 101;
 
     @Override
 

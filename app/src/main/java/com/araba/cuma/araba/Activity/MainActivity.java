@@ -64,7 +64,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (userCheck())
+                {
+                    navigation.setSelectedItemId(R.id.navigation_ilanver);
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, new AdvertFragment()).commit();
+                }
+
                 else
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_framelayout, new RegisterFragment()).commit();
 

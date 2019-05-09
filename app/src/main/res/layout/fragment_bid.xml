@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragment.BidFragment"
+    android:background="@color/beyaz"
     tools:ignore="MissingConstraints">
 
     <android.support.v7.widget.RecyclerView
@@ -13,7 +14,7 @@
         android:overScrollMode="never"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:background="@color/color_beyaz"
+        android:background="@color/beyaz"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

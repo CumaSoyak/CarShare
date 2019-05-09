@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/toolbar_info"
+        android:scrollbars="none"
         android:layout_marginTop="0dp">
 
         <LinearLayout
@@ -22,13 +23,15 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp">
+                android:layout_height="160dp"
+                 >
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_photo"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
-                    android:layout_gravity="center"
+                    android:layout_gravity="top|center"
+                    android:layout_marginTop="20dp"
                     android:src="@drawable/dddd"
                     app:civ_border_color="@color/mavi"
                     app:civ_border_width="4dp" />
@@ -36,11 +39,13 @@
                 <TextView
                     android:id="@+id/photo_change"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|center"
+                    android:layout_marginBottom="10dp"
                     android:text="Fotoğraf değiştir"
                     android:textColor="@color/mavi"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                      />
 
             </FrameLayout>
 

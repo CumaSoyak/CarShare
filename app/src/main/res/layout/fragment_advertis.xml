@@ -13,12 +13,11 @@
     <EditText
         android:id="@+id/e_mail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginStart="50dp"
         android:layout_marginTop="100dp"
         android:layout_marginEnd="50dp"
-
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/custom_advertis"
         android:gravity="center"
         android:hint="E-posta"
         android:inputType="textPersonName"
@@ -34,7 +33,7 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="20dp"
         android:gravity="center"
-        android:background="@drawable/edit_text_background"
+        android:background="@drawable/custom_advertis"
         android:ems="10"
         android:textColor="@color/text_color_black"
         android:hint="Mesajınızı giriniz"

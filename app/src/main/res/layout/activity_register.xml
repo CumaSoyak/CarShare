@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/review_back"
     android:cursorVisible="false"
+    android:scrollbars="none"
     android:fillViewport="true">
 
     <FrameLayout
@@ -40,7 +41,7 @@
                     android:layout_centerInParent="true"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:text="Fotoğraf seçiniz"
+                    android:text="@string/select_photo"
                     android:textColor="@color/mavi" />
 
                 <ImageView
@@ -65,22 +66,22 @@
             <EditText
                 android:id="@+id/adSoyad"
                 style="@style/RegisterEditTextStyle"
-                android:hint="Ad Soyad" />
+                android:hint="@string/name_surname" />
 
             <EditText
                 android:id="@+id/email"
                 style="@style/RegisterEditTextStyle"
-                android:hint="E mail adresi " />
+                android:hint="@string/e_mail" />
 
             <EditText
                 android:id="@+id/parola_tekrar"
                 style="@style/RegisterEditTextStyle"
-                android:hint="Parola" />
+                android:hint="@string/password" />
 
             <EditText
                 android:id="@+id/parola"
                 style="@style/RegisterEditTextStyle"
-                android:hint="Parola(Tekrar)" />
+                android:hint="@string/parola_replay" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -96,7 +97,7 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:fontFamily="@font/capriola"
-                    android:text="Agress with the "
+                    android:text="@string/agress"
                     android:textColor="@color/text_color_black" />
 
                 <TextView
@@ -106,7 +107,7 @@
                     android:layout_marginStart="5dp"
                     android:fontFamily="@font/capriola"
                     android:gravity="center"
-                    android:text="conditions"
+                    android:text="@string/conditions"
                     android:textColor="@color/mavi" />
             </LinearLayout>
 
@@ -119,7 +120,7 @@
                 android:layout_marginEnd="32dp"
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/custom_register_login_button"
-                android:text="Kaydol"
+                android:text="@string/register"
                 android:textColor="@color/beyaz" />
 
             <TextView
@@ -128,7 +129,7 @@
                 android:layout_height="40dp"
                 android:layout_marginBottom="50dp"
                 android:fontFamily="@font/capriola"
-                android:text="Giriş Yap"
+                android:text="@string/login"
                 android:textColor="@color/text_color_black" />
 
 

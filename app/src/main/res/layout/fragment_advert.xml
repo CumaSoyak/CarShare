@@ -43,9 +43,9 @@
                 android:id="@+id/traveler_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/baloo"
-                 android:layout_centerHorizontal="true"
                 android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:fontFamily="@font/baloo"
                 android:text="Yolcuyum"
                 android:textColor="@color/acik_gri" />
 
@@ -106,266 +106,276 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:overScrollMode="never"
+        android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2"
         tools:context=".Fragment.DriverFragment">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <android.support.constraint.ConstraintLayout style="@style/RelativeLayoutStyle">
-
-                <TextView
-                    android:id="@+id/from"
-                    style="@style/AdvertCustomStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:hint="Nereden"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/imageView7"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints" />
-
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_centerInParent="true"
-                    android:layout_marginStart="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:src="@drawable/ic_direction_right"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/to"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/from"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints" />
-
-                <TextView
-                    android:id="@+id/to"
-                    style="@style/AdvertCustomStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:gravity="center"
-                    android:hint="Nereye"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/imageView7"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="MissingConstraints" />
-
-            </android.support.constraint.ConstraintLayout>
-
-            <include layout="@layout/view_bottom" />
-
+            android:layout_height="match_parent">
             <LinearLayout
-                android:id="@+id/layout_car"
-                style="@style/RelativeLayoutStyle"
-                android:layout_gravity="center">
-
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="@dimen/linarStart"
-                    android:layout_marginEnd="50dp"
-                    android:src="@drawable/ic_car" />
-
-
-                <TextView
-                    android:id="@+id/car_driver"
-                    style="@style/AdvertCustomStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:hint="Araç seçiniz" />
-
-            </LinearLayout>
-
-            <include
-                android:id="@+id/line_one"
-                layout="@layout/view_bottom"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:id="@+id/layout_material"
-                style="@style/RelativeLayoutStyle">
-
-                <ImageView
-                    android:id="@+id/kisi_image2"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="@dimen/linarStart"
-                    android:layout_marginEnd="50dp"
-                    android:src="@drawable/ic_material" />
-
-
-                <TextView
-                    android:id="@+id/material_traveler"
-                    style="@style/AdvertCustomStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:hint="Eşya seçiniz" />
-            </LinearLayout>
-
-            <include
-                android:id="@+id/line_two"
-                layout="@layout/view_bottom"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:id="@+id/layout_person_driver"
-                style="@style/RelativeLayoutStyle">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="@dimen/linarStart"
-                    android:layout_marginEnd="50dp"
-                    android:src="@drawable/ic_traveler" />
-
-
-                <TextView
-                    android:id="@+id/person_driver"
-                    style="@style/AdvertCustomStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:hint="Kaç kişi götürebilirsin" />
-            </LinearLayout>
-
-            <include
-                android:id="@+id/line_theree"
-                layout="@layout/view_bottom"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:id="@+id/layout_person_traveler"
-                style="@style/RelativeLayoutStyle">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="@dimen/linarStart"
-                    android:layout_marginEnd="50dp"
-                    android:src="@drawable/ic_traveler" />
-
-
-                <TextView
-                    android:id="@+id/person_traveler"
-                    style="@style/AdvertCustomStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:hint="Kaç kişisiniz" />
-            </LinearLayout>
-
-            <include
-                android:id="@+id/line_four"
-                layout="@layout/view_bottom"
-                android:visibility="gone" />
-
-            <LinearLayout
-                style="@style/RelativeLayoutStyle"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="@dimen/linarStart"
-                    android:layout_marginEnd="50dp"
-                    android:src="@drawable/ic_date_range_black_24dp" />
-
-
-                <TextView
-                    android:id="@+id/date"
-                    style="@style/AdvertCustomStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/select_date" />
-
-                <ImageButton
-                    android:id="@+id/two_date_between_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:background="?android:selectableItemBackground"
-                    android:src="@drawable/ic_date_two" />
-
-            </LinearLayout>
-
-            <include layout="@layout/view_bottom" />
-
-            <LinearLayout style="@style/RelativeLayoutStyle">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginStart="@dimen/linarStart"
-                    android:layout_marginEnd="50dp"
-                    android:src="@drawable/ic_access_time_black_24dp" />
-
-                <TextView
-                    android:id="@+id/hour"
-                    style="@style/AdvertCustomStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="@string/select_time" />
-
-                <ImageButton
-                    android:id="@+id/two_between_hour"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="32dp"
-                    android:background="?android:selectableItemBackground"
-                    android:src="@drawable/ic_date_two" />
-
-
-            </LinearLayout>
-
-            <include
-                android:id="@+id/line_five"
-                layout="@layout/view_bottom"
-                android:visibility="gone" />
-
-            <LinearLayout
-                style="@style/LinerLayoutStyle"
-                android:layout_height="100dp">
-
-                <EditText
-                    android:id="@+id/description"
-                    style="@style/AdvertCustomStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="Açıklama ekle(isteğe bağlı)" />
-            </LinearLayout>
-
-            <include layout="@layout/view_bottom" />
-
-            <Button
-                android:id="@+id/post"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="50dp"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/button_blue"
-                android:fontFamily="@font/baloo"
-                android:text="İlan ver"
-                android:textColor="@color/beyaz" />
+                android:gravity="center"
+                android:orientation="vertical">
 
-        </LinearLayout>
+                <android.support.constraint.ConstraintLayout
+                    style="@style/RelativeLayoutStyle"
+                    tools:ignore="MissingConstraints">
+
+                    <TextView
+                        android:id="@+id/from"
+                        style="@style/AdvertCustomStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:hint="@string/nereden"
+                        android:text="@string/nereden"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/imageView7"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/imageView7"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerInParent="true"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/ic_direction_right"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/to"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toEndOf="@+id/from"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/to"
+                        style="@style/AdvertCustomStyle"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="center"
+                        android:hint="@string/nereye"
+                        android:text="@string/nereye"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/imageView7"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </android.support.constraint.ConstraintLayout>
+
+                <include layout="@layout/view_bottom" />
+
+                <LinearLayout
+                    android:id="@+id/layout_car"
+                    style="@style/RelativeLayoutStyle"
+                    android:layout_gravity="center">
+
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="@dimen/linarStart"
+                        android:layout_marginEnd="50dp"
+                        android:src="@drawable/ic_car" />
+
+
+                    <TextView
+                        android:id="@+id/car_driver"
+                        style="@style/AdvertCustomStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/car_select" />
+
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/line_one"
+                    layout="@layout/view_bottom"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/layout_material"
+                    style="@style/RelativeLayoutStyle">
+
+                    <ImageView
+                        android:id="@+id/kisi_image2"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="@dimen/linarStart"
+                        android:layout_marginEnd="50dp"
+                        android:src="@drawable/ic_material" />
+
+
+                    <TextView
+                        android:id="@+id/material_traveler"
+                        style="@style/AdvertCustomStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/material_select" />
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/line_two"
+                    layout="@layout/view_bottom"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/layout_person_driver"
+                    style="@style/RelativeLayoutStyle">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="@dimen/linarStart"
+                        android:layout_marginEnd="50dp"
+                        android:src="@drawable/ic_traveler" />
+
+
+                    <TextView
+                        android:id="@+id/person_driver"
+                        style="@style/AdvertCustomStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/person_driver_select" />
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/line_theree"
+                    layout="@layout/view_bottom"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/layout_person_traveler"
+                    style="@style/RelativeLayoutStyle">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="@dimen/linarStart"
+                        android:layout_marginEnd="50dp"
+                        android:src="@drawable/ic_traveler" />
+
+
+                    <TextView
+                        android:id="@+id/person_traveler"
+                        style="@style/AdvertCustomStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="@string/person_traveler_select" />
+                </LinearLayout>
+
+                <include
+                    android:id="@+id/line_four"
+                    layout="@layout/view_bottom"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    style="@style/RelativeLayoutStyle"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="@dimen/linarStart"
+                        android:layout_marginEnd="50dp"
+                        android:src="@drawable/ic_date_range_black_24dp" />
+
+
+                    <TextView
+                        android:id="@+id/date"
+                        style="@style/AdvertCustomStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/select_date" />
+
+                    <ImageButton
+                        android:id="@+id/two_date_between_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:background="?android:selectableItemBackground"
+                        android:src="@drawable/ic_date_two" />
+
+                </LinearLayout>
+
+                <include layout="@layout/view_bottom" />
+
+                <LinearLayout style="@style/RelativeLayoutStyle">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginStart="@dimen/linarStart"
+                        android:layout_marginEnd="50dp"
+                        android:src="@drawable/ic_access_time_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/hour"
+                        style="@style/AdvertCustomStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/select_time" />
+
+                    <ImageButton
+                        android:id="@+id/two_between_hour"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp"
+                        android:background="?android:selectableItemBackground"
+                        android:src="@drawable/ic_date_two" />
+
+
+                </LinearLayout>
+
+                <include layout="@layout/view_bottom" />
+
+                <LinearLayout
+                    style="@style/LinerLayoutStyle"
+                    android:layout_height="100dp">
+
+                    <EditText
+                        android:id="@+id/description"
+                        style="@style/AdvertCustomStyle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="@string/add_description"
+                        android:textColorHint="@color/text_color"/>
+                </LinearLayout>
+
+                <include layout="@layout/view_bottom" />
+
+                <Button
+                    android:id="@+id/post"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="50dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="50dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/button_blue"
+                    android:fontFamily="@font/baloo"
+                    android:text="İlan ver"
+                    android:textColor="@color/beyaz" />
+
+            </LinearLayout>
+            <ProgressBar
+                android:id="@+id/progressBar_advert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                />
+        </FrameLayout>
+
 
     </ScrollView>
 

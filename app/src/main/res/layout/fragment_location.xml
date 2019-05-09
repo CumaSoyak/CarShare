@@ -14,7 +14,7 @@
             android:background="@drawable/custom_advert_edit"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Search  City, Area"
+            android:hint="@string/search_city_area"
             android:fontFamily="@font/capriola"
             android:textSize="17sp"
             android:gravity="center"
